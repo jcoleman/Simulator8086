@@ -1,0 +1,166 @@
+TMacRuby-Sim8086
+v7
+r0
+t274534454.502396
+cCheck dependencies
+cProcessInfoPlistFile /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/Info.plist Info.plist
+cStripNIB /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/English.lproj/MainMenu.nib
+cCopyStringsFile /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/Resources/English.lproj/InfoPlist.strings English.lproj/InfoPlist.strings
+cCpResource build/Debug/MacRuby-Sim8086.app/Contents/Resources/rb_main.rb rb_main.rb
+cCompileC build/MacRuby-Sim8086.build/Debug/MacRuby-Sim8086.build/Objects-normal/x86_64/main.o /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/main.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+cLd /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/MacOS/MacRuby-Sim8086 normal x86_64
+cTouch /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app
+
+N/Developer/SDKs/MacOSX10.5.sdk
+c000000004A49A9E400000000000000EE
+t1246341604
+s238
+
+N/Developer/SDKs/MacOSX10.5.sdk/Library/Frameworks/MacRuby.framework/Headers/MacRuby.h
+c000000004AA9AA66000000000000005F
+t1252633190
+s95
+
+N/Library/Frameworks/MacRuby.framework/MacRuby
+c000000004AAC60120000000001A72E30
+t1252810770
+s27733552
+
+N/System/Library/Frameworks/Cocoa.framework/Cocoa
+c000000004A1F2D63000000000000A5E0
+t1243557219
+s42464
+
+N/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/English.lproj/InfoPlist.strings
+c000000004AACD8AA00000000000000CA
+t1252841642
+s202
+
+N/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/English.lproj/MainMenu.nib
+c000000004AACD8AA0000000000000088
+t1252841642
+s136
+
+N/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app
+t1252841654
+s102
+
+N/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/Info.plist
+t1252841647
+s793
+
+N/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/MacOS/MacRuby-Sim8086
+t1252841654
+s10184
+
+N/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/PkgInfo
+t1252841647
+s8
+
+N/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/Resources/English.lproj/InfoPlist.strings
+t1252841648
+s202
+
+N/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/Resources/English.lproj/MainMenu.nib
+t1252841649
+s18012
+
+N/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/Resources/rb_main.rb
+t1252841648
+s543
+
+N/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/MacRuby-Sim8086.build/Debug/MacRuby-Sim8086.build/Objects-normal/x86_64/MacRuby-Sim8086.LinkFileList
+c000000004AACD8AF0000000000000092
+t1252841647
+s146
+
+N/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/MacRuby-Sim8086.build/Debug/MacRuby-Sim8086.build/Objects-normal/x86_64/main.o
+t1252841653
+s11608
+
+N/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/main.m
+c000000004AACD8AA0000000000000102
+t1252841642
+s258
+i<MacRuby/MacRuby.h>
+
+N/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/rb_main.rb
+c000000004AACD8AA000000000000021F
+t1252841642
+s543
+
+NInfo.plist
+c000000004AACD8AA000000000000034C
+t1252841642
+s844
+
+CCheck dependencies
+r0
+lSLF07#2@18"Check dependencies274534447#274534447#0(0"0(0#1#0"28710924367953976#0"0#
+
+CCompileC build/MacRuby-Sim8086.build/Debug/MacRuby-Sim8086.build/Objects-normal/x86_64/main.o /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/main.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+s274534449.802169
+e274534453.441221
+r1
+xCompileC
+xbuild/MacRuby-Sim8086.build/Debug/MacRuby-Sim8086.build/Objects-normal/x86_64/main.o
+x/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/main.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@75"Compile /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/main.m274534449#274534453#0(0"0(0#0#67"/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/main.m4300882208#1168"    cd /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.5.sdk -mfix-and-continue -fobjc-gc-only -mmacosx-version-min=10.5 -gdwarf-2 -I/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/MacRuby-Sim8086.build/Debug/MacRuby-Sim8086.build/MacRuby-Sim8086.hmap -F/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug -I/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/include -I/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/MacRuby-Sim8086.build/Debug/MacRuby-Sim8086.build/DerivedSources/x86_64 -I/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/MacRuby-Sim8086.build/Debug/MacRuby-Sim8086.build/DerivedSources -c /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/main.m -o /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/MacRuby-Sim8086.build/Debug/MacRuby-Sim8086.build/Objects-normal/x86_64/main.o0#
+
+CCopyStringsFile /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/Resources/English.lproj/InfoPlist.strings English.lproj/InfoPlist.strings
+s274534447.565126
+e274534448.099176
+r1
+xCopyStringsFile
+x/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/Resources/English.lproj/InfoPlist.strings
+xEnglish.lproj/InfoPlist.strings
+lSLF07#2@36"Copy English.lproj/InfoPlist.strings274534447#274534448#0(0"0(0#0#92"/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/English.lproj/InfoPlist.strings4300882208#418"    cd /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086    setenv ICONV /usr/bin/iconv    /Developer/Library/Xcode/Plug-ins/CoreBuildTasks.xcplugin/Contents/Resources/copystrings --validate --inputencoding utf-16 --outputencoding UTF-16 English.lproj/InfoPlist.strings --outdir /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/Resources/English.lproj0#
+
+CCpResource build/Debug/MacRuby-Sim8086.app/Contents/Resources/rb_main.rb rb_main.rb
+s274534448.099330
+e274534448.203388
+r1
+xCpResource
+xbuild/Debug/MacRuby-Sim8086.app/Contents/Resources/rb_main.rb
+xrb_main.rb
+lSLF07#2@15"Copy rb_main.rb274534448#274534448#0(0"0(0#0#71"/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/rb_main.rb4300882208#400"    cd /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086    /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/rb_main.rb /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/Resources0#
+
+CLd /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/MacOS/MacRuby-Sim8086 normal x86_64
+s274534453.441419
+e274534454.486108
+r1
+xLd
+x/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/MacOS/MacRuby-Sim8086
+xnormal
+xx86_64
+lSLF07#2@128"Link /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/MacOS/MacRuby-Sim8086274534453#274534454#0(0"0(0#0#0"4300882208#711"    cd /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086    setenv MACOSX_DEPLOYMENT_TARGET 10.5    /Developer/usr/bin/gcc-4.2 -arch x86_64 -isysroot /Developer/SDKs/MacOSX10.5.sdk -L/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug -F/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug -filelist /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/MacRuby-Sim8086.build/Debug/MacRuby-Sim8086.build/Objects-normal/x86_64/MacRuby-Sim8086.LinkFileList -mmacosx-version-min=10.5 -framework Cocoa -framework MacRuby -o /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/MacOS/MacRuby-Sim80860#
+
+CProcessInfoPlistFile /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/Info.plist Info.plist
+s274534447.436564
+e274534447.531224
+r1
+xProcessInfoPlistFile
+x/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/Info.plist
+xInfo.plist
+lSLF07#2@18"Process Info.plist274534447#274534447#0(0"0(0#0#71"/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/Info.plist29555229039853688#384"    cd /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086    builtin-infoPlistUtility Info.plist -genpkginfo /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/PkgInfo -expandbuildsettings -platform macosx -o /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/Info.plist0#
+
+CStripNIB /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/English.lproj/MainMenu.nib
+s274534447.531348
+e274534449.801956
+r1
+xStripNIB
+x/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/English.lproj/MainMenu.nib
+lSLF07#2@35"StripNIB English.lproj/MainMenu.nib274534447#274534449#0(0"0(0#0#87"/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/English.lproj/MainMenu.nib3415820241470317056#369"    cd /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086    /Developer/usr/bin/ibtool --strip /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app/Contents/Resources/English.lproj/MainMenu.nib --output-format human-readable-text /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/English.lproj/MainMenu.nib0#
+
+CTouch /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app
+s274534454.486247
+e274534454.502321
+r1
+xTouch
+x/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app
+lSLF07#2@98"Touch /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app274534454#274534454#0(0"0(0#0#0"4300882208#183"    cd /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086    /usr/bin/touch -c /Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/build/Debug/MacRuby-Sim8086.app0#
+
