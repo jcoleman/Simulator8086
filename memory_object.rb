@@ -11,41 +11,32 @@
 
 class MemoryObject
 	
+	attr_reader :registers, :modules
+	
 	def initialize(io)
-		@io = io
-		@positions = { :registers => 0,
-									 :module_count => 28,
-									 :modules => 29 }
+		@registers = 14.times.collect { io.read_word }
+		@modules = read_modules(io)
 	end
 	
-	def modules
-		@io.seek @positions[:module_count]
-		module_count = @io.getbyte
+	def read_modules(io)
+		module_count = io.readbyte
 		
-		@io.seek @positions[:modules]
     modules = []
-		module_count.times { modules << read_module }
+		module_count.times { modules << read_module(io) }
 		
 		return modules
 	end
 	
-	def read_module
+	def read_module(io)
 		# Determine where to load the module
-    segment_register_id = @io.getbyte
-		offset = @io.read_word
-    
-    # Read the module's memory dump
-    bytes = @io.get_bytes(@io.read_word)
+    segment_register_id = io.readbyte
+		offset = io.read_word
 		
-		print bytes
-		print "\n"
+    # Read the module's memory dump
+		size = io.read_word
+    bytes = io.get_bytes(size)
 		
 		{ :segment_register_id => segment_register_id, :offset => offset, :bytes => bytes }
-	end
-	
-	def registers
-		@io.seek @positions[:registers]
-		14.times.collect { @io.read_word }
 	end
 	
 end

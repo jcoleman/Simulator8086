@@ -13,6 +13,10 @@ class Memory
     raise new MemoryAccessViolation unless reference + 1 < @bytes_array.size
     (@bytes_array[reference + 1] << 8) + @bytes_array[reference]
   end
+	
+	def bytes_at(reference, count)
+		@bytes_array[reference ... (reference + count)]
+	end
   
   def set_byte_at(reference, value)
     raise new MemoryAccessViolation unless reference < @bytes_array.size
@@ -60,6 +64,10 @@ class Memory
     (segment << 4) + offset
   end
   
+	def byte_size
+		@bytes_array.size
+	end
+	
   def checksum
     Utility.checksum_byte_array @bytes_array
   end

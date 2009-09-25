@@ -10,11 +10,11 @@ module Extension
 	# IO class extensions
   class Object::IO
     def get_bytes(size)
-      read(size).each_byte.collect { |byte| byte }
+			size.times.collect { readbyte }
     end
     
     def read_word
-      getbyte + (getbyte << 8)
+			readbyte + (readbyte << 8)
     end
   end
 end

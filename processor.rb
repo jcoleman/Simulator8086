@@ -1,12 +1,47 @@
-#require "memory"
-#require "register"
-#require "storage_access"
-#require "utility"
-
 class Processor
   
+	include Decoder
+	
+	attr_reader :ram
+	
   def initialize
-    # Registers
+    initialize_registers
+    initialize_memory
+		initialize_decoder
+  end
+	
+	# -----------------------------------------------------------------
+	# Main Processor Execution-cycle Methods
+	# -----------------------------------------------------------------
+	
+	def fetch
+		instruction_address = Memory.absolute_address_for @cs.value, @ip.value
+		@ip.value += 1 # Increment the instruction pointer
+		@ram.byte_at instruction_address
+	end
+	
+	def decode
+		
+	end
+	
+	def execute
+		
+	end
+	
+	# -----------------------------------------------------------------
+	# Execution-cycle Helper Methods
+	# -----------------------------------------------------------------
+	
+	def segment_register_from_id(id)
+		@segment_registers[id]
+	end
+	
+	# -----------------------------------------------------------------
+	# Initialization Helper Methods
+	# -----------------------------------------------------------------
+	
+	def initialize_registers
+		# Registers
     @ax = Register.new
     @bx = Register.new
     @cx = Register.new
@@ -24,10 +59,19 @@ class Processor
     
     @registers = [@ax, @bx, @cx, @dx, @sp, @bp, @si, @di, @cs, @ds, @ss, @es, @ip, @flags]
     @segment_registers = [@cs, @ds, @ss, @es]
-    
-    # Memory
-    @ram = Memory.new(32768, 0)
-  end
+	end
+	
+	def initialize_memory
+		@ram = Memory.new(32768, 0)
+	end
+	
+	def initialize_decoder
+		# Read in the instruction tables
+	end
+	
+	# -----------------------------------------------------------------
+	# External Access Helper Methods
+	# -----------------------------------------------------------------
 	
 	def load_object(object)
 		object.registers.each_with_index do |register_value, index|
@@ -39,10 +83,6 @@ class Processor
 			memory_module[:address] = Memory.absolute_address_for segment, memory_module[:offset]
 			@ram.load_module memory_module
 		end
-	end
-  
-	def segment_register_from_id(id)
-		@segment_registers[id]
 	end
 	
 	def register_values
@@ -62,6 +102,19 @@ class Processor
 			:flags => @flags.value }
 	end
 	
+	def flag_values
+		flags = @flags.value
+		{ :of => flags[11],
+			:df => flags[10],
+			:if => flags[9],
+			:tf => flags[8],
+			:sf => flags[7],
+			:zf => flags[6],
+			:af => flags[4],
+			:pf => flags[2],
+			:cf => flags[0] }
+	end
+	
   def registers_checksum
     register_bytes = []
     
@@ -78,11 +131,6 @@ class Processor
   
   def print_registers
     @registers.each { |reg| puts reg.value.to_s(16) }
-  end
-  
-  def print_checksums
-    puts "Register checksum: #{checksum_registers}"
-    puts "RAM checksum: #{@ram.checksum}"
   end
   
 end
