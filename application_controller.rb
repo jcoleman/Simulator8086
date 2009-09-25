@@ -169,8 +169,9 @@ class ApplicationController
 	def applicationDidFinishLaunching(notification)
 		Kernel.puts "\nApplication finished launching."
 		puts "Ruby interpreter: #{RUBY_VERSION}"
-		puts @memory_display_source
+		
 		initialize_memory_display
+		refresh_all_displays
 	end
 	
 	def applicationWillTerminate(notification)

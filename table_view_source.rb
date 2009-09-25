@@ -26,7 +26,7 @@ module TableViewSource
 				when 'raw'
 					raw_data_from_bytes bytes
 				when 'ascii'
-					""
+					bytes.collect { |byte| (32 <= byte && byte <= 126) ? byte.chr : '.' }.join
 				when 'address'
 					address.to_s(16).upcase.rjust(4, '0').insert(2, ' ')
 			end
@@ -39,7 +39,8 @@ module TableViewSource
 			
 			display_string = ""
 			display_bytes.each_with_index do |display_byte, i|
-				display_string << display_byte << (i == 7 ? '-' : ' ')
+				display_string << display_byte
+				display_string << (i == 7 ? '-' : ' ') unless i == 15
 			end
 			
 			return display_string

@@ -13,6 +13,7 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		C44F72D2106A9020008628C6 /* table_view_source.rb in Resources */ = {isa = PBXBuildFile; fileRef = C44F72D1106A9020008628C6 /* table_view_source.rb */; };
 		C497B52A105D79BD00FFB668 /* application_controller.rb in Resources */ = {isa = PBXBuildFile; fileRef = C497B529105D79BD00FFB668 /* application_controller.rb */; };
 		C497B533105E677300FFB668 /* processor.rb in Resources */ = {isa = PBXBuildFile; fileRef = C497B532105E677300FFB668 /* processor.rb */; };
 		C497B535105E67CF00FFB668 /* memory.rb in Resources */ = {isa = PBXBuildFile; fileRef = C497B534105E67CF00FFB668 /* memory.rb */; };
@@ -21,6 +22,9 @@
 		C497B53B105E688D00FFB668 /* memory_object.rb in Resources */ = {isa = PBXBuildFile; fileRef = C497B53A105E688D00FFB668 /* memory_object.rb */; };
 		C497B53E105E68C000FFB668 /* utility.rb in Resources */ = {isa = PBXBuildFile; fileRef = C497B53D105E68C000FFB668 /* utility.rb */; };
 		C497B540105E68D400FFB668 /* extension.rb in Resources */ = {isa = PBXBuildFile; fileRef = C497B53F105E68D400FFB668 /* extension.rb */; };
+		C497B5DC1061100F00FFB668 /* lib in Resources */ = {isa = PBXBuildFile; fileRef = C497B5961061100F00FFB668 /* lib */; };
+		C497B5DE1061818F00FFB668 /* simulator_database.rb in Resources */ = {isa = PBXBuildFile; fileRef = C497B5DD1061818F00FFB668 /* simulator_database.rb */; };
+		C4A5FD3A1063DC9900A43A26 /* decoder.rb in Resources */ = {isa = PBXBuildFile; fileRef = C4A5FD391063DC9900A43A26 /* decoder.rb */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +39,7 @@
 		4DE3BE130D8651D900ECA448 /* MacRuby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MacRuby.framework; path = /Library/Frameworks/MacRuby.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* MacRuby-Sim8086.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MacRuby-Sim8086.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C44F72D1106A9020008628C6 /* table_view_source.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = table_view_source.rb; sourceTree = "<group>"; };
 		C497B529105D79BD00FFB668 /* application_controller.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = application_controller.rb; sourceTree = "<group>"; };
 		C497B532105E677300FFB668 /* processor.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = processor.rb; sourceTree = "<group>"; };
 		C497B534105E67CF00FFB668 /* memory.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = memory.rb; sourceTree = "<group>"; };
@@ -43,6 +48,10 @@
 		C497B53A105E688D00FFB668 /* memory_object.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = memory_object.rb; sourceTree = "<group>"; };
 		C497B53D105E68C000FFB668 /* utility.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = utility.rb; sourceTree = "<group>"; };
 		C497B53F105E68D400FFB668 /* extension.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = extension.rb; sourceTree = "<group>"; };
+		C497B5961061100F00FFB668 /* lib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lib; sourceTree = "<group>"; };
+		C497B5DD1061818F00FFB668 /* simulator_database.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = simulator_database.rb; sourceTree = "<group>"; };
+		C497B5DF1061826B00FFB668 /* config.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.yaml; sourceTree = "<group>"; };
+		C4A5FD391063DC9900A43A26 /* decoder.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = decoder.rb; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,9 +70,11 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				C4A5FD381063B36A00A43A26 /* tests */,
 				C497B53C105E68B600FFB668 /* lib */,
 				C497B531105E676100FFB668 /* Models */,
 				C497B526105D184900FFB668 /* Controllers */,
+				C497B5DF1061826B00FFB668 /* config.yaml */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -119,6 +130,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C497B5961061100F00FFB668 /* lib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
@@ -151,6 +163,9 @@
 				C497B536105E682400FFB668 /* register.rb */,
 				C497B538105E685000FFB668 /* storage_access.rb */,
 				C497B53A105E688D00FFB668 /* memory_object.rb */,
+				C497B5DD1061818F00FFB668 /* simulator_database.rb */,
+				C4A5FD391063DC9900A43A26 /* decoder.rb */,
+				C44F72D1106A9020008628C6 /* table_view_source.rb */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -162,6 +177,13 @@
 				C497B53F105E68D400FFB668 /* extension.rb */,
 			);
 			name = lib;
+			sourceTree = "<group>";
+		};
+		C4A5FD381063B36A00A43A26 /* tests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,6 +240,10 @@
 				C497B53B105E688D00FFB668 /* memory_object.rb in Resources */,
 				C497B53E105E68C000FFB668 /* utility.rb in Resources */,
 				C497B540105E68D400FFB668 /* extension.rb in Resources */,
+				C497B5DC1061100F00FFB668 /* lib in Resources */,
+				C497B5DE1061818F00FFB668 /* simulator_database.rb in Resources */,
+				C4A5FD3A1063DC9900A43A26 /* decoder.rb in Resources */,
+				C44F72D2106A9020008628C6 /* table_view_source.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
