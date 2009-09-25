@@ -6,61 +6,85 @@
 #  Copyright (c) 2009 Radiadesign. All rights reserved.
 #
 
+require "table_view_source"
+
+
 class ApplicationController
 	
 	attr_accessor :main_window, :inspector, :registers_checksum_label, :memory_checksum_label
 	attr_accessor :ax_label, :bx_label, :cx_label, :dx_label, :di_label, :si_label, :cs_label
 	attr_accessor :ds_label, :es_label, :ss_label, :ip_label, :bp_label, :sp_label, :flags_label
-	attr_accessor :calculator_result_label, :calculator_input1, :calculator_input2, :loop_label
+	attr_accessor :of_display, :df_display, :if_display, :tf_display, :sf_display, :zf_display
+	attr_accessor :af_display, :pf_display, :cf_display, :object_file_label, :preload_os
+	attr_accessor :memory_display, :stack_display, :instruction_display, :interrupt_window
+	attr_accessor :memory_display_source
 	
-	# The main simulator object
-	@processor = nil
-	
-	# Options
-	@update_registers = true
-	@update_checksums = true
-	
-	@thread = nil
-	
-	def calculator_action(sender)
-		op = sender.title
-		input1 = @calculator_input1.stringValue
-		input2 = @calculator_input2.stringValue
-		@calculator_result_label.setFont NSFont.fontWithName("Andale Mono", size:12)
-		@calculator_result_label.setStringValue eval("0x#{input1} #{op} 0x#{input2}").to_i.to_s(16)
+	def initialize
+		# The main simulator object
+		initialize_processor_with_hooks
+		
+		# Options
+		@update_registers = true
+		@update_checksums = true
+		@preload_os = true
+		@registers_display_base = 16
 	end
 	
-	def loop_action(sender)
-		begin
-			unless @thread
-				@thread = Thread.new(@loop_label) do |loop_label|
-					@loop_value = 0
-					loop do
-						loop_label.setStringValue @loop_value.to_s
-						puts @loop_value
-						sleep 0.2
-						@loop_value += 1
-					end
-				end
-			end
-		rescue Exception => e
-			puts "Caught #{e}"
-		end
+	def initialize_processor_with_hooks
+		@processor = Processor.new
+		
+	end
+		
+	def submit_checksums_to_db(sender)
+		db = SimulatorDatabase.new("css.cs.bju.edu", 1433, "sim86", "sim86fall2009", "jcole358")
+		db.insert_checksums @last_loaded_object, @processor.registers_checksum, @processor.memory_checksum
+	end
+	
+	def reset_simulator(sender)
+		initialize_processor_with_hooks
+		refresh_all_displays
+	end
+	
+	def choose_hardware_interrupt(sender)
+		@interrupt_window.makeKeyAndOrderFront(sender)
+	end
+	
+	def send_interrupt(sender)
+		
 	end
 	
 	def load_module(sender)
-		@processor = Processor.new unless @processor
+		puts "loading module"
+		initialize_processor_with_hooks
 		
 		open_dialog = NSOpenPanel.openPanel
 		#runModalForDirectory:file:types:
-		if open_dialog.runModalForDirectory(nil, file:nil, types:nil) == NSOKButton
+		if open_dialog.runModalForDirectory(nil, file:nil, types:["obj"]) == NSOKButton
 			file = open_dialog.filenames[0]
 			object = MemoryObject.new(File.new file)
+			@last_loaded_object = File.basename(file.to_s)
+			@object_file_label.setStringValue @last_loaded_object
+			# Preload Sim86OS here
 			@processor.load_object object
 		end
-		
-		refresh_checksum_display
+		puts "calling refresh all displays"
+		refresh_all_displays
+	end
+	
+	def refresh_all_displays
 		refresh_registers_display
+		refresh_checksum_display
+		refresh_flags_display
+		refresh_memory_display
+	end
+	
+	def initialize_memory_display
+		@memory_display_source = TableViewSource::MemoryView.new(@processor.ram)
+		@memory_display.dataSource = @memory_display_source
+	end
+	
+	def refresh_memory_display
+		@memory_display.reloadData
 	end
 	
 	def refresh_checksum_display
@@ -70,24 +94,48 @@ class ApplicationController
 	
 	def refresh_registers_display
 		register_values = @processor.register_values
-		@ax_label.setStringValue storage_word_to_binary_string(register_values[:ax])
-		@bx_label.setStringValue storage_word_to_binary_string(register_values[:bx])
-		@cx_label.setStringValue storage_word_to_binary_string(register_values[:cx])
-		@dx_label.setStringValue storage_word_to_binary_string(register_values[:dx])
-		@di_label.setStringValue storage_word_to_binary_string(register_values[:di])
-		@si_label.setStringValue storage_word_to_binary_string(register_values[:si])
-		@cs_label.setStringValue storage_word_to_binary_string(register_values[:cs])
-		@ds_label.setStringValue storage_word_to_binary_string(register_values[:ds])
-		@es_label.setStringValue storage_word_to_binary_string(register_values[:es])
-		@ss_label.setStringValue storage_word_to_binary_string(register_values[:ss])
-		@ip_label.setStringValue storage_word_to_binary_string(register_values[:ip])
-		@bp_label.setStringValue storage_word_to_binary_string(register_values[:bp])
-		@sp_label.setStringValue storage_word_to_binary_string(register_values[:sp])
-		@flags_label.setStringValue storage_word_to_binary_string(register_values[:flags])
+		base = @registers_display_base
+		@ax_label.setStringValue storage_word_to_numeric_string(register_values[:ax], base)
+		@bx_label.setStringValue storage_word_to_numeric_string(register_values[:bx], base)
+		@cx_label.setStringValue storage_word_to_numeric_string(register_values[:cx], base)
+		@dx_label.setStringValue storage_word_to_numeric_string(register_values[:dx], base)
+		@di_label.setStringValue storage_word_to_numeric_string(register_values[:di], base)
+		@si_label.setStringValue storage_word_to_numeric_string(register_values[:si], base)
+		@cs_label.setStringValue storage_word_to_numeric_string(register_values[:cs], base)
+		@ds_label.setStringValue storage_word_to_numeric_string(register_values[:ds], base)
+		@es_label.setStringValue storage_word_to_numeric_string(register_values[:es], base)
+		@ss_label.setStringValue storage_word_to_numeric_string(register_values[:ss], base)
+		@ip_label.setStringValue storage_word_to_numeric_string(register_values[:ip], base)
+		@bp_label.setStringValue storage_word_to_numeric_string(register_values[:bp], base)
+		@sp_label.setStringValue storage_word_to_numeric_string(register_values[:sp], base)
+		@flags_label.setStringValue storage_word_to_numeric_string(register_values[:flags], base)
+	end
+	
+	def refresh_flags_display
+		flag_values = @processor.flag_values
+		@of_display.setIntValue flag_values[:of]
+		@df_display.setIntValue flag_values[:df]
+		@if_display.setIntValue flag_values[:if]
+		@tf_display.setIntValue flag_values[:tf]
+		@sf_display.setIntValue flag_values[:sf]
+		@zf_display.setIntValue flag_values[:zf]
+		@af_display.setIntValue flag_values[:af]
+		@pf_display.setIntValue flag_values[:pf]
+		@cf_display.setIntValue flag_values[:cf]
 	end
 	
 	def show_inspector(sender)
 	  @inspector.makeKeyAndOrderFront(sender)
+	end
+	
+	def display_registers_as(sender)
+		@registers_display_base = (sender.selectedSegment == 0 ? 16 : 2)
+		refresh_registers_display
+	end
+	
+	def should_preload_os(sender)
+		@preload_os = !@preload_os
+		sender.setTitle((@preload_os ? "Disable " : "Enable ") + "OS Preload")
 	end
 	
 	def registers_should_update(sender)
@@ -98,9 +146,14 @@ class ApplicationController
 		@update_checksums = sender.state == NSOnState
 	end
 	
-	def storage_word_to_binary_string(word)
-		binary = word.to_s(2)
-		("0" * (16 - binary.size) << binary).insert 8, ':'
+	def storage_word_to_numeric_string(word, base)
+		word_length = 4 # default to hex
+		word_length = 16 if base == 2
+		
+		word.to_s(base).upcase.rjust(word_length, '0').insert(word_length/2, ' ')
+		
+		#binary = word.to_s(base)
+		#(("0" * (word_length - binary.size) << binary).insert word_length/2, ':').upcase
 	end
 	
 	def awakeFromNib
@@ -116,6 +169,8 @@ class ApplicationController
 	def applicationDidFinishLaunching(notification)
 		Kernel.puts "\nApplication finished launching."
 		puts "Ruby interpreter: #{RUBY_VERSION}"
+		puts @memory_display_source
+		initialize_memory_display
 	end
 	
 	def applicationWillTerminate(notification)

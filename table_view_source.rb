@@ -20,10 +20,21 @@ module TableViewSource
 		end
 		
 		def tableView(tableView, objectValueForTableColumn:tableColumn, row:index)
-			bytes = @ram.bytes_at(16*index, 16)
+			address = index * 16
+			bytes = bytes = @ram.bytes_at(address, 16)
+			case tableColumn.identifier
+				when 'raw'
+					raw_data_from_bytes bytes
+				when 'ascii'
+					""
+				when 'address'
+					address.to_s(16).upcase.rjust(4, '0').insert(2, ' ')
+			end
+		end
+		
+		def raw_data_from_bytes(bytes)
 			display_bytes = bytes.map do |byte|
-				byte_string = byte.to_s(16)
-				"0" * (2 - byte_string.size) << byte_string
+				byte_string = byte.to_s(16).upcase.rjust(2, '0')
 			end
 			
 			display_string = ""
