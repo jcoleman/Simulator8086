@@ -56,6 +56,7 @@ class ApplicationController
 	def load_module(sender)
 		puts "loading module"
 		initialize_processor_with_hooks
+		initialize_memory_display
 		
 		open_dialog = NSOpenPanel.openPanel
 		#runModalForDirectory:file:types:
