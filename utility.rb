@@ -3,7 +3,7 @@
 #  MacRuby-Sim8086
 #
 #  Created by James Coleman on 9/11/09.
-#  Copyright (c) 2009 __MyCompanyName__. All rights reserved.
+#  Copyright (c) 2009 Radiadesign. All rights reserved.
 #
 
 module Utility
@@ -12,8 +12,6 @@ module Utility
   
   def self.checksum_byte_array(byte_array)
     sum = 0
-		#print byte_array
-		#print "\n"
     byte_array.each_index do |index|
 			sum += byte_array[index] ^ index
       sum = (sum - MAX_32) if sum > MAX_SIGNED_32

@@ -334,12 +334,11 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>C40A95F0106E7F7400FA90B0</string>
+										<string>C40A961D106EA4EC00FA90B0</string>
 										<key>history</key>
 										<array>
 											<string>C497B58810610F5F00FFB668</string>
 											<string>C4A5FDCE1067233200A43A26</string>
-											<string>C4A5FDD31067233200A43A26</string>
 											<string>C4A5FDD41067233200A43A26</string>
 											<string>C4A5FDD51067233200A43A26</string>
 											<string>C4A5FDD61067233200A43A26</string>
@@ -347,10 +346,11 @@
 											<string>C40A957F106DB1CF00FA90B0</string>
 											<string>C40A9581106DB1CF00FA90B0</string>
 											<string>C40A9582106DB1CF00FA90B0</string>
-											<string>C40A95DD106E7E7B00FA90B0</string>
-											<string>C40A95E4106E7F0D00FA90B0</string>
-											<string>C40A95EA106E7F6200FA90B0</string>
-											<string>C40A95EB106E7F6200FA90B0</string>
+											<string>C40A95FC106E9FD700FA90B0</string>
+											<string>C40A960F106EA3E300FA90B0</string>
+											<string>C40A9610106EA3E300FA90B0</string>
+											<string>C40A9614106EA49700FA90B0</string>
+											<string>C40A9615106EA49700FA90B0</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -548,7 +548,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>C40A95F1106E7F7400FA90B0</string>
+		<string>C40A961E106EA4EC00FA90B0</string>
 		<string>C40A9562106D363000FA90B0</string>
 		<string>C40A9563106D363000FA90B0</string>
 		<string>1CD10A99069EF8BA00B06720</string>

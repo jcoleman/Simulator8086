@@ -44,7 +44,6 @@ module MemoryStack
 	end
 	
 	def stack_word_size
-		puts (MAX_STACK_INDEX - stack_offset) / 2
 		(MAX_STACK_INDEX - stack_offset) / 2
 	end
 	

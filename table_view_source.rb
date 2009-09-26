@@ -73,7 +73,10 @@ module TableViewSource
 	class ExecutedInstructionView
 	
 		def initialize
-			@executed_instructions = [{}]
+			@executed_instructions = [ { address:"0000:1135",
+																	 raw_instruction:"8D160810",
+																	 assembly_instruction:"LEA    DX,[1008]",
+																	 mode:"RegRM" } ]
 		end
 		
 		def numberOfRowsInTableView(tableView)
@@ -81,7 +84,7 @@ module TableViewSource
 		end
 		
 		def tableView(tableView, objectValueForTableColumn:tableColumn, row:index)
-			
+			@executed_instructions[index][tableColumn.identifier.to_sym]
 		end
 		
 	end
