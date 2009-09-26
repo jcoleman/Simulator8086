@@ -5,12 +5,12 @@ class Memory
   end
   
   def byte_at(reference)
-    raise new MemoryAccessViolation unless reference < @bytes_array.size
+    raise MemoryAccessViolation.new unless reference < @bytes_array.size
     @bytes_array[reference]
   end
   
   def word_at(reference)
-    raise new MemoryAccessViolation unless reference + 1 < @bytes_array.size
+    raise MemoryAccessViolation.new unless reference + 1 < @bytes_array.size
     (@bytes_array[reference + 1] << 8) + @bytes_array[reference]
   end
 	
@@ -19,12 +19,12 @@ class Memory
 	end
   
   def set_byte_at(reference, value)
-    raise new MemoryAccessViolation unless reference < @bytes_array.size
+    raise MemoryAccessViolation.new unless reference < @bytes_array.size
     @bytes_array[reference] = value
   end
   
   def set_word_at(reference, value)
-    raise new MemoryAccessViolation unless reference + 1 < @bytes_array.size
+    raise MemoryAccessViolation.new unless reference + 1 < @bytes_array.size
     @bytes_array[reference] = value >> 8
     @bytes_array[reference + 1] = value & 0x00FF
   end
@@ -32,7 +32,7 @@ class Memory
   # Note: set_bytes_at will not correct endianess! Do not use unless
   # 'bytes' is already stored in the correct endian format
   def set_bytes_at(reference, bytes)
-    raise new MemoryAccessViolation unless reference + bytes.size < @bytes_array.size
+    raise MemoryAccessViolation.new unless reference + bytes.size < @bytes_array.size
     bytes.each_with_index do |byte, index|
       @bytes_array[reference + index] = byte
     end

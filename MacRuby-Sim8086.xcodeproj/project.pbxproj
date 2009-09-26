@@ -13,6 +13,7 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		C40A957D106D9C0600FA90B0 /* memory_stack.rb in Resources */ = {isa = PBXBuildFile; fileRef = C40A957C106D9C0600FA90B0 /* memory_stack.rb */; };
 		C44F72D2106A9020008628C6 /* table_view_source.rb in Resources */ = {isa = PBXBuildFile; fileRef = C44F72D1106A9020008628C6 /* table_view_source.rb */; };
 		C497B52A105D79BD00FFB668 /* application_controller.rb in Resources */ = {isa = PBXBuildFile; fileRef = C497B529105D79BD00FFB668 /* application_controller.rb */; };
 		C497B533105E677300FFB668 /* processor.rb in Resources */ = {isa = PBXBuildFile; fileRef = C497B532105E677300FFB668 /* processor.rb */; };
@@ -39,6 +40,7 @@
 		4DE3BE130D8651D900ECA448 /* MacRuby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MacRuby.framework; path = /Library/Frameworks/MacRuby.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* MacRuby-Sim8086.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MacRuby-Sim8086.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C40A957C106D9C0600FA90B0 /* memory_stack.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = memory_stack.rb; sourceTree = "<group>"; };
 		C44F72D1106A9020008628C6 /* table_view_source.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = table_view_source.rb; sourceTree = "<group>"; };
 		C497B529105D79BD00FFB668 /* application_controller.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = application_controller.rb; sourceTree = "<group>"; };
 		C497B532105E677300FFB668 /* processor.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = processor.rb; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				C497B5DD1061818F00FFB668 /* simulator_database.rb */,
 				C4A5FD391063DC9900A43A26 /* decoder.rb */,
 				C44F72D1106A9020008628C6 /* table_view_source.rb */,
+				C40A957C106D9C0600FA90B0 /* memory_stack.rb */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -244,6 +247,7 @@
 				C497B5DE1061818F00FFB668 /* simulator_database.rb in Resources */,
 				C4A5FD3A1063DC9900A43A26 /* decoder.rb in Resources */,
 				C44F72D2106A9020008628C6 /* table_view_source.rb in Resources */,
+				C40A957D106D9C0600FA90B0 /* memory_stack.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

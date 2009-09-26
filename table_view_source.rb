@@ -28,7 +28,7 @@ module TableViewSource
 				when 'ascii'
 					bytes.collect { |byte| (32 <= byte && byte <= 126) ? byte.chr : '.' }.join
 				when 'address'
-					address.to_s(16).upcase.rjust(4, '0').insert(2, ' ')
+					address.to_s(16).upcase.rjust(5, '0')
 			end
 		end
 		
@@ -48,14 +48,36 @@ module TableViewSource
 		
 	end
 	
-	class ExecutedInstructionView
-	
-		def initialize
-			
+	class StackView
+		
+		def initialize(processor)
+			@processor = processor
 		end
 		
 		def numberOfRowsInTableView(tableView)
+			stack_word_size = @processor.stack_word_size
+			stack_word_size > 16 ? 16 : stack_word_size
+		end
 		
+		def tableView(tableView, objectValueForTableColumn:tableColumn, row:index)
+			case tableColumn.identifier
+				when 'offset'
+					@processor.stack_word_index_to_offset(index).to_s(16).upcase.rjust(4, '0').insert(2, ' ')
+				when 'raw'
+					@processor.stack_word_at(index).to_s(16).upcase.rjust(4, '0').insert(2, ' ')
+			end
+		end
+		
+	end
+	
+	class ExecutedInstructionView
+	
+		def initialize
+			@executed_instructions = [{}]
+		end
+		
+		def numberOfRowsInTableView(tableView)
+			@executed_instructions.size
 		end
 		
 		def tableView(tableView, objectValueForTableColumn:tableColumn, row:index)

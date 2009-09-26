@@ -32,7 +32,6 @@ class ApplicationController
 	
 	def initialize_processor_with_hooks
 		@processor = Processor.new
-		
 	end
 		
 	def submit_checksums_to_db(sender)
@@ -54,9 +53,7 @@ class ApplicationController
 	end
 	
 	def load_module(sender)
-		puts "loading module"
 		initialize_processor_with_hooks
-		initialize_memory_display
 		
 		open_dialog = NSOpenPanel.openPanel
 		#runModalForDirectory:file:types:
@@ -68,8 +65,15 @@ class ApplicationController
 			# Preload Sim86OS here
 			@processor.load_object object
 		end
-		puts "calling refresh all displays"
+		
+		initialize_all_displays
 		refresh_all_displays
+	end
+	
+	def initialize_all_displays
+		initialize_memory_display
+		initialize_stack_display
+		initialize_instruction_display
 	end
 	
 	def refresh_all_displays
@@ -77,6 +81,7 @@ class ApplicationController
 		refresh_checksum_display
 		refresh_flags_display
 		refresh_memory_display
+		refresh_instruction_display
 	end
 	
 	def initialize_memory_display
@@ -86,6 +91,24 @@ class ApplicationController
 	
 	def refresh_memory_display
 		@memory_display.reloadData
+	end
+	
+	def initialize_stack_display
+		@stack_display_source = TableViewSource::StackView.new(@processor)
+		@stack_display.dataSource = @stack_display_source
+	end
+	
+	def refresh_stack_display
+		@stack_display.reloadData
+	end
+	
+	def initialize_instruction_display
+		@instruction_display_source = TableViewSource::ExecutedInstructionView.new
+		@instruction_display.dataSource = @instruction_display_source
+	end
+	
+	def refresh_instruction_display
+		@instruction_display.reloadData
 	end
 	
 	def refresh_checksum_display
@@ -171,7 +194,7 @@ class ApplicationController
 		Kernel.puts "\nApplication finished launching."
 		puts "Ruby interpreter: #{RUBY_VERSION}"
 		
-		initialize_memory_display
+		initialize_all_displays
 		refresh_all_displays
 	end
 	

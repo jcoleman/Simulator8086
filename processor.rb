@@ -1,8 +1,9 @@
 class Processor
   
 	include Decoder
+	include MemoryStack
 	
-	attr_reader :ram
+	attr_reader :ram, :ss, :sp
 	
   def initialize
     initialize_registers
