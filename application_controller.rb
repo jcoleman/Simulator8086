@@ -117,6 +117,7 @@ class ApplicationController
 	
 	def refresh_instruction_display
 		@instruction_display.reloadData
+		@instruction_display.scrollRowToVisible(@instruction_display.numberOfRows - 1)
 	end
 	
 	def refresh_checksum_display
@@ -217,6 +218,7 @@ class ApplicationController
 	
 	def step_execute_instruction(sender)
 		@processor.process_instruction
+		refresh_all_displays
 	end
 	
 	def storage_word_to_numeric_string(word, base)
