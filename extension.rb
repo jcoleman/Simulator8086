@@ -17,5 +17,12 @@ module Extension
 			readbyte + (readbyte << 8)
     end
   end
+	
+	class Object::Fixnum
+		def to_hex_string(length)
+			self.to_s(16).upcase.rjust(length, '0')
+		end
+	end
+	
 end
 

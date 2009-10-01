@@ -1,5 +1,8 @@
+require 'processor_constants'
+
 class Processor
   
+	include ProcessorConstants
 	include Decoder
 	include MemoryStack
 	
@@ -9,24 +12,41 @@ class Processor
     initialize_registers
     initialize_memory
 		initialize_decoder
+		initialize_callbacks
   end
 	
 	# -----------------------------------------------------------------
 	# Main Processor Execution-cycle Methods
 	# -----------------------------------------------------------------
 	
+	def process_instruction
+		execute(decode(fetch))
+	end
+	
 	def fetch
-		instruction_address = Memory.absolute_address_for @cs.value, @ip.value
+		@before_fetch.call if @before_fetch
+		
+		instruction_segment = @cs.value
+		instruction_pointer = @ip.value
+		instruction_address = Memory.absolute_address_for instruction_segment, instruction_pointer
 		@ip.value += 1 # Increment the instruction pointer
-		@ram.byte_at instruction_address
+		byte = @ram.byte_at instruction_address
+		
+		@after_fetch.call(instruction_segment, instruction_pointer, byte) if @after_fetch
+		return byte
 	end
 	
-	def decode
-		
+	def decode(initial_byte)
+		@before_decode.call if @before_decode
+		instruction = nil
+		instruction = false if initial_byte == 0xF4
+		@after_decode.call if @after_decode
 	end
 	
-	def execute
-		
+	def execute(instruction)
+		@before_execute.call if @before_execute
+		@after_execute.call if @after_execute
+		return instruction
 	end
 	
 	# -----------------------------------------------------------------
@@ -35,6 +55,34 @@ class Processor
 	
 	def segment_register_from_id(id)
 		@segment_registers[id]
+	end
+	
+	# -----------------------------------------------------------------
+	# Callback Helper Methods
+	# -----------------------------------------------------------------
+	
+	def before_fetch(&block)
+		@before_fetch = block
+	end
+	
+	def after_fetch(&block)
+		@after_fetch = block
+	end
+	
+	def before_decode(&block)
+		@before_decode = block
+	end
+	
+	def after_decode(&block)
+		@after_decode = block
+	end
+	
+	def before_execute(&block)
+		@before_execute = block
+	end
+	
+	def after_execute(&block)
+		@after_execute = block
 	end
 	
 	# -----------------------------------------------------------------
@@ -68,6 +116,15 @@ class Processor
 	
 	def initialize_decoder
 		# Read in the instruction tables
+	end
+	
+	def initialize_callbacks
+		@before_fetch = nil
+		@after_fetch = nil
+		@before_decode = nil
+		@after_decode = nil
+		@before_execute = nil
+		@after_execute = nil
 	end
 	
 	# -----------------------------------------------------------------
@@ -105,15 +162,15 @@ class Processor
 	
 	def flag_values
 		flags = @flags.value
-		{ :of => flags[11],
-			:df => flags[10],
-			:if => flags[9],
-			:tf => flags[8],
-			:sf => flags[7],
-			:zf => flags[6],
-			:af => flags[4],
-			:pf => flags[2],
-			:cf => flags[0] }
+		{ :of => flags[OVERFLOW_FLAG],
+			:df => flags[DIRECTION_FLAG],
+			:if => flags[INTERRUPT_FLAG],
+			:tf => flags[TRACE_FLAG],
+			:sf => flags[SIGN_FLAG],
+			:zf => flags[ZERO_FLAG],
+			:af => flags[AUX_CARRY_FLAG],
+			:pf => flags[PARITY_FLAG],
+			:cf => flags[CARRY_FLAG] }
 	end
 	
   def registers_checksum

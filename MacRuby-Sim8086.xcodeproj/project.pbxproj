@@ -6,6 +6,21 @@
 	objectVersion = 44;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		C40A965610711E3600FA90B0 /* Embed MacRuby */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = C40A966E10711E8200FA90B0 /* Build configuration list for PBXAggregateTarget "Embed MacRuby" */;
+			buildPhases = (
+				C40A965510711E3600FA90B0 /* ShellScript */,
+			);
+			dependencies = (
+				C40A965A10711E4500FA90B0 /* PBXTargetDependency */,
+			);
+			name = "Embed MacRuby";
+			productName = "Embed MacRuby";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		4DE339F70D74FCDD00ADB6EE /* rb_main.rb in Resources */ = {isa = PBXBuildFile; fileRef = 4DE339F60D74FCDD00ADB6EE /* rb_main.rb */; };
 		4DE3BE140D8651D900ECA448 /* MacRuby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE3BE130D8651D900ECA448 /* MacRuby.framework */; };
@@ -14,6 +29,8 @@
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		C40A957D106D9C0600FA90B0 /* memory_stack.rb in Resources */ = {isa = PBXBuildFile; fileRef = C40A957C106D9C0600FA90B0 /* memory_stack.rb */; };
+		C40A96511070E46F00FA90B0 /* processor_constants.rb in Resources */ = {isa = PBXBuildFile; fileRef = C40A96501070E46F00FA90B0 /* processor_constants.rb */; };
+		C40A969A107171DB00FA90B0 /* instruction.rb in Resources */ = {isa = PBXBuildFile; fileRef = C40A9699107171DB00FA90B0 /* instruction.rb */; };
 		C44F72D2106A9020008628C6 /* table_view_source.rb in Resources */ = {isa = PBXBuildFile; fileRef = C44F72D1106A9020008628C6 /* table_view_source.rb */; };
 		C497B52A105D79BD00FFB668 /* application_controller.rb in Resources */ = {isa = PBXBuildFile; fileRef = C497B529105D79BD00FFB668 /* application_controller.rb */; };
 		C497B533105E677300FFB668 /* processor.rb in Resources */ = {isa = PBXBuildFile; fileRef = C497B532105E677300FFB668 /* processor.rb */; };
@@ -28,6 +45,16 @@
 		C4A5FD3A1063DC9900A43A26 /* decoder.rb in Resources */ = {isa = PBXBuildFile; fileRef = C4A5FD391063DC9900A43A26 /* decoder.rb */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		C40A965910711E4500FA90B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1107260486CEB800E47090 /* MacRuby-Sim8086 */;
+			remoteInfo = "MacRuby-Sim8086";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -41,6 +68,8 @@
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* MacRuby-Sim8086.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MacRuby-Sim8086.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C40A957C106D9C0600FA90B0 /* memory_stack.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = memory_stack.rb; sourceTree = "<group>"; };
+		C40A96501070E46F00FA90B0 /* processor_constants.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = processor_constants.rb; sourceTree = "<group>"; };
+		C40A9699107171DB00FA90B0 /* instruction.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = instruction.rb; sourceTree = "<group>"; };
 		C44F72D1106A9020008628C6 /* table_view_source.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = table_view_source.rb; sourceTree = "<group>"; };
 		C497B529105D79BD00FFB668 /* application_controller.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = application_controller.rb; sourceTree = "<group>"; };
 		C497B532105E677300FFB668 /* processor.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = processor.rb; sourceTree = "<group>"; };
@@ -169,6 +198,8 @@
 				C4A5FD391063DC9900A43A26 /* decoder.rb */,
 				C44F72D1106A9020008628C6 /* table_view_source.rb */,
 				C40A957C106D9C0600FA90B0 /* memory_stack.rb */,
+				C40A96501070E46F00FA90B0 /* processor_constants.rb */,
+				C40A9699107171DB00FA90B0 /* instruction.rb */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -223,6 +254,7 @@
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* MacRuby-Sim8086 */,
+				C40A965610711E3600FA90B0 /* Embed MacRuby */,
 			);
 		};
 /* End PBXProject section */
@@ -248,10 +280,28 @@
 				C4A5FD3A1063DC9900A43A26 /* decoder.rb in Resources */,
 				C44F72D2106A9020008628C6 /* table_view_source.rb in Resources */,
 				C40A957D106D9C0600FA90B0 /* memory_stack.rb in Resources */,
+				C40A96511070E46F00FA90B0 /* processor_constants.rb in Resources */,
+				C40A969A107171DB00FA90B0 /* instruction.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C40A965510711E3600FA90B0 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH=\"$PATH:/usr/local/bin\" /usr/bin/env macruby -r hotcocoa/application_builder -e \"HotCocoa::ApplicationBuilder.deploy(ARGV[0])\" $TARGET_BUILD_DIR/$PROJECT_NAME.app";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D11072C0486CEB800E47090 /* Sources */ = {
@@ -263,6 +313,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C40A965A10711E4500FA90B0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D1107260486CEB800E47090 /* MacRuby-Sim8086 */;
+			targetProxy = C40A965910711E4500FA90B0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
@@ -338,6 +396,27 @@
 			};
 			name = Release;
 		};
+		C40A965710711E3700FA90B0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "Embed MacRuby";
+			};
+			name = Debug;
+		};
+		C40A965810711E3700FA90B0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = "Embed MacRuby";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -355,6 +434,15 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C40A966E10711E8200FA90B0 /* Build configuration list for PBXAggregateTarget "Embed MacRuby" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C40A965710711E3700FA90B0 /* Debug */,
+				C40A965810711E3700FA90B0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -71,6 +71,10 @@ class Memory
   def checksum
     Utility.checksum_byte_array @bytes_array
   end
+	
+	def self.segment_offset_string_from(segment, offset)
+		segment.to_hex_string(4) << ':' << offset.to_hex_string(4)
+	end
   
 end
 

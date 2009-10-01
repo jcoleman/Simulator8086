@@ -17,7 +17,8 @@ class ApplicationController
 	attr_accessor :of_display, :df_display, :if_display, :tf_display, :sf_display, :zf_display
 	attr_accessor :af_display, :pf_display, :cf_display, :object_file_label, :preload_os
 	attr_accessor :memory_display, :stack_display, :instruction_display, :interrupt_window
-	attr_accessor :memory_display_source
+	attr_accessor :memory_display_source, :start_toolbar_item, :stop_toolbar_item
+	attr_accessor :start_menu_item, :stop_menu_item, :step_instruction_button, :single_step_menu_item
 	
 	def initialize
 		# The main simulator object
@@ -32,6 +33,12 @@ class ApplicationController
 	
 	def initialize_processor_with_hooks
 		@processor = Processor.new
+		@processor.after_fetch do |segment, pointer, byte|
+			instruction_address = Memory.segment_offset_string_from segment, pointer
+			@instruction_display_source.executed_instructions << { address:instruction_address,
+																														 raw_instruction:byte.to_hex_string(2) }
+			refresh_all_displays
+		end
 	end
 		
 	def submit_checksums_to_db(sender)
@@ -41,6 +48,7 @@ class ApplicationController
 	
 	def reset_simulator(sender)
 		initialize_processor_with_hooks
+		initialize_all_displays
 		refresh_all_displays
 	end
 	
@@ -170,14 +178,52 @@ class ApplicationController
 		@update_checksums = sender.state == NSOnState
 	end
 	
+	def prepare_for_execution
+		@executing = true
+		@start_menu_item.action = nil
+		@start_toolbar_item.action = nil
+		@step_instruction_button.action = nil
+		@single_step_menu_item.action = nil
+		@stop_menu_item.action = 'stop_execution:'
+		@stop_toolbar_item.action = 'stop_execution:'
+	end
+	
+	def end_execution
+		@executing = false
+		@start_menu_item.action = 'start_execution:'
+		@start_toolbar_item.action = 'start_execution:'
+		@step_instruction_button.action = 'step_execution:'
+		@single_step_menu_item.action = 'step_execution:'
+		@stop_menu_item.action = nil
+		@stop_toolbar_item.action = nil
+	end
+	
+	def start_execution(sender)
+		prepare_for_execution
+		
+		@thread = Thread.new do
+			ret = nil
+			until ret == false || @executing == false
+				ret = @processor.process_instruction
+				sleep 0.1
+			end
+			end_execution
+		end
+	end
+	
+	def stop_execution(sender)
+		end_execution
+	end
+	
+	def step_execute_instruction(sender)
+		@processor.process_instruction
+	end
+	
 	def storage_word_to_numeric_string(word, base)
 		word_length = 4 # default to hex
 		word_length = 16 if base == 2
 		
 		word.to_s(base).upcase.rjust(word_length, '0').insert(word_length/2, ' ')
-		
-		#binary = word.to_s(base)
-		#(("0" * (word_length - binary.size) << binary).insert word_length/2, ':').upcase
 	end
 	
 	def awakeFromNib

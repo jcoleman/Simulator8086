@@ -28,13 +28,13 @@ module TableViewSource
 				when 'ascii'
 					bytes.collect { |byte| (32 <= byte && byte <= 126) ? byte.chr : '.' }.join
 				when 'address'
-					address.to_s(16).upcase.rjust(5, '0')
+					address.to_hex_string(5)
 			end
 		end
 		
 		def raw_data_from_bytes(bytes)
 			display_bytes = bytes.map do |byte|
-				byte_string = byte.to_s(16).upcase.rjust(2, '0')
+				byte_string = byte.to_hex_string(2)
 			end
 			
 			display_string = ""
@@ -62,21 +62,24 @@ module TableViewSource
 		def tableView(tableView, objectValueForTableColumn:tableColumn, row:index)
 			case tableColumn.identifier
 				when 'offset'
-					@processor.stack_word_index_to_offset(index).to_s(16).upcase.rjust(4, '0').insert(2, ' ')
+					@processor.stack_word_index_to_offset(index).to_hex_string(4).insert(2, ' ')
 				when 'raw'
-					@processor.stack_word_at(index).to_s(16).upcase.rjust(4, '0').insert(2, ' ')
+					@processor.stack_word_at(index).to_hex_string(4).insert(2, ' ')
 			end
 		end
 		
 	end
 	
 	class ExecutedInstructionView
-	
+		
+		attr_accessor :executed_instructions
+		
 		def initialize
-			@executed_instructions = [ { address:"0000:1135",
-																	 raw_instruction:"8D160810",
-																	 assembly_instruction:"LEA    DX,[1008]",
-																	 mode:"RegRM" } ]
+			#{ address:"0000:1135",
+			#  raw_instruction:"8D160810",
+			#  assembly_instruction:"LEA    DX,[1008]",
+			#  mode:"RegRM" }
+			@executed_instructions = []
 		end
 		
 		def numberOfRowsInTableView(tableView)
