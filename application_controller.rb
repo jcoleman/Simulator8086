@@ -193,8 +193,8 @@ class ApplicationController
 		@executing = false
 		@start_menu_item.action = 'start_execution:'
 		@start_toolbar_item.action = 'start_execution:'
-		@step_instruction_button.action = 'step_execution:'
-		@single_step_menu_item.action = 'step_execution:'
+		@step_instruction_button.action = 'step_execute_instruction:'
+		@single_step_menu_item.action = 'step_execute_instruction:'
 		@stop_menu_item.action = nil
 		@stop_toolbar_item.action = nil
 	end
