@@ -1,0 +1,153 @@
+      0      1      2      3      4      5      6      7      8      9      A      B      C      D      E      F
+  +------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ------
+0 | 73 01  73 01  73 01  73 01  73 02  73 02 143 03 141 03 138 01 138 01 138 01 138 01 138 02 138 02 143 03 141 03
+1 | 72 01  72 01  72 01  72 01  72 02  72 02 143 03 141 03 158 01 158 01 158 01 158 01 158 02 158 02 143 03 141 03
+2 | 74 01  74 01  74 01  74 01  74 02  74 02 064 03  86 04 166 01 166 01 166 01 166 01 166 02 166 02 064 03  87 04
+3 |172 01 172 01 172 01 172 01 172 02 172 02 064 03  68 04  83 01  83 01  83 01  83 01  83 02  83 02 064 03  71 04
+4 | 97 05  97 05  97 05  97 05  97 05  97 05  97 05  97 05  88 05  88 05  88 05  88 05  88 05  88 05  88 05  88 05
+5 |143 05 143 05 143 05 143 05 143 05 143 05 143 05 143 05 141 05 141 05 141 05 141 05 141 05 141 05 141 05 141 05
+6 |999 99 999 99 999 99 999 99 999 99 999 99 999 99 999 99 999 99 999 99 999 99 999 99 999 99 999 99 999 99 999 99
+7 |119 06 116 06 103 06 102 06 107 06 115 06 104 06 101 06 121 06 117 06 120 06 118 06 110 06 109 06 111 06 108 06
+8 |000 00 000 00 999 99 001 00 167 01 167 01 170 01 170 01 131 01 131 01 131 01 131 01 131 07 124 01 131 07 002 00
+9 |170 08 170 08 170 08 170 08 170 08 170 08 170 08 170 08  78 04  85 04  65 12 168 00 144 18 142 18 153 18 122 18
+A |131 09 131 09 131 09 131 09 133 27 133 27  84 27  84 27 167 02 167 02 165 27 165 27 127 27 127 27 159 27 159 27
+B |131 10 131 10 131 10 131 10 131 10 131 10 131 10 131 10 131 10 131 10 131 10 131 10 131 10 131 10 131 10 131 10
+C |999 99 999 99 149 19 149 00 125 01 123 01 131 15 131 15 999 99 999 99  67 19  67 00  98 21  98 26  99 00 100 00
+D |003 00 003 00 003 00 003 00  70 25  69 25 999 99 171 00  91 22  91 22  91 22  91 22  91 22  91 22  91 22  91 22
+E |130 06 129 06 128 06 106 06  96 16  96 16 140 16 140 16  76 11 112 11  66 12 112 06  96 24  96 24 140 24 140 24
+F |126 00 999 99 148 00 147 00  92 00  82 00 004 00 004 00  79 00 162 00  81 00 164 00  80 00 163 00 005 00 006 00
+
+      0      1      2      3      4      5      6     7
+  +------ ------ ------ ------ ------ ------ ------ ------
+0 | 73 15 138 15  72 15 158 15  74 15 166 15 172 15  83 15
+1 | 73 15 999 99  72 15 158 15 999 99 166 15 999 99  83 15
+2 |141 17 999 99 999 99 999 99 999 99 999 99 999 99 999 99
+3 |151 17 152 17 145 17 146 17 154 17 160 17 999 99 156 17
+4 |167 15 999 99 137 17 135 17 134 17  95 17  89 17  93 17
+5 | 97 17  88 17 999 99 999 99 999 99 999 99 999 99 999 99
+6 | 97 17  88 17  76 13  65 13 112 13  66 13 143 17 999 99
+
+AAA     =   68; { ASCII Adjust for Addition }
+AAD     =   69; { ASCII Adjust for Division }
+AAM     =   70; { ASCII Adjust for Multiply }
+AAS     =   71; { ASCII Adjust for Subtract }
+ADC     =   72; { Add With Carry }
+ADD     =   73; { Addition }
+AND     =   74; { And Logical }
+CALL    =   76; { Call Procedure }
+CALFAR  =   65; { Call Far Procedure }
+CBW     =   78; { Convert Byte to Word }
+CLC     =   79; { Clear Carry }
+CLD     =   80; { Clear Direction Flag }
+CLI     =   81; { Clear Interrupt Enable Flag }
+CMC     =   82; { Complement Carry Flag }
+CMP     =   83; { Compare }
+CMPS    =   84; { Compare String }
+CWD     =   85; { Convert Word to Double Word }
+DAA     =   86; { Decimal Adjust for Addition }
+DAS     =   87; { Decimal Adjust for Subtract }
+DEC     =   88; { Decrement }
+DIV     =   89; { Divide }
+ESC     =   91; { Escape }
+HLT     =   92; { Halt }
+IDIV    =   93; { Integer Divide }
+IMUL    =   95; { Integer Multiply }
+IN      =   96; { Input }
+INC     =   97; { Increment }
+INT     =   98; { Interrupt }
+INTO    =   99; { Interrupt on Overflow }
+IRET    =  100; { Interrupt Return }
+JNBE    =  101; { Jump on Not Below or Equal }
+JNB     =  102; { Jump on Not Below }
+JNAE    =  103; { Jump on Not Above or Equal }
+JNA     =  104; { Jump on Not Above }
+JC      =  105; { Jump on Carry }
+JCXZ    =  106; { Jump if CX Register Zero }
+JE      =  107; { Jump on Equal }
+JG      =  108; { Jump on Greater than }
+JGE     =  109; { Jump on Greater or Equal }
+JL      =  110; { Jump on Less }
+JLE     =  111; { Jump on Less than or Equal }
+JMP     =  112; { Jump Unconditionally }
+JMPFAR  =   66; { Jump Far }
+JNC     =  114; { Jump on Not Carry }
+JNE     =  115; { Jump on Not Equal }
+JNO     =  116; { Jump on Not Overflow }
+JNS     =  117; { Jump on Not Sign }
+JNP     =  118; { Jump on Not Parity }
+JO      =  119; { Jump on Overflow }
+JPE     =  120; { Jump on Parity Even }
+JS      =  121; { Jump on Sign }
+LAHF    =  122; { Load Register AH From Flags }
+LDS     =  123; { Load Pointer Using DS }
+LEA     =  124; { Load Effective Address }
+LES     =  125; { Load Pointer Using ES }
+LOCK    =  126; { Lock the Bus }
+LODS    =  127; { Load String }
+LOOP    =  128; { Loop if CX Not Zero }
+LOOPE   =  129; { Loop While Equal }
+LOOPNE  =  130; { Loop While Not Equal }
+MOV     =  131; { Move }
+MOVS    =  133; { Move String }
+MUL     =  134; { Multiply }
+NEG     =  135; { Negate }
+NOP     =  136; { No Operation }
+NOT     =  137; { Logical Not }
+OR      =  138; { Logical Or }
+OUT     =  140; { Output }
+POP     =  141; { Pop Stack }
+POPF    =  142; { Pop Flags }
+PUSH    =  143; { Push onto Stack }
+PUSHF   =  144; { Push Flags onto Stack }
+RCL     =  145; { Rotate Thru Carry Left }
+RCR     =  146; { Rotate Thru Carry Right }
+REPE    =  147; { Repeat }
+REPNE   =  148; { Repeat While Not Equal }
+RET     =  149; { Return }
+RETFAR  =   67; { Return Far }
+ROL     =  151; { Rotate Left }
+ROR     =  152; { Rotate Right }
+SAHF    =  153; { Store Register AH into Flags }
+SHL     =  154; { Shift Logical Left }
+SAR     =  156; { Shift Arithmetic Right }
+SBB     =  158; { Subtract with Borrow }
+SCAS    =  159; { Scan String }
+SEG     =  064; { Segment Override }
+SHR     =  160; { Shift Logical Right }
+STC     =  162; { Set Carry }
+STD     =  163; { Set Direction Flag }
+STI     =  164; { Set Interrupt-Enable Flag }
+STOS    =  165; { Store String }
+SUB     =  166; { Subtract }
+TEST    =  167; { Test - Logical Compare }
+WAIT    =  168; { Wait }
+XCHG    =  170; { Exchange }
+XLAT    =  171; { Translate }
+XOR     =  172; { Exclusive Or }
+None    =   00; { no operands }
+RegRM   =   01; { register to/from register/memory }
+AccImm  =   02; { immediate to accumulator }
+Segment =   03; { segment register }
+Acc     =   04; { accumulator only }
+Reg     =   05; { register only }
+Short   =   06; { short jumps }
+SegRM   =   07; { segment register to/from register/memory }
+AccReg  =   08; { accumulator to/from register }
+AccMem  =   09; { accumulator to/from memory }
+RegImm  =   10; { immediate to register }
+Intra   =   11; { Intra-segment Direct }
+Inter   =   12; { Inter-segment Direct }
+XferInd =   13; { Transfer Indirect }
+RMImm   =   15; { immediate to register/memory }
+AccPort =   16; { accumulator to/from I/O port }
+RM      =   17; { register/memory only }
+Flags   =   18; { flags register }
+RetPop  =   19; { return with Pop }
+Type3   =   21; { type-3 interrupt }
+EscNum  =   22; { escape number for talking to another processor }
+AccVPrt =   24; { Accumulator <-> Variable Port }
+AccBase =   25; { Accumulator with Base (next byte) }
+IntNum  =   26; { Interrupt number }
+String  =   27; { String }
+
+

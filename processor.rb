@@ -8,7 +8,9 @@ class Processor
 	
 	attr_reader :ram, :ss, :sp
 	
-  def initialize
+  def initialize(base_path)
+		@base_path = base_path
+		
     initialize_registers
     initialize_memory
 		initialize_decoder
@@ -115,7 +117,9 @@ class Processor
 	end
 	
 	def initialize_decoder
-		# Read in the instruction tables
+		File.open(@base_path + "/8086.ops") do |file|
+			read_opcodes_from file
+		end
 	end
 	
 	def initialize_callbacks

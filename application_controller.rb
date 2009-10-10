@@ -32,7 +32,7 @@ class ApplicationController
 	end
 	
 	def initialize_processor_with_hooks
-		@processor = Processor.new
+		@processor = Processor.new(NSBundle.mainBundle.resourcePath.fileSystemRepresentation)
 		@processor.after_fetch do |segment, pointer, byte|
 			instruction_address = Memory.segment_offset_string_from segment, pointer
 			@instruction_display_source.executed_instructions << { address:instruction_address,
