@@ -9,6 +9,9 @@
 
 module Executor
 	
+	def execute_XCHG(left, right)
+		left.value, right.value = right.value, left.value
+	end
 	
 	class InvalidInstructionCode < StandardError; end
 end
