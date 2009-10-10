@@ -321,6 +321,8 @@
 			C40A986B10811E5C00FA90B0 /* PBXTextBookmark */ = C40A986B10811E5C00FA90B0 /* PBXTextBookmark */;
 			C40A986C10811E5C00FA90B0 /* PBXTextBookmark */ = C40A986C10811E5C00FA90B0 /* PBXTextBookmark */;
 			C40A986D10811E5C00FA90B0 /* PBXTextBookmark */ = C40A986D10811E5C00FA90B0 /* PBXTextBookmark */;
+			C40A9DDF1081255500FA90B0 /* PBXTextBookmark */ = C40A9DDF1081255500FA90B0 /* PBXTextBookmark */;
+			C40A9DE01081255500FA90B0 /* PBXTextBookmark */ = C40A9DE01081255500FA90B0 /* PBXTextBookmark */;
 			C44F729D1067A958008628C6 = C44F729D1067A958008628C6 /* PBXTextBookmark */;
 			C44F72B01067AA52008628C6 = C44F72B01067AA52008628C6 /* PBXTextBookmark */;
 			C44F72B41067EF69008628C6 = C44F72B41067EF69008628C6 /* PBXTextBookmark */;
@@ -371,7 +373,8 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {711, 722}}";
 			sepNavSelRange = "{462, 57}";
-			sepNavVisRange = "{0, 706}";
+			sepNavVisRange = "{0, 707}";
+			sepNavWindowFrame = "{{84, 152}, {750, 558}}";
 		};
 	};
 	8D1107260486CEB800E47090 /* MacRuby-Sim8086 */ = {
@@ -2873,6 +2876,26 @@
 		vrLen = 1340;
 		vrLoc = 0;
 	};
+	C40A9DDF1081255500FA90B0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C497B532105E677300FFB668 /* processor.rb */;
+		name = "processor.rb: 17";
+		rLen = 0;
+		rLoc = 294;
+		rType = 0;
+		vrLen = 1443;
+		vrLoc = 0;
+	};
+	C40A9DE01081255500FA90B0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C497B532105E677300FFB668 /* processor.rb */;
+		name = "processor.rb: 17";
+		rLen = 0;
+		rLoc = 294;
+		rType = 0;
+		vrLen = 1443;
+		vrLoc = 0;
+	};
 	C44F729D1067A958008628C6 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = C497B529105D79BD00FFB668 /* application_controller.rb */;
@@ -3047,7 +3070,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {711, 2548}}";
 			sepNavSelRange = "{294, 0}";
-			sepNavVisRange = "{0, 1340}";
+			sepNavVisRange = "{0, 1443}";
 			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
 		};
 	};

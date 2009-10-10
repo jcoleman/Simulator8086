@@ -229,6 +229,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -264,6 +266,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateExpansionKey</key>
 							<array>
 								<string>29B97314FDCFA39411CA2CEA</string>
+								<string>C40A9DDE1081254B00FA90B0</string>
 								<string>080E96DDFE201D6D7F000001</string>
 								<string>C4A5FD381063B36A00A43A26</string>
 								<string>C497B53C105E68B600FFB668</string>
@@ -280,8 +283,6 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>7</integer>
-									<integer>6</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -317,8 +318,6 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -336,7 +335,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>C40A986D10811E5C00FA90B0</string>
+										<string>C40A9DE01081255500FA90B0</string>
 										<key>history</key>
 										<array>
 											<string>C4A5FDCE1067233200A43A26</string>
@@ -355,7 +354,7 @@
 											<string>C40A97AD1081107A00FA90B0</string>
 											<string>C40A97B91081115800FA90B0</string>
 											<string>C40A986B10811E5C00FA90B0</string>
-											<string>C40A986C10811E5C00FA90B0</string>
+											<string>C40A9DDF1081255500FA90B0</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -553,12 +552,11 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>C40A986E10811E5C00FA90B0</string>
 		<string>C40A9562106D363000FA90B0</string>
 		<string>C40A9563106D363000FA90B0</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>C497B4D1105D103800FFB668</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/MacRuby-Sim8086.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
