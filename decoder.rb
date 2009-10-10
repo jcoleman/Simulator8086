@@ -13,7 +13,64 @@ module Decoder
 	# Addressing Mode Decode Methods
 	# -----------------------------------------------------------------
 	
+	def decode_None(instruction)
+		# Do nothing! No addressing modes need to be decoded :)
+	end
 	
+	def decode_AccMem(instruction)
+		
+	end
+	
+	def decode_AccReg(instruction)
+		
+	end
+	
+	def decode_AccImm(instruction)
+		
+	end
+	
+	def decode_Reg(instruction)
+		# A single 16-bit register
+		reg_index = instruction.bytes[0] & 0x07 # last 3 bits determine register
+		instruction.operands << @register_operands_16[reg_index]
+	end
+	
+	def decode_RegImm(instruction)
+		
+	end
+	
+	def decode_Short(instruction)
+		
+	end
+	
+	def decode_Intra(instruction)
+		
+	end
+	
+	def decode_illegal_addr_mode
+		raise IllegalAddressingMode.new
+	end
+	
+	# -----------------------------------------------------------------
+	# Helper Methods
+	# -----------------------------------------------------------------
+	
+	def preload_register_operands
+		@register_operands_16 = [ @ax, @cx, @dx, @bx, @sp, @bp, @si, @di ].collect do |register|
+			RegisterAccess.new(register)
+		end
+		
+		split_registers = [ @ax, @cx, @dx, @bx ]
+		@register_operands_8 = []
+		
+		split_registers.each do |register|
+			@register_operands_8 << RegisterAccess.new(register, :low)
+		end
+		
+		split_registers.each do |register|
+			@register_operands_8 << RegisterAccess.new(register, :high)
+		end
+	end
 	
 	# -----------------------------------------------------------------
 	# OpCode Setup Methods
@@ -23,8 +80,6 @@ module Decoder
 		lines = file.readlines.map { |line| line.strip }
 		@ops_symbols = read_symbols_from lines[ 29...lines.size ]
 		@primary_opcode_table = opcode_table_from(lines[ 2..17 ])
-		print @primary_opcode_table
-		puts nil
 		@secondary_opcode_table = opcode_table_from(lines[ 21..27 ])
 	end
 	
@@ -61,11 +116,14 @@ module Decoder
 		lines.each do |line|
 			unless line.empty?
 				line =~ /(\S+)\s+=\s+(\d+);\s+\{ (.+) \}/
-				ops_symbols[($2).to_i] = { :symbol => ($1).to_sym, :description => $3 }
+				key = ($2).to_i
+				symbol = (key < 30 ? "decode_#{$1}" : "execute_#{$1}").to_sym
+				ops_symbols[key] = { :symbol => symbol, :description => $3 }
 			end
 		end
 		
 		return ops_symbols
 	end
 	
+	class IllegalAddressingMode < StandardError; end
 end

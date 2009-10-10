@@ -33,10 +33,12 @@ class ApplicationController
 	
 	def initialize_processor_with_hooks
 		@processor = Processor.new(NSBundle.mainBundle.resourcePath.fileSystemRepresentation)
-		@processor.after_fetch do |segment, pointer, byte|
-			instruction_address = Memory.segment_offset_string_from segment, pointer
-			@instruction_display_source.executed_instructions << { address:instruction_address,
-																														 raw_instruction:byte.to_hex_string(2) }
+		@processor.after_decode do |instruction|
+			instruction_address = Memory.segment_offset_string_from instruction.segment, instruction.pointer
+			@instruction_display_source.executed_instructions << { address: instruction_address,
+																														 raw_instruction: instruction.bytes.collect { |b| b.to_hex_string(2) }.join,
+																														 assembly_instruction: instruction.opcode,
+																														 mode: instruction.addressing_mode }
 			refresh_all_displays
 		end
 	end

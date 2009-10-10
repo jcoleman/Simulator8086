@@ -1,8 +1,9 @@
 class Register
   attr_accessor :value
   
-  def initialize(value = 0)
-    @value = value
+  def initialize(name, value = 0)
+    @name = name
+		@value = value
   end
   
   def high

@@ -4,6 +4,7 @@ class Processor
   
 	include ProcessorConstants
 	include Decoder
+	include Executor
 	include MemoryStack
 	
 	attr_reader :ram, :ss, :sp
@@ -22,7 +23,7 @@ class Processor
 	# -----------------------------------------------------------------
 	
 	def process_instruction
-		execute(decode(fetch))
+		execute(decode(*fetch))
 	end
 	
 	def fetch
@@ -35,18 +36,37 @@ class Processor
 		byte = @ram.byte_at instruction_address
 		
 		@after_fetch.call(instruction_segment, instruction_pointer, byte) if @after_fetch
-		return byte
+		
+		return byte, instruction_segment, instruction_pointer
 	end
 	
-	def decode(initial_byte)
+	def decode(initial_byte, segment, pointer)
 		@before_decode.call if @before_decode
-		instruction = nil
-		instruction = false if initial_byte == 0xF4
-		@after_decode.call if @after_decode
+		
+		# Split the byte into the two nybbles for lookup purposes
+		hi = initial_byte >> 4
+		lo = initial_byte & 0x0F
+		
+		# Look up the two nybbles to decode the opcode and addressing mode
+		op_with_addr_mode = @primary_opcode_table[hi][lo]
+		
+		instruction = Instruction.new(op_with_addr_mode, segment, pointer)
+		instruction.bytes << initial_byte
+		
+		# Decode the addressing mode to gather the operands
+		self.send(instruction.addressing_mode, instruction)
+		
+		@after_decode.call(instruction) if @after_decode
+		
+		return instruction
 	end
 	
 	def execute(instruction)
 		@before_execute.call if @before_execute
+		
+		# Execute the instruction
+		#self.send(instruction.opcode, *instruction.operands)
+		
 		@after_execute.call if @after_execute
 		return instruction
 	end
@@ -93,20 +113,20 @@ class Processor
 	
 	def initialize_registers
 		# Registers
-    @ax = Register.new
-    @bx = Register.new
-    @cx = Register.new
-    @dx = Register.new
-    @di = Register.new
-    @si = Register.new
-    @cs = Register.new
-    @ds = Register.new
-    @es = Register.new
-    @ss = Register.new
-    @ip = Register.new
-    @bp = Register.new
-    @sp = Register.new
-    @flags = Register.new
+    @ax = Register.new :ax
+    @bx = Register.new :bx
+    @cx = Register.new :cx
+    @dx = Register.new :dx
+    @di = Register.new :di
+    @si = Register.new :si
+    @cs = Register.new :cs
+    @ds = Register.new :ds
+    @es = Register.new :es
+    @ss = Register.new :ss
+    @ip = Register.new :ip
+    @bp = Register.new :bp
+    @sp = Register.new :sp
+    @flags = Register.new :flags
     
     @registers = [@ax, @bx, @cx, @dx, @sp, @bp, @si, @di, @cs, @ds, @ss, @es, @ip, @flags]
     @segment_registers = [@cs, @ds, @ss, @es]
@@ -120,6 +140,8 @@ class Processor
 		File.open(@base_path + "/8086.ops") do |file|
 			read_opcodes_from file
 		end
+		
+		preload_register_operands
 	end
 	
 	def initialize_callbacks
