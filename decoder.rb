@@ -22,7 +22,11 @@ module Decoder
 	end
 	
 	def decode_AccReg(instruction)
+		# Only used for XCHG, so order of operands is unnecessary
+		instruction.operands << @register_operands_16[0] # AX register operand
 		
+		reg_index = instruction.bytes[0] & 0x07 # last 3 bits determine register
+		instruction.operands << @register_operands_16[reg_index]
 	end
 	
 	def decode_AccImm(instruction)
@@ -45,6 +49,14 @@ module Decoder
 	
 	def decode_Intra(instruction)
 		
+	end
+	
+	def decode_Acc(instruction)
+		# Accumulator register, 8 or 16 bits
+		if instruction.bytes.first[0] == 1
+			@register_operands_16[0] # AX register
+		else
+			@register_operands_8[0] # AL register
 	end
 	
 	def decode_illegal_addr_mode
