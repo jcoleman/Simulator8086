@@ -37,10 +37,10 @@ class Processor
 		
 		@after_fetch.call(instruction_segment, instruction_pointer, byte) if @after_fetch
 		
-		return byte, instruction_segment, instruction_pointer
+		return byte
 	end
 	
-	def decode(initial_byte, segment, pointer)
+	def decode(initial_byte)
 		@before_decode.call if @before_decode
 		
 		# Split the byte into the two nybbles for lookup purposes
@@ -50,6 +50,8 @@ class Processor
 		# Look up the two nybbles to decode the opcode and addressing mode
 		op_with_addr_mode = @primary_opcode_table[hi][lo]
 		
+		segment = @cs.value
+		pointer = @ip.value - 1
 		instruction = Instruction.new(op_with_addr_mode, segment, pointer)
 		instruction.bytes << initial_byte
 		

@@ -61,7 +61,7 @@ module Decoder
 		else
 			# Byte value
 			instruction.operands << @register_operands_8[0] # AL register
-			instruction.operands << ImmediateValue.new(fetch)
+			add_immediate_byte_operand(instruction)
 		end
 	end
 	
@@ -79,7 +79,7 @@ module Decoder
 		else
 			# Byte value
 			add_register8_operand(instruction)
-			instruction.operands << ImmediateValue.new(fetch)
+			add_immediate_byte_operand(instruction)
 		end
 	end
 	
@@ -123,7 +123,12 @@ module Decoder
 	# -----------------------------------------------------------------
 	
 	def add_immediate_word_operand(instruction)
-		instruction.operands << ImmediateValue.new(Memory.word_from_little_endian_bytes(fetch, fetch))
+		word_value = Memory.word_from_little_endian_bytes(fetch, fetch)
+		instruction.operands << ImmediateValue.new(word_value)
+	end
+	
+	def add_immediate_byte_operand(instruction)
+		instruction.operands << ImmediateValue.new(fetch)
 	end
 	
 	# -----------------------------------------------------------------
