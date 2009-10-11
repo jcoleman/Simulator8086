@@ -13,5 +13,9 @@ module Executor
 		left.value, right.value = right.value, left.value
 	end
 	
+	def execute_MOV(destination, source)
+		destination.value = source.value
+	end
+	
 	class InvalidInstructionCode < StandardError; end
 end

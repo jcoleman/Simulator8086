@@ -67,7 +67,7 @@ class Processor
 		@before_execute.call if @before_execute
 		
 		# Execute the instruction
-		#self.send(instruction.opcode, *instruction.operands)
+		self.send(instruction.opcode, *instruction.operands)
 		
 		@after_execute.call if @after_execute
 		return instruction
