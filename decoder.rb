@@ -84,11 +84,11 @@ module Decoder
 	end
 	
 	def decode_Short(instruction)
-		
+		add_signed_immediate_byte_operand(instruction)
 	end
 	
 	def decode_Intra(instruction)
-		
+		add_signed_immediate_word_operand(instruction)
 	end
 	
 	def decode_Acc(instruction)
@@ -129,6 +129,15 @@ module Decoder
 	
 	def add_immediate_byte_operand(instruction)
 		instruction.operands << ImmediateValue.new(fetch)
+	end
+	
+	def add_signed_immediate_word_operand(instruction)
+		word_value = Memory.word_from_little_endian_bytes(fetch, fetch).to_fixed_size(16, true)
+		instruction.operands << ImmediateValue.new(word_value)
+	end
+	
+	def add_signed_immediate_byte_operand(instruction)
+		instruction.operands << ImmediateValue.new(fetch.to_fixed_size(8, true))
 	end
 	
 	# -----------------------------------------------------------------
