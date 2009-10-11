@@ -18,7 +18,30 @@ module Decoder
 	end
 	
 	def decode_AccMem(instruction)
+		# Accumulator to/from memory
 		
+		# Determine memory offset
+		offset = Memory.word_from_little_endian_bytes(fetch, fetch)
+		address = Memory.absolute_address_for @ds.value, offset
+		
+		if instruction.bytes.first[0] == 1 # W-bit
+			# Word value
+			accumulator = @register_operands_16[0] # AX register operand
+			memory = MemoryAccess.new(@ram, address, 2)
+		else
+			# Byte value
+			accumulator = @register_operands_8[0] # AL register
+			memory = MemoryAccess.new(@ram, address, 1)
+		end
+		
+		# Determine direction of operands
+		if instruction.bytes.first[0] == 1 # !D-bit
+			instruction.operands << memory
+			instruction.operands << accumulator
+		else
+			instruction.operands << accumulator
+			instruction.operands << memory
+		end
 	end
 	
 	def decode_AccReg(instruction)
@@ -30,17 +53,34 @@ module Decoder
 	end
 	
 	def decode_AccImm(instruction)
-		
+		# From immediate to accumulator
+		if instruction.bytes.first[0] == 1 # W-bit
+			# Word value
+			instruction.operands << @register_operands_16[0] # AX register operand
+			add_immediate_word_operand(instruction)
+		else
+			# Byte value
+			instruction.operands << @register_operands_8[0] # AL register
+			instruction.operands << ImmediateValue.new(fetch)
+		end
 	end
 	
 	def decode_Reg(instruction)
 		# A single 16-bit register
-		reg_index = instruction.bytes[0] & 0x07 # last 3 bits determine register
-		instruction.operands << @register_operands_16[reg_index]
+		add_register16_operand(instruction)
 	end
 	
 	def decode_RegImm(instruction)
-		
+		# From immediate to register
+		if instruction.bytes.first[3] == 1 # W-bit
+			# Word value
+			add_register16_operand(instruction)
+			add_immediate_word_operand(instruction)
+		else
+			# Byte value
+			add_register8_operand(instruction)
+			instruction.operands << ImmediateValue.new(fetch)
+		end
 	end
 	
 	def decode_Short(instruction)
@@ -53,14 +93,37 @@ module Decoder
 	
 	def decode_Acc(instruction)
 		# Accumulator register, 8 or 16 bits
-		if instruction.bytes.first[0] == 1
-			@register_operands_16[0] # AX register
+		if instruction.bytes.first[0] == 1 # W-bit
+			instruction.operands << @register_operands_16[0] # AX register
 		else
-			@register_operands_8[0] # AL register
+			instruction.operands << @register_operands_8[0] # AL register
+		end
 	end
 	
 	def decode_illegal_addr_mode
 		raise IllegalAddressingMode.new
+	end
+	
+	# -----------------------------------------------------------------
+	# Register Methods
+	# -----------------------------------------------------------------
+	
+	def add_register16_operand(instruction)
+		reg_index = instruction.bytes[0] & 0x07 # last 3 bits determine register
+		instruction.operands << @register_operands_16[reg_index]
+	end
+	
+	def add_register8_operand(instruction)
+		reg_index = instruction.bytes[0] & 0x07 # last 3 bits determine register
+		instruction.operands << @register_operands_8[reg_index]
+	end
+	
+	# -----------------------------------------------------------------
+	# Immediate Methods
+	# -----------------------------------------------------------------
+	
+	def add_immediate_word_operand(instruction)
+		instruction.operands << ImmediateValue.new(Memory.word_from_little_endian_bytes(fetch, fetch))
 	end
 	
 	# -----------------------------------------------------------------

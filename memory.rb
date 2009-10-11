@@ -11,7 +11,7 @@ class Memory
   
   def word_at(reference)
     raise MemoryAccessViolation.new unless reference + 1 < @bytes_array.size
-    (@bytes_array[reference + 1] << 8) + @bytes_array[reference]
+    Memory.word_from_little_endian_bytes(@bytes_array[reference], @bytes_array[reference + 1])
   end
 	
 	def bytes_at(reference, count)
@@ -76,6 +76,10 @@ class Memory
 		segment.to_hex_string(4) << ':' << offset.to_hex_string(4)
 	end
   
+	def self.word_from_little_endian_bytes(byte0, byte1)
+		(byte1 << 8) + byte0
+	end
+	
 end
 
 class MemoryAccessViolation < StandardError; end
