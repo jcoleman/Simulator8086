@@ -71,7 +71,7 @@ end
 class ImmediateValue
   attr_reader :value
   
-  def intialize(value)
+  def initialize(value)
     @value = value
   end
 end
