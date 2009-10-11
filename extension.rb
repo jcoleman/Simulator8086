@@ -22,6 +22,17 @@ module Extension
 		def to_hex_string(length)
 			self.to_s(16).upcase.rjust(length, '0')
 		end
+		
+		def to_fixed_size(bit_count, signed = false)
+			# Converts self to an integer limited in size to bit_count bits, signed or unsigned
+			# This simulates fixed sized math for use in hardware math simulation
+			unsigned = self & (1 << bit_count) - 1
+			if signed && unsigned[bit_count - 1] == 1
+				unsigned - (1 << bit_count)
+			else
+				unsigned
+			end
+		end
 	end
 	
 end

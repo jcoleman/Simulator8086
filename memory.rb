@@ -20,11 +20,12 @@ class Memory
   
   def set_byte_at(reference, value)
     raise MemoryAccessViolation.new unless reference < @bytes_array.size
-    @bytes_array[reference] = value
+    @bytes_array[reference] = value.to_fixed_size(8)
   end
   
   def set_word_at(reference, value)
     raise MemoryAccessViolation.new unless reference + 1 < @bytes_array.size
+		value = value.to_fixed_size(16)
     @bytes_array[reference] = value >> 8
     @bytes_array[reference + 1] = value & 0x00FF
   end
@@ -34,7 +35,7 @@ class Memory
   def set_bytes_at(reference, bytes)
     raise MemoryAccessViolation.new unless reference + bytes.size < @bytes_array.size
     bytes.each_with_index do |byte, index|
-      @bytes_array[reference + index] = byte
+      @bytes_array[reference + index] = byte.to_fixed_size(8)
     end
   end
   

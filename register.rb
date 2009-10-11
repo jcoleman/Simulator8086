@@ -1,9 +1,9 @@
 class Register
-  attr_accessor :value
-  
+  attr_reader :value
+	
   def initialize(name, value = 0)
     @name = name
-		@value = value
+		@value = value.to_fixed_size(16)
   end
   
   def high
@@ -21,4 +21,8 @@ class Register
   def low=(value)
     @value = (@value & 0xFF00) + value
   end
+	
+	def value=(value)
+		@value = value.to_fixed_size(16)
+	end
 end

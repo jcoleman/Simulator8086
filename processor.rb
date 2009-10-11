@@ -23,7 +23,7 @@ class Processor
 	# -----------------------------------------------------------------
 	
 	def process_instruction
-		execute(decode(*fetch))
+		execute(decode(fetch))
 	end
 	
 	def fetch
