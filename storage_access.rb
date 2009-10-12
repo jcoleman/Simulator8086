@@ -76,7 +76,14 @@ class RegisterAccess
   end
 	
 	def to_s
-		@register.name.to_s
+		register_name = @register.name.to_s
+		case @section
+			when :high
+				register_name[1] = 'h'
+			when :low
+				register_name[1] = 'l'
+		end
+		return register_name
 	end
 end
 
