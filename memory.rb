@@ -26,8 +26,8 @@ class Memory
   def set_word_at(reference, value)
     raise MemoryAccessViolation.new unless reference + 1 < @bytes_array.size
 		value = value.to_fixed_size(16)
-    @bytes_array[reference] = value >> 8
-    @bytes_array[reference + 1] = value & 0x00FF
+    @bytes_array[reference] = value & 0x00FF
+		@bytes_array[reference + 1] = value >> 8
   end
   
   # Note: set_bytes_at will not correct endianess! Do not use unless

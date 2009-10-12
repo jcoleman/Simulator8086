@@ -27,15 +27,15 @@ module Decoder
 		if instruction.bytes.first[0] == 1 # W-bit
 			# Word value
 			accumulator = @register_operands_16[0] # AX register operand
-			memory = MemoryAccess.new(@ram, address, 2)
+			memory = MemoryAccess.new(@ram, address, 16)
 		else
 			# Byte value
 			accumulator = @register_operands_8[0] # AL register
-			memory = MemoryAccess.new(@ram, address, 1)
+			memory = MemoryAccess.new(@ram, address, 8)
 		end
 		
 		# Determine direction of operands
-		if instruction.bytes.first[0] == 1 # !D-bit
+		if instruction.bytes.first[1] == 1 # !D-bit
 			instruction.operands << memory
 			instruction.operands << accumulator
 		else
@@ -124,20 +124,20 @@ module Decoder
 	
 	def add_immediate_word_operand(instruction)
 		word_value = Memory.word_from_little_endian_bytes(fetch, fetch)
-		instruction.operands << ImmediateValue.new(word_value)
+		instruction.operands << ImmediateValue.new(word_value, 16)
 	end
 	
 	def add_immediate_byte_operand(instruction)
-		instruction.operands << ImmediateValue.new(fetch)
+		instruction.operands << ImmediateValue.new(fetch, 8)
 	end
 	
 	def add_signed_immediate_word_operand(instruction)
 		word_value = Memory.word_from_little_endian_bytes(fetch, fetch).to_fixed_size(16, true)
-		instruction.operands << ImmediateValue.new(word_value)
+		instruction.operands << ImmediateValue.new(word_value, 16)
 	end
 	
 	def add_signed_immediate_byte_operand(instruction)
-		instruction.operands << ImmediateValue.new(fetch.to_fixed_size(8, true))
+		instruction.operands << ImmediateValue.new(fetch.to_fixed_size(8, true), 8)
 	end
 	
 	# -----------------------------------------------------------------

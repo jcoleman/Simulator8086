@@ -2,29 +2,38 @@ class MemoryAccess
   attr_writer :ram
   attr_accessor :reference, :size
   
-  def initialize(ram, reference, size)
+  def initialize(ram, reference, size, string = nil)
     @ram = ram
     @reference = reference
     @size = size
+		@string = string
   end
   
   def value
     case @size
-      when 1
-        @ram.get_byte(@reference)
-      when 2
-        @ram.get_word(@reference)
+      when 8
+        @ram.byte_at(@reference)
+      when 16
+        @ram.word_at(@reference)
     end
   end
   
   def value=(value)
     case @size
-      when 1
-        @ram.set_byte(@reference, value)
-      when 2
-        @ram.set_word(@reference, value)
+      when 8
+        @ram.set_byte_at(@reference, value)
+      when 16
+        @ram.set_word_at(@reference, value)
     end 
   end
+	
+	def to_s
+		if @string
+			@string
+		else
+			"[#{@reference.to_hex_string(5)}]"
+		end
+	end
 end
 
 
@@ -39,7 +48,7 @@ class RegisterAccess
   def value
     case @section
       when nil
-        @register
+        @register.value
       when :high
         @register.high
       when :low
@@ -60,18 +69,27 @@ class RegisterAccess
   
   def size
     unless @section
-      2
+      16
     else
-      1
+      8
     end
   end
+	
+	def to_s
+		@register.name.to_s
+	end
 end
 
 
 class ImmediateValue
-  attr_reader :value
+  attr_reader :value, :size
   
-  def initialize(value)
+  def initialize(value, size)
     @value = value
+		@size = size
   end
+	
+	def to_s
+		@value.to_hex_string(@size / 4)
+	end
 end

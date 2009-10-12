@@ -37,7 +37,7 @@ class ApplicationController
 			instruction_address = Memory.segment_offset_string_from instruction.segment, instruction.pointer
 			@instruction_display_source.executed_instructions << { address: instruction_address,
 																														 raw_instruction: instruction.bytes.collect { |b| b.to_hex_string(2) }.join,
-																														 assembly_instruction: instruction.opcode.to_s + instruction.operands.join(' '),
+																														 assembly_instruction: instruction.opcode.to_s << ' ' << instruction.operands.join(', '),
 																														 mode: instruction.addressing_mode }
 			refresh_all_displays
 		end

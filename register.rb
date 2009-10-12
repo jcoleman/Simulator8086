@@ -1,5 +1,5 @@
 class Register
-  attr_reader :value
+  attr_reader :value, :name
 	
   def initialize(name, value = 0)
     @name = name
@@ -24,5 +24,9 @@ class Register
 	
 	def value=(value)
 		@value = value.to_fixed_size(16)
+	end
+	
+	def set_bit_at(bit_index, value)
+		@value |= (value << bit_index)
 	end
 end
