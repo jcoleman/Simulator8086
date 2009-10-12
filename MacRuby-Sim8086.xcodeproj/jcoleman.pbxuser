@@ -509,6 +509,14 @@
 			C40A9F5610839E7D00FA90B0 /* PBXTextBookmark */ = C40A9F5610839E7D00FA90B0 /* PBXTextBookmark */;
 			C40A9F5710839E7D00FA90B0 /* PBXTextBookmark */ = C40A9F5710839E7D00FA90B0 /* PBXTextBookmark */;
 			C40A9F5810839E7D00FA90B0 /* PBXTextBookmark */ = C40A9F5810839E7D00FA90B0 /* PBXTextBookmark */;
+			C40A9F5C1083A10000FA90B0 /* PBXTextBookmark */ = C40A9F5C1083A10000FA90B0 /* PBXTextBookmark */;
+			C40A9F5D1083A10000FA90B0 /* PBXTextBookmark */ = C40A9F5D1083A10000FA90B0 /* PBXTextBookmark */;
+			C40A9F5E1083A10000FA90B0 /* PBXTextBookmark */ = C40A9F5E1083A10000FA90B0 /* PBXTextBookmark */;
+			C40A9F5F1083A10000FA90B0 /* PBXTextBookmark */ = C40A9F5F1083A10000FA90B0 /* PBXTextBookmark */;
+			C40A9F631083A2BB00FA90B0 /* PBXTextBookmark */ = C40A9F631083A2BB00FA90B0 /* PBXTextBookmark */;
+			C40A9F641083A2BB00FA90B0 /* PBXTextBookmark */ = C40A9F641083A2BB00FA90B0 /* PBXTextBookmark */;
+			C40A9F651083A2BB00FA90B0 /* PBXTextBookmark */ = C40A9F651083A2BB00FA90B0 /* PBXTextBookmark */;
+			C40A9F661083A2BB00FA90B0 /* PBXTextBookmark */ = C40A9F661083A2BB00FA90B0 /* PBXTextBookmark */;
 			C44F729D1067A958008628C6 = C44F729D1067A958008628C6 /* PBXTextBookmark */;
 			C44F72B01067AA52008628C6 = C44F72B01067AA52008628C6 /* PBXTextBookmark */;
 			C44F72B41067EF69008628C6 = C44F72B41067EF69008628C6 /* PBXTextBookmark */;
@@ -1382,7 +1390,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 33";
 		rLen = 0;
-		rLoc = 1792;
+		rLoc = 1804;
 		rType = 0;
 		vrLen = 1351;
 		vrLoc = 0;
@@ -1633,7 +1641,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 161";
 		rLen = 0;
-		rLoc = 4897;
+		rLoc = 4909;
 		rType = 0;
 		vrLen = 572;
 		vrLoc = 3570;
@@ -1643,7 +1651,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 156";
 		rLen = 0;
-		rLoc = 4711;
+		rLoc = 4723;
 		rType = 0;
 		vrLen = 1274;
 		vrLoc = 3086;
@@ -1653,7 +1661,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 156";
 		rLen = 0;
-		rLoc = 4711;
+		rLoc = 4723;
 		rType = 0;
 		vrLen = 1488;
 		vrLoc = 0;
@@ -1770,9 +1778,9 @@
 	};
 	C40A9699107171DB00FA90B0 /* instruction.rb */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {684, 752}}";
-			sepNavSelRange = "{344, 0}";
-			sepNavVisRange = "{0, 475}";
+			sepNavIntBoundsRect = "{{0, 0}, {740, 816}}";
+			sepNavSelRange = "{589, 0}";
+			sepNavVisRange = "{0, 636}";
 		};
 	};
 	C40A96A11071918600FA90B0 /* PBXTextBookmark */ = {
@@ -1820,7 +1828,7 @@
 		fRef = C40A9699107171DB00FA90B0 /* instruction.rb */;
 		name = "instruction.rb: 10";
 		rLen = 0;
-		rLoc = 470;
+		rLoc = 631;
 		rType = 0;
 		vrLen = 164;
 		vrLoc = 0;
@@ -1830,7 +1838,7 @@
 		fRef = C40A9699107171DB00FA90B0 /* instruction.rb */;
 		name = "instruction.rb: 10";
 		rLen = 0;
-		rLoc = 470;
+		rLoc = 631;
 		rType = 0;
 		vrLen = 164;
 		vrLoc = 0;
@@ -1840,7 +1848,7 @@
 		fRef = C40A9699107171DB00FA90B0 /* instruction.rb */;
 		name = "instruction.rb: 10";
 		rLen = 0;
-		rLoc = 470;
+		rLoc = 631;
 		rType = 0;
 		vrLen = 164;
 		vrLoc = 0;
@@ -1890,7 +1898,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 49";
 		rLen = 0;
-		rLoc = 1853;
+		rLoc = 1865;
 		rType = 0;
 		vrLen = 1440;
 		vrLoc = 0;
@@ -2430,7 +2438,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 135";
 		rLen = 170;
-		rLoc = 3733;
+		rLoc = 3745;
 		rType = 0;
 		vrLen = 1414;
 		vrLoc = 2489;
@@ -2530,7 +2538,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 135";
 		rLen = 170;
-		rLoc = 3733;
+		rLoc = 3745;
 		rType = 0;
 		vrLen = 1414;
 		vrLoc = 2489;
@@ -2540,7 +2548,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 135";
 		rLen = 170;
-		rLoc = 3733;
+		rLoc = 3745;
 		rType = 0;
 		vrLen = 1291;
 		vrLoc = 0;
@@ -2550,7 +2558,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 121";
 		rLen = 0;
-		rLoc = 3473;
+		rLoc = 3485;
 		rType = 0;
 		vrLen = 1412;
 		vrLoc = 2282;
@@ -2577,7 +2585,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 121";
 		rLen = 0;
-		rLoc = 3473;
+		rLoc = 3485;
 		rType = 0;
 		vrLen = 1412;
 		vrLoc = 2282;
@@ -2597,7 +2605,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 122";
 		rLen = 0;
-		rLoc = 3493;
+		rLoc = 3505;
 		rType = 0;
 		vrLen = 1227;
 		vrLoc = 1926;
@@ -2607,7 +2615,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 122";
 		rLen = 0;
-		rLoc = 3493;
+		rLoc = 3505;
 		rType = 0;
 		vrLen = 1232;
 		vrLoc = 1926;
@@ -2617,7 +2625,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 122";
 		rLen = 0;
-		rLoc = 3493;
+		rLoc = 3505;
 		rType = 0;
 		vrLen = 1232;
 		vrLoc = 1926;
@@ -2657,7 +2665,7 @@
 		fRef = C4A5FD391063DC9900A43A26 /* decoder.rb */;
 		name = "decoder.rb: 52";
 		rLen = 0;
-		rLoc = 6692;
+		rLoc = 6824;
 		rType = 0;
 		vrLen = 1414;
 		vrLoc = 133;
@@ -2667,7 +2675,7 @@
 		fRef = C4A5FD391063DC9900A43A26 /* decoder.rb */;
 		name = "decoder.rb: 54";
 		rLen = 0;
-		rLoc = 6830;
+		rLoc = 6921;
 		rType = 0;
 		vrLen = 1413;
 		vrLoc = 133;
@@ -2687,7 +2695,7 @@
 		fRef = C4A5FD391063DC9900A43A26 /* decoder.rb */;
 		name = "decoder.rb: 56";
 		rLen = 0;
-		rLoc = 6825;
+		rLoc = 6916;
 		rType = 0;
 		vrLen = 1481;
 		vrLoc = 185;
@@ -2707,7 +2715,7 @@
 		fRef = C4A5FD391063DC9900A43A26 /* decoder.rb */;
 		name = "decoder.rb: 57";
 		rLen = 0;
-		rLoc = 6845;
+		rLoc = 6936;
 		rType = 0;
 		vrLen = 1483;
 		vrLoc = 185;
@@ -2717,7 +2725,7 @@
 		fRef = C4A5FD391063DC9900A43A26 /* decoder.rb */;
 		name = "decoder.rb: 57";
 		rLen = 0;
-		rLoc = 6825;
+		rLoc = 6916;
 		rType = 0;
 		vrLen = 1491;
 		vrLoc = 185;
@@ -2727,7 +2735,7 @@
 		fRef = C4A5FD391063DC9900A43A26 /* decoder.rb */;
 		name = "decoder.rb: 60";
 		rLen = 0;
-		rLoc = 6906;
+		rLoc = 6997;
 		rType = 0;
 		vrLen = 1499;
 		vrLoc = 185;
@@ -2787,7 +2795,7 @@
 		fRef = C4A5FD391063DC9900A43A26 /* decoder.rb */;
 		name = "decoder.rb: 50";
 		rLen = 0;
-		rLoc = 6561;
+		rLoc = 6693;
 		rType = 0;
 		vrLen = 1492;
 		vrLoc = 185;
@@ -2827,7 +2835,7 @@
 		fRef = C4A5FD391063DC9900A43A26 /* decoder.rb */;
 		name = "decoder.rb: 50";
 		rLen = 0;
-		rLoc = 6522;
+		rLoc = 6654;
 		rType = 0;
 		vrLen = 1553;
 		vrLoc = 185;
@@ -2927,7 +2935,7 @@
 		fRef = C4A5FD391063DC9900A43A26 /* decoder.rb */;
 		name = "decoder.rb: 50";
 		rLen = 0;
-		rLoc = 6522;
+		rLoc = 6654;
 		rType = 0;
 		vrLen = 1495;
 		vrLoc = 16;
@@ -2967,7 +2975,7 @@
 		fRef = C4A5FD391063DC9900A43A26 /* decoder.rb */;
 		name = "decoder.rb: 48";
 		rLen = 0;
-		rLoc = 6502;
+		rLoc = 6571;
 		rType = 0;
 		vrLen = 1411;
 		vrLoc = 378;
@@ -3017,7 +3025,7 @@
 		fRef = C4A5FD391063DC9900A43A26 /* decoder.rb */;
 		name = "decoder.rb: 67";
 		rLen = 0;
-		rLoc = 6825;
+		rLoc = 6916;
 		rType = 0;
 		vrLen = 1465;
 		vrLoc = 378;
@@ -3027,7 +3035,7 @@
 		fRef = C4A5FD391063DC9900A43A26 /* decoder.rb */;
 		name = "decoder.rb: 63";
 		rLen = 0;
-		rLoc = 6825;
+		rLoc = 6916;
 		rType = 0;
 		vrLen = 1425;
 		vrLoc = 378;
@@ -3173,7 +3181,7 @@
 		fRef = C4A5FD391063DC9900A43A26 /* decoder.rb */;
 		name = "decoder.rb: 66";
 		rLen = 0;
-		rLoc = 6880;
+		rLoc = 6971;
 		rType = 0;
 		vrLen = 1488;
 		vrLoc = 378;
@@ -3203,7 +3211,7 @@
 		fRef = C40A9699107171DB00FA90B0 /* instruction.rb */;
 		name = "instruction.rb: 17";
 		rLen = 0;
-		rLoc = 465;
+		rLoc = 626;
 		rType = 0;
 		vrLen = 397;
 		vrLoc = 0;
@@ -3273,7 +3281,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 121";
 		rLen = 0;
-		rLoc = 3212;
+		rLoc = 3224;
 		rType = 0;
 		vrLen = 1497;
 		vrLoc = 118;
@@ -3300,7 +3308,7 @@
 		fRef = C40A9699107171DB00FA90B0 /* instruction.rb */;
 		name = "instruction.rb: 14";
 		rLen = 0;
-		rLoc = 344;
+		rLoc = 395;
 		rType = 0;
 		vrLen = 475;
 		vrLoc = 0;
@@ -3310,7 +3318,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 68";
 		rLen = 0;
-		rLoc = 1737;
+		rLoc = 1738;
 		rType = 0;
 		vrLen = 1746;
 		vrLoc = 321;
@@ -3360,7 +3368,7 @@
 		fRef = C4A5FD391063DC9900A43A26 /* decoder.rb */;
 		name = "decoder.rb: 128";
 		rLen = 0;
-		rLoc = 6967;
+		rLoc = 7058;
 		rType = 0;
 		vrLen = 1507;
 		vrLoc = 1607;
@@ -3370,7 +3378,7 @@
 		fRef = C4A5FD391063DC9900A43A26 /* decoder.rb */;
 		name = "decoder.rb: 128";
 		rLen = 0;
-		rLoc = 6967;
+		rLoc = 7058;
 		rType = 0;
 		vrLen = 1507;
 		vrLoc = 1607;
@@ -3400,7 +3408,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 57";
 		rLen = 0;
-		rLoc = 1536;
+		rLoc = 1537;
 		rType = 0;
 		vrLen = 1548;
 		vrLoc = 501;
@@ -3410,7 +3418,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 57";
 		rLen = 0;
-		rLoc = 1536;
+		rLoc = 1537;
 		rType = 0;
 		vrLen = 1607;
 		vrLoc = 501;
@@ -3510,7 +3518,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 57";
 		rLen = 0;
-		rLoc = 1536;
+		rLoc = 1537;
 		rType = 0;
 		vrLen = 1510;
 		vrLoc = 0;
@@ -3979,7 +3987,7 @@
 		isa = PBXTextBookmark;
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 59";
-		rLen = 51;
+		rLen = 52;
 		rLoc = 1499;
 		rType = 0;
 		vrLen = 780;
@@ -4160,7 +4168,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 70";
 		rLen = 0;
-		rLoc = 1737;
+		rLoc = 1738;
 		rType = 0;
 		vrLen = 1569;
 		vrLoc = 290;
@@ -4170,7 +4178,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 70";
 		rLen = 0;
-		rLoc = 1737;
+		rLoc = 1738;
 		rType = 0;
 		vrLen = 1640;
 		vrLoc = 290;
@@ -4210,7 +4218,7 @@
 		fRef = C40A9699107171DB00FA90B0 /* instruction.rb */;
 		name = "instruction.rb: 14";
 		rLen = 0;
-		rLoc = 344;
+		rLoc = 395;
 		rType = 0;
 		vrLen = 475;
 		vrLoc = 0;
@@ -4470,7 +4478,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 70";
 		rLen = 0;
-		rLoc = 1737;
+		rLoc = 1738;
 		rType = 0;
 		vrLen = 1617;
 		vrLoc = 313;
@@ -4480,7 +4488,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 70";
 		rLen = 0;
-		rLoc = 1737;
+		rLoc = 1738;
 		rType = 0;
 		vrLen = 1327;
 		vrLoc = 2035;
@@ -4490,7 +4498,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 70";
 		rLen = 0;
-		rLoc = 1737;
+		rLoc = 1738;
 		rType = 0;
 		vrLen = 1327;
 		vrLoc = 2035;
@@ -4630,7 +4638,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 70";
 		rLen = 0;
-		rLoc = 1737;
+		rLoc = 1738;
 		rType = 0;
 		vrLen = 1352;
 		vrLoc = 2033;
@@ -4955,6 +4963,86 @@
 		vrLen = 902;
 		vrLoc = 511;
 	};
+	C40A9F5C1083A10000FA90B0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C497B538105E685000FFB668 /* storage_access.rb */;
+		name = "storage_access.rb: 85";
+		rLen = 0;
+		rLoc = 1357;
+		rType = 0;
+		vrLen = 930;
+		vrLoc = 511;
+	};
+	C40A9F5D1083A10000FA90B0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C4A5FD391063DC9900A43A26 /* decoder.rb */;
+		name = "decoder.rb: 235";
+		rLen = 0;
+		rLoc = 6909;
+		rType = 0;
+		vrLen = 1696;
+		vrLoc = 5252;
+	};
+	C40A9F5E1083A10000FA90B0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C497B532105E677300FFB668 /* processor.rb */;
+		name = "processor.rb: 11";
+		rLen = 0;
+		rLoc = 165;
+		rType = 0;
+		vrLen = 1813;
+		vrLoc = 560;
+	};
+	C40A9F5F1083A10000FA90B0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C497B532105E677300FFB668 /* processor.rb */;
+		name = "processor.rb: 59";
+		rLen = 0;
+		rLoc = 1537;
+		rType = 0;
+		vrLen = 1841;
+		vrLoc = 571;
+	};
+	C40A9F631083A2BB00FA90B0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C4A5FD391063DC9900A43A26 /* decoder.rb */;
+		name = "decoder.rb: 221";
+		rLen = 0;
+		rLoc = 6628;
+		rType = 0;
+		vrLen = 1772;
+		vrLoc = 5252;
+	};
+	C40A9F641083A2BB00FA90B0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C497B532105E677300FFB668 /* processor.rb */;
+		name = "processor.rb: 59";
+		rLen = 0;
+		rLoc = 1537;
+		rType = 0;
+		vrLen = 1791;
+		vrLoc = 571;
+	};
+	C40A9F651083A2BB00FA90B0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C40A9699107171DB00FA90B0 /* instruction.rb */;
+		name = "instruction.rb: 14";
+		rLen = 0;
+		rLoc = 395;
+		rType = 0;
+		vrLen = 475;
+		vrLoc = 0;
+	};
+	C40A9F661083A2BB00FA90B0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C40A9699107171DB00FA90B0 /* instruction.rb */;
+		name = "instruction.rb: 19";
+		rLen = 0;
+		rLoc = 589;
+		rType = 0;
+		vrLen = 636;
+		vrLoc = 0;
+	};
 	C44F729D1067A958008628C6 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = C497B529105D79BD00FFB668 /* application_controller.rb */;
@@ -5020,7 +5108,7 @@
 		fRef = C4A5FD391063DC9900A43A26 /* decoder.rb */;
 		name = "decoder.rb: 10";
 		rLen = 0;
-		rLoc = 6984;
+		rLoc = 7075;
 		rType = 0;
 		vrLen = 204;
 		vrLoc = 0;
@@ -5127,9 +5215,9 @@
 	};
 	C497B532105E677300FFB668 /* processor.rb */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {740, 2834}}";
-			sepNavSelRange = "{165, 0}";
-			sepNavVisRange = "{560, 1818}";
+			sepNavIntBoundsRect = "{{0, 0}, {740, 2821}}";
+			sepNavSelRange = "{1537, 0}";
+			sepNavVisRange = "{571, 1791}";
 			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
 		};
 	};
@@ -5152,7 +5240,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {740, 1300}}";
 			sepNavSelRange = "{1357, 0}";
-			sepNavVisRange = "{511, 902}";
+			sepNavVisRange = "{511, 930}";
 			sepNavWindowFrame = "{{130, 110}, {750, 558}}";
 		};
 	};
@@ -5242,7 +5330,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 71";
 		rLen = 0;
-		rLoc = 5135;
+		rLoc = 5147;
 		rType = 0;
 		vrLen = 703;
 		vrLoc = 557;
@@ -5286,9 +5374,9 @@
 	};
 	C4A5FD391063DC9900A43A26 /* decoder.rb */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {740, 3146}}";
-			sepNavSelRange = "{3192, 0}";
-			sepNavVisRange = "{2533, 1867}";
+			sepNavIntBoundsRect = "{{0, 0}, {740, 3250}}";
+			sepNavSelRange = "{6628, 0}";
+			sepNavVisRange = "{5252, 1772}";
 		};
 	};
 	C4A5FDCE1067233200A43A26 /* PBXTextBookmark */ = {
@@ -5306,7 +5394,7 @@
 		fRef = C4A5FD391063DC9900A43A26 /* decoder.rb */;
 		name = "decoder.rb: 10";
 		rLen = 0;
-		rLoc = 6984;
+		rLoc = 7075;
 		rType = 0;
 		vrLen = 204;
 		vrLoc = 0;

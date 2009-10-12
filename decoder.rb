@@ -216,7 +216,9 @@ module Decoder
 					addr_mode = :decode_illegal_addr_mode
 				end
 				code_row << { :opcode => opcode,
-						:addr_mode => addr_mode }
+											:decode_with => "decode_#{addr_mode}".to_sym,
+				              :addr_mode => addr_mode,
+				              :execute_with => "execute_#{opcode}".to_sym }
 				index += 2
 			end
 			
@@ -232,7 +234,7 @@ module Decoder
 			unless line.empty?
 				line =~ /(\S+)\s+=\s+(\d+);\s+\{ (.+) \}/
 				key = ($2).to_i
-				symbol = (key < 30 ? "decode_#{$1}" : "execute_#{$1}").to_sym
+				symbol = ($1).to_sym
 				ops_symbols[key] = { :symbol => symbol, :description => $3 }
 			end
 		end

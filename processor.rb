@@ -56,7 +56,7 @@ class Processor
 		instruction.bytes << initial_byte
 		
 		# Decode the addressing mode to gather the operands
-		self.send(instruction.addressing_mode, instruction)
+		self.send(instruction.decoder_function, instruction)
 		
 		@after_decode.call(instruction) if @after_decode
 		
@@ -67,7 +67,7 @@ class Processor
 		@before_execute.call if @before_execute
 		
 		# Execute the instruction
-		self.send(instruction.opcode, *instruction.operands)
+		self.send(instruction.executor_function, *instruction.operands)
 		
 		@after_execute.call if @after_execute
 		return instruction
