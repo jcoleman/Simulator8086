@@ -27,6 +27,10 @@ class Register
 	end
 	
 	def set_bit_at(bit_index, value)
-		@value |= (value << bit_index)
+		if value.zero?
+			@value &= (0xFFFE << bit_index)
+		else
+			@value |= (0x0001 << bit_index)
+		end
 	end
 end

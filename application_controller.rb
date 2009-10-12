@@ -235,7 +235,6 @@ class ApplicationController
 		NSApp.delegate = self
 		
 		puts "ApplicationController awoke."
-		puts "Edit: app/controllers/application_controller.rb"
 		puts	"\nIts window is: #{@main_window.inspect}"
 	end
 	

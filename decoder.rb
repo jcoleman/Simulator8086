@@ -91,6 +91,11 @@ module Decoder
 		add_signed_immediate_word_operand(instruction)
 	end
 	
+	def decode_Inter(instruction)
+		add_immediate_word_operand(instruction)
+		add_immediate_word_operand(instruction)
+	end
+	
 	def decode_Acc(instruction)
 		# Accumulator register, 8 or 16 bits
 		if instruction.bytes.first[0] == 1 # W-bit
@@ -98,6 +103,23 @@ module Decoder
 		else
 			instruction.operands << @register_operands_8[0] # AL register
 		end
+	end
+	
+	def decode_Segment(instruction)
+		segment_register_index = (instruction.bytes.first >> 3) & 0x07 # Retrieve middle 3 bits
+		@segment_register_operands[segment_register_index]
+	end
+	
+	def decode_Flags(instruction)
+		instruction.operands << RegisterAccess.new(@flags)
+	end
+	
+	def decode_RetPop(instruction)
+		add_immediate_word_operand(instruction)
+	end
+	
+	def decode_IntNum(instruction)
+		add_immediate_byte_operand(instruction)
 	end
 	
 	def decode_illegal_addr_mode
@@ -158,6 +180,10 @@ module Decoder
 		
 		split_registers.each do |register|
 			@register_operands_8 << RegisterAccess.new(register, :high)
+		end
+		
+		@segment_register_operands = [ @es, @cs, @ss, @ds ].collect do |register|
+			RegisterAccess.new(register)
 		end
 	end
 	

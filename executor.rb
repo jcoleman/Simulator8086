@@ -22,7 +22,7 @@ module Executor
 	end
 	
 	def execute_HLT
-	
+		
 	end
 	
 	def execute_ADD(destination, source)
@@ -49,30 +49,34 @@ module Executor
 		perform_arithmetic_operation(operand, operand.value - 1)
 	end
 	
-	def execute_JNZ(operand)
-		execute_JMP(operand) unless @flags[ZERO_FLAG].zero?
-	end
-	
 	def execute_JNE(operand)
-		execute_JNZ(operand)
-	end
-	
-	def execute_JZ(operand)
-		execute_JMP(operand) if @flags[ZERO_FLAG].zero?
+		jump_to_signed_displacement(operand) if @flags.value[ZERO_FLAG].zero? # Zero means not set
 	end
 	
 	def execute_JE(operand)
-		execute_JZ(operand)
+		jump_to_signed_displacement(operand) unless @flags.value[ZERO_FLAG].zero? # Non-zero means set
 	end
 	
 	def execute_JMP(operand)
-		@ip.value += operand.value
+		jump_to_signed_displacement(operand)
+	end
+	
+	def execute_JMPFAR(offset, segment)
+		
 	end
 	
 	def perform_arithmetic_operation(destination, expected_value)
 		actual = expected_value.to_fixed_size(destination.size, true)
 		set_arithmetic_flags_from(expected_value, actual)
 		destination.value = actual
+	end
+	
+	# -----------------------------------------------------------------
+	# Jump Helper Methods
+	# -----------------------------------------------------------------
+	
+	def jump_to_signed_displacement(operand)
+		@ip.value += operand.value
 	end
 	
 	# -----------------------------------------------------------------
