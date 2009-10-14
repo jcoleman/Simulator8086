@@ -29,14 +29,21 @@ class Processor
 	def fetch
 		@before_fetch.call if @before_fetch
 		
+		byte = fetch_byte
+		
+		@after_fetch.call(instruction_segment, instruction_pointer, byte) if @after_fetch
+		
+		return byte
+	end
+	
+	def fetch_byte(instruction=nil)
 		instruction_segment = @cs.value
 		instruction_pointer = @ip.value
 		instruction_address = Memory.absolute_address_for instruction_segment, instruction_pointer
 		@ip.value += 1 # Increment the instruction pointer
+		
 		byte = @ram.byte_at instruction_address
-		
-		@after_fetch.call(instruction_segment, instruction_pointer, byte) if @after_fetch
-		
+		instruction.bytes << byte if instruction
 		return byte
 	end
 	

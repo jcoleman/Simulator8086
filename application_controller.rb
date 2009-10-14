@@ -207,10 +207,12 @@ class ApplicationController
 		@thread = Thread.new do
 			ret = nil
 			until ret == false || @executing == false
-				ret = @processor.process_instruction
-				sleep 0.1
+				instruction = @processor.process_instruction
+				ret = instruction.opcode != :HLT
 			end
 			end_execution
+			refresh_all_displays
+			Thread.exit
 		end
 	end
 	
@@ -220,6 +222,10 @@ class ApplicationController
 	
 	def step_execute_instruction(sender)
 		@processor.process_instruction
+		refresh_all_displays
+	end
+	
+	def manually_refresh_display(sender)
 		refresh_all_displays
 	end
 	

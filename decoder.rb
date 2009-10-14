@@ -21,7 +21,7 @@ module Decoder
 		# Accumulator to/from memory
 		
 		# Determine memory offset
-		offset = Memory.word_from_little_endian_bytes(fetch, fetch)
+		offset = Memory.word_from_little_endian_bytes(fetch_byte(instruction), fetch_byte(instruction))
 		address = Memory.absolute_address_for @ds.value, offset
 		
 		if instruction.bytes.first[0] == 1 # W-bit
@@ -48,8 +48,7 @@ module Decoder
 		# Only used for XCHG, so order of operands is unnecessary
 		instruction.operands << @register_operands_16[0] # AX register operand
 		
-		reg_index = instruction.bytes[0] & 0x07 # last 3 bits determine register
-		instruction.operands << @register_operands_16[reg_index]
+		add_register16_operand(instruction)
 	end
 	
 	def decode_AccImm(instruction)
@@ -106,8 +105,7 @@ module Decoder
 	end
 	
 	def decode_Segment(instruction)
-		segment_register_index = (instruction.bytes.first >> 3) & 0x07 # Retrieve middle 3 bits
-		@segment_register_operands[segment_register_index]
+		add_segment_register_operand(instruction, instruction.bytes.first)
 	end
 	
 	def decode_Flags(instruction)
@@ -140,26 +138,35 @@ module Decoder
 		instruction.operands << @register_operands_8[reg_index]
 	end
 	
+	def add_segment_register_operand(instruction, byte_with_index)
+		segment_register_index = (byte_with_index >> 3) & 0x03 # Retrieve bits 4-3
+		instruction.operands << @segment_register_operands[segment_register_index]
+	end
+	
 	# -----------------------------------------------------------------
 	# Immediate Methods
 	# -----------------------------------------------------------------
 	
 	def add_immediate_word_operand(instruction)
-		word_value = Memory.word_from_little_endian_bytes(fetch, fetch)
+		word_value = fetch_word_value(instruction)
 		instruction.operands << ImmediateValue.new(word_value, 16)
 	end
 	
 	def add_immediate_byte_operand(instruction)
-		instruction.operands << ImmediateValue.new(fetch, 8)
+		instruction.operands << ImmediateValue.new(fetch_byte(instruction), 8)
 	end
 	
 	def add_signed_immediate_word_operand(instruction)
-		word_value = Memory.word_from_little_endian_bytes(fetch, fetch).to_fixed_size(16, true)
+		word_value = fetch_word_value(instruction).to_fixed_size(16, true)
 		instruction.operands << ImmediateValue.new(word_value, 16)
 	end
 	
 	def add_signed_immediate_byte_operand(instruction)
-		instruction.operands << ImmediateValue.new(fetch.to_fixed_size(8, true), 8)
+		instruction.operands << ImmediateValue.new(fetch_byte(instruction).to_fixed_size(8, true), 8)
+	end
+	
+	def fetch_word_value(instruction)
+		Memory.word_from_little_endian_bytes(fetch_byte(instruction), fetch_byte(instruction))
 	end
 	
 	# -----------------------------------------------------------------
