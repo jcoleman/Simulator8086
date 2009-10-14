@@ -1,3 +1,11 @@
+#
+#  register.rb
+#  MacRuby-Sim8086
+#
+#  Created by James Coleman on 9/06/09.
+#  Copyright (c) 2009 Radiadesign. All rights reserved.
+#
+
 class Register
   attr_reader :value, :name
 	

@@ -22,16 +22,15 @@ module Decoder
 		
 		# Determine memory offset
 		offset = Memory.word_from_little_endian_bytes(fetch_byte(instruction), fetch_byte(instruction))
-		address = Memory.absolute_address_for @ds.value, offset
 		
 		if instruction.bytes.first[0] == 1 # W-bit
 			# Word value
 			accumulator = @register_operands_16[0] # AX register operand
-			memory = MemoryAccess.new(@ram, address, 16)
+			memory = MemoryAccess.new(@ram, @ds.value, offset, 16)
 		else
 			# Byte value
 			accumulator = @register_operands_8[0] # AL register
-			memory = MemoryAccess.new(@ram, address, 8)
+			memory = MemoryAccess.new(@ram, @ds.value, offset, 8)
 		end
 		
 		# Determine direction of operands

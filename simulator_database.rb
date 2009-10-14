@@ -26,7 +26,7 @@ class SimulatorDatabase
 		sql << '\ngo'
 		
 		cmd = "export TDSVER=7.0 && echo \"#{sql}\" | /usr/local/bin/tsql -H #{@host} -p #{@port} -U #{@user_id} -P #{@password}"
-		`#{cmd}`
+		puts `#{cmd}`
 	end
 	
 end

@@ -204,12 +204,15 @@ class ApplicationController
 	def start_execution(sender)
 		prepare_for_execution
 		
+		@execution_time = nil
 		@thread = Thread.new do
+			@execution_time = Time.new
 			ret = nil
 			until ret == false || @executing == false
 				instruction = @processor.process_instruction
 				ret = instruction.opcode != :HLT
 			end
+			puts "Execution cycle lasted #{Time.new - @execution_time} seconds."
 			end_execution
 			refresh_all_displays
 			Thread.exit

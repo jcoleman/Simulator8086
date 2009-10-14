@@ -14,7 +14,7 @@
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="896"/>
 			<integer value="387"/>
-			<integer value="371"/>
+			<integer value="818"/>
 			<integer value="702"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -1217,7 +1217,7 @@
 																	</object>
 																	<object class="NSTableColumn" id="141875779">
 																		<string key="NSIdentifier">raw_instruction</string>
-																		<double key="NSWidth">115</double>
+																		<double key="NSWidth">98</double>
 																		<double key="NSMinWidth">40</double>
 																		<double key="NSMaxWidth">1000</double>
 																		<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -1244,7 +1244,7 @@
 																	</object>
 																	<object class="NSTableColumn" id="406676676">
 																		<string key="NSIdentifier">assembly_instruction</string>
-																		<double key="NSWidth">193</double>
+																		<double key="NSWidth">173</double>
 																		<double key="NSMinWidth">40</double>
 																		<double key="NSMaxWidth">1000</double>
 																		<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -1274,7 +1274,7 @@
 																	</object>
 																	<object class="NSTableColumn" id="647384190">
 																		<string key="NSIdentifier">mode</string>
-																		<double key="NSWidth">51</double>
+																		<double key="NSWidth">88</double>
 																		<double key="NSMinWidth">40</double>
 																		<double key="NSMaxWidth">1000</double>
 																		<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -1431,18 +1431,18 @@
 													<int key="NSPeriodicInterval">75</int>
 												</object>
 											</object>
-											<object class="NSButton" id="1007070240">
+											<object class="NSButton" id="914501144">
 												<reference key="NSNextResponder" ref="704748811"/>
 												<int key="NSvFlags">268</int>
 												<string key="NSFrame">{{545, 46}, {118, 25}}</string>
 												<reference key="NSSuperview" ref="704748811"/>
 												<bool key="NSEnabled">YES</bool>
-												<object class="NSButtonCell" key="NSCell" id="533681519">
+												<object class="NSButtonCell" key="NSCell" id="784002032">
 													<int key="NSCellFlags">-2080244224</int>
 													<int key="NSCellFlags2">134217728</int>
 													<string key="NSContents">Refresh Displays</string>
 													<reference key="NSSupport" ref="1058287965"/>
-													<reference key="NSControlView" ref="1007070240"/>
+													<reference key="NSControlView" ref="914501144"/>
 													<int key="NSButtonFlags">-2038152961</int>
 													<int key="NSButtonFlags2">163</int>
 													<string key="NSAlternateContents"/>
@@ -3289,7 +3289,7 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">manually_refresh_display:</string>
 						<reference key="source" ref="247202554"/>
-						<reference key="destination" ref="1007070240"/>
+						<reference key="destination" ref="914501144"/>
 					</object>
 					<int key="connectionID">948</int>
 				</object>
@@ -4344,7 +4344,7 @@
 							<reference ref="630268968"/>
 							<reference ref="80768856"/>
 							<reference ref="4748956"/>
-							<reference ref="1007070240"/>
+							<reference ref="914501144"/>
 						</object>
 						<reference key="parent" ref="416475291"/>
 					</object>
@@ -5050,17 +5050,17 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">945</int>
-						<reference key="object" ref="1007070240"/>
+						<reference key="object" ref="914501144"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="533681519"/>
+							<reference ref="784002032"/>
 						</object>
 						<reference key="parent" ref="704748811"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">946</int>
-						<reference key="object" ref="533681519"/>
-						<reference key="parent" ref="1007070240"/>
+						<reference key="object" ref="784002032"/>
+						<reference key="parent" ref="914501144"/>
 					</object>
 				</object>
 			</object>

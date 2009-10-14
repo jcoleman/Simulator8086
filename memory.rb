@@ -1,3 +1,11 @@
+#
+#  memory.rb
+#  MacRuby-Sim8086
+#
+#  Created by James Coleman on 9/05/09.
+#  Copyright (c) 2009 Radiadesign. All rights reserved.
+#
+
 class Memory
 	
   def initialize(bytes, initial_value)
