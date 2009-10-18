@@ -19,6 +19,7 @@ class ApplicationController
 	attr_accessor :memory_display, :stack_display, :instruction_display, :interrupt_window
 	attr_accessor :memory_display_source, :start_toolbar_item, :stop_toolbar_item
 	attr_accessor :start_menu_item, :stop_menu_item, :step_instruction_button, :single_step_menu_item
+	attr_accessor :next_instr_raw_label, :next_instr_op_label, :next_instr_mode_label
 	
 	def initialize
 		# The main simulator object
@@ -27,13 +28,14 @@ class ApplicationController
 		# Options
 		@update_registers = true
 		@update_checksums = true
+		@update_all_displays = true
 		@preload_os = true
 		@registers_display_base = 16
 	end
 	
 	def initialize_processor_with_hooks
 		@processor = Processor.new(NSBundle.mainBundle.resourcePath.fileSystemRepresentation)
-		@processor.after_decode do |instruction|
+		@processor.after_execute do |instruction|
 			instruction_address = Memory.segment_offset_string_from instruction.segment, instruction.pointer
 			@instruction_display_source.executed_instructions << { address: instruction_address,
 																														 raw_instruction: instruction.bytes.collect { |b| b.to_hex_string(2) }.join,
@@ -41,6 +43,7 @@ class ApplicationController
 																														 mode: instruction.addressing_mode }
 			refresh_all_displays
 		end
+		@next_instruction = nil
 	end
 		
 	def submit_checksums_to_db(sender)
@@ -51,7 +54,7 @@ class ApplicationController
 	def reset_simulator(sender)
 		initialize_processor_with_hooks
 		initialize_all_displays
-		refresh_all_displays
+		refresh_all_displays(true)
 	end
 	
 	def choose_hardware_interrupt(sender)
@@ -76,8 +79,10 @@ class ApplicationController
 			@processor.load_object object
 		end
 		
+		get_next_instruction
+		
 		initialize_all_displays
-		refresh_all_displays
+		refresh_all_displays(true)
 	end
 	
 	def initialize_all_displays
@@ -86,12 +91,27 @@ class ApplicationController
 		initialize_instruction_display
 	end
 	
-	def refresh_all_displays
-		refresh_registers_display
-		refresh_checksum_display
-		refresh_flags_display
-		refresh_memory_display
-		refresh_instruction_display
+	def refresh_all_displays(force=false)
+		if @update_all_displays || force
+			refresh_registers_display
+			refresh_checksum_display
+			refresh_flags_display
+			refresh_memory_display
+			refresh_instruction_display
+			refresh_next_instruction_display
+		end
+	end
+	
+	def refresh_next_instruction_display
+		if @next_instruction
+			@next_instr_raw_label.stringValue = @next_instruction.bytes.collect { |b| b.to_hex_string(2) }.join
+			@next_instr_op_label.stringValue = @next_instruction.opcode.to_s << ' ' << @next_instruction.operands.join(', ')
+			@next_instr_mode_label.stringValue = @next_instruction.addressing_mode
+		else
+			@next_instr_raw_label.stringValue = ''
+			@next_instr_op_label.stringValue = ''
+			@next_instr_mode_label.stringValue = ''
+		end
 	end
 	
 	def initialize_memory_display
@@ -173,12 +193,9 @@ class ApplicationController
 		sender.setTitle((@preload_os ? "Disable " : "Enable ") + "OS Preload")
 	end
 	
-	def registers_should_update(sender)
-	  @update_registers = sender.state == NSOnState
-	end
-	
-	def checksums_should_update(sender)
-		@update_checksums = sender.state == NSOnState
+	def should_update_displays(sender)
+		@update_all_displays = !@update_all_displays
+		sender.setTitle((@update_all_displays ? "Disable " : "Enable ") + "Disable Updates")
 	end
 	
 	def prepare_for_execution
@@ -208,13 +225,12 @@ class ApplicationController
 		@thread = Thread.new do
 			@execution_time = Time.new
 			ret = nil
-			until ret == false || @executing == false
-				instruction = @processor.process_instruction
-				ret = instruction.opcode != :HLT
+			until @executing == false
+				process_instruction
 			end
 			puts "Execution cycle lasted #{Time.new - @execution_time} seconds."
 			end_execution
-			refresh_all_displays
+			refresh_all_displays(true)
 			Thread.exit
 		end
 	end
@@ -223,13 +239,28 @@ class ApplicationController
 		end_execution
 	end
 	
+	def get_next_instruction
+		begin
+			@next_instruction = @processor.decode(@processor.fetch)
+		rescue
+			@next_instruction = nil
+		end
+	end
+	
+	def process_instruction
+		@processor.execute(@next_instruction)
+		@executing = @processor.state == :EXECUTION_STATE
+		get_next_instruction
+		refresh_next_instruction_display if @should_update_displays
+	end
+	
 	def step_execute_instruction(sender)
-		@processor.process_instruction
-		refresh_all_displays
+		process_instruction
+		refresh_all_displays(true)
 	end
 	
 	def manually_refresh_display(sender)
-		refresh_all_displays
+		refresh_all_displays(true)
 	end
 	
 	def storage_word_to_numeric_string(word, base)

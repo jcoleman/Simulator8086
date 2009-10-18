@@ -22,7 +22,7 @@ module Executor
 	end
 	
 	def execute_HLT
-		
+		@state = :HALT_STATE
 	end
 	
 	def execute_ADD(destination, source)

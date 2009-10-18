@@ -62,7 +62,7 @@ module TableViewSource
 		def tableView(tableView, objectValueForTableColumn:tableColumn, row:index)
 			case tableColumn.identifier
 				when 'offset'
-					@processor.stack_word_index_to_offset(index).to_hex_string(4).insert(2, ' ')
+					@processor.stack_word_index_to_offset(index).to_hex_string(4)
 				when 'raw'
 					@processor.stack_word_at(index).to_hex_string(4).insert(2, ' ')
 			end

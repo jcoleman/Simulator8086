@@ -15,7 +15,7 @@ class Processor
 	include Executor
 	include MemoryStack
 	
-	attr_reader :ram, :ss, :sp
+	attr_reader :ram, :ss, :sp, :state
 	
   def initialize(base_path)
 		@base_path = base_path
@@ -24,39 +24,43 @@ class Processor
     initialize_memory
 		initialize_decoder
 		initialize_callbacks
+		
+		@state = :READY_STATE
   end
 	
 	# -----------------------------------------------------------------
 	# Main Processor Execution-cycle Methods
 	# -----------------------------------------------------------------
 	
-	def process_instruction
-		execute(decode(fetch))
-	end
-	
 	def fetch
 		@before_fetch.call if @before_fetch
 		
-		byte = fetch_byte
-		
-		@after_fetch.call(instruction_segment, instruction_pointer, byte) if @after_fetch
-		
-		return byte
-	end
-	
-	def fetch_byte(instruction=nil)
 		instruction_segment = @cs.value
 		instruction_pointer = @ip.value
 		instruction_address = Memory.absolute_address_for instruction_segment, instruction_pointer
-		@ip.value += 1 # Increment the instruction pointer
+		
+		instruction = Instruction.new(instruction_segment, instruction_pointer)
+		fetch_byte(instruction)
+		
+		@after_fetch.call(instruction) if @after_fetch
+		
+		return instruction
+	end
+	
+	def fetch_byte(instruction)
+		instruction_segment = @cs.value
+		instruction_pointer = (@ip.value + instruction.bytes.size).to_fixed_size 16
+		instruction_address = Memory.absolute_address_for instruction_segment, instruction_pointer
 		
 		byte = @ram.byte_at instruction_address
-		instruction.bytes << byte if instruction
+		instruction.bytes << byte
 		return byte
 	end
 	
-	def decode(initial_byte)
+	def decode(instruction)
 		@before_decode.call if @before_decode
+		
+		initial_byte = instruction.bytes.first
 		
 		# Split the byte into the two nybbles for lookup purposes
 		hi = initial_byte >> 4
@@ -64,11 +68,7 @@ class Processor
 		
 		# Look up the two nybbles to decode the opcode and addressing mode
 		op_with_addr_mode = @primary_opcode_table[hi][lo]
-		
-		segment = @cs.value
-		pointer = @ip.value - 1
-		instruction = Instruction.new(op_with_addr_mode, segment, pointer)
-		instruction.bytes << initial_byte
+		instruction.initialize_op_and_addr_mode(op_with_addr_mode)
 		
 		# Decode the addressing mode to gather the operands
 		self.send(instruction.decoder_function, instruction)
@@ -79,12 +79,17 @@ class Processor
 	end
 	
 	def execute(instruction)
+		@state = :EXECUTION_STATE
+		
 		@before_execute.call if @before_execute
+		
+		# Commit the fetch ip changes
+		@ip.value += instruction.bytes.size
 		
 		# Execute the instruction
 		self.send(instruction.executor_function, *instruction.operands)
 		
-		@after_execute.call if @after_execute
+		@after_execute.call(instruction) if @after_execute
 		return instruction
 	end
 	

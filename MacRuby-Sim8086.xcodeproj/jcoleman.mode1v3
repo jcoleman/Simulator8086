@@ -307,7 +307,7 @@
 							<real>186</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>-1310 55 1036 995 -1680 0 1680 1050 </string>
+						<string>-1325 55 1125 995 -1680 0 1680 1050 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -337,20 +337,15 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>C40AA02710863BA400FA90B0</string>
+										<string>C40AA08B108A908B00FA90B0</string>
 										<key>history</key>
 										<array>
 											<string>C40A9DEA10812BBA00FA90B0</string>
 											<string>C40A9DEB10812BBA00FA90B0</string>
 											<string>C40A9DEC10812BBA00FA90B0</string>
-											<string>C40A9F8010853D1200FA90B0</string>
-											<string>C40AA0041086371A00FA90B0</string>
 											<string>C40AA0051086371A00FA90B0</string>
 											<string>C40AA0061086371A00FA90B0</string>
 											<string>C40AA0071086371A00FA90B0</string>
-											<string>C40AA0081086371A00FA90B0</string>
-											<string>C40AA0091086371A00FA90B0</string>
-											<string>C40AA00A1086371A00FA90B0</string>
 											<string>C40AA00B1086371A00FA90B0</string>
 											<string>C40AA00C1086371A00FA90B0</string>
 											<string>C40AA00D1086371A00FA90B0</string>
@@ -358,7 +353,12 @@
 											<string>C40AA00F1086371A00FA90B0</string>
 											<string>C40AA0101086371A00FA90B0</string>
 											<string>C40AA0111086371A00FA90B0</string>
-											<string>C40A9FF31085FF9800FA90B0</string>
+											<string>C40AA039108A829100FA90B0</string>
+											<string>C40AA056108A8C1300FA90B0</string>
+											<string>C40AA058108A8C1300FA90B0</string>
+											<string>C40AA088108A908B00FA90B0</string>
+											<string>C40AA089108A908B00FA90B0</string>
+											<string>C40AA08A108A908B00FA90B0</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -370,9 +370,9 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {828, 872}}</string>
+								<string>{{0, 0}, {917, 872}}</string>
 								<key>RubberWindowFrame</key>
-								<string>-1310 55 1036 995 -1680 0 1680 1050 </string>
+								<string>-1325 55 1125 995 -1680 0 1680 1050 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -390,9 +390,9 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 877}, {828, 77}}</string>
+								<string>{{0, 877}, {917, 77}}</string>
 								<key>RubberWindowFrame</key>
-								<string>-1310 55 1036 995 -1680 0 1680 1050 </string>
+								<string>-1325 55 1125 995 -1680 0 1680 1050 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -401,7 +401,7 @@
 						</dict>
 					</array>
 					<key>Proportion</key>
-					<string>828pt</string>
+					<string>917pt</string>
 				</dict>
 			</array>
 			<key>Name</key>
@@ -556,7 +556,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>C40AA02810863BA400FA90B0</string>
+		<string>C40AA08C108A908B00FA90B0</string>
 		<string>C40A9562106D363000FA90B0</string>
 		<string>C40A9563106D363000FA90B0</string>
 		<string>1CD10A99069EF8BA00B06720</string>
@@ -565,7 +565,7 @@
 		<string>/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/MacRuby-Sim8086.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>-1310 55 1036 995 -1680 0 1680 1050 </string>
+	<string>-1325 55 1125 995 -1680 0 1680 1050 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -911,7 +911,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {650, 209}}</string>
 								<key>RubberWindowFrame</key>
-								<string>-1581 543 650 250 -1680 0 1680 1050 </string>
+								<string>62 485 650 250 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXDebugCLIModule</string>
@@ -940,7 +940,7 @@
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.consoleV3</string>
 			<key>WindowString</key>
-			<string>-1581 543 650 250 -1680 0 1680 1050 </string>
+			<string>62 485 650 250 0 0 1280 778 </string>
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
