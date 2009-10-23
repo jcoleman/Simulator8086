@@ -102,13 +102,19 @@ end
 
 class ImmediateValue
   attr_reader :value, :size
+	attr_writer :string
   
   def initialize(value, size)
     @value = value
 		@size = size
+		@string = nil
   end
 	
 	def to_s
-		@value.to_hex_string(@size / 4)
+		unless @string
+			@value.to_hex_string(@size / 4)
+		else
+			@string
+		end
 	end
 end

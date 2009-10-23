@@ -15,7 +15,7 @@ class Processor
 	include Executor
 	include MemoryStack
 	
-	attr_reader :ram, :ss, :sp, :state
+	attr_reader :ram, :ss, :sp, :state, :instruction_count
 	
   def initialize(base_path)
 		@base_path = base_path
@@ -26,6 +26,7 @@ class Processor
 		initialize_callbacks
 		
 		@state = :READY_STATE
+		@instruction_count = 0
   end
 	
 	# -----------------------------------------------------------------
@@ -33,7 +34,8 @@ class Processor
 	# -----------------------------------------------------------------
 	
 	def fetch
-		@before_fetch.call if @before_fetch
+		# Callback
+		#@before_fetch.call if @before_fetch
 		
 		instruction_segment = @cs.value
 		instruction_pointer = @ip.value
@@ -42,23 +44,27 @@ class Processor
 		instruction = Instruction.new(instruction_segment, instruction_pointer)
 		fetch_byte(instruction)
 		
-		@after_fetch.call(instruction) if @after_fetch
+		# Callback
+		#@after_fetch.call(instruction) if @after_fetch
 		
 		return instruction
 	end
 	
 	def fetch_byte(instruction)
 		instruction_segment = @cs.value
+		# Pointer factors in the number of bytes already fetched for this instruction.
+		# This allows support for a peek ahead decode of the next instruction.
 		instruction_pointer = (@ip.value + instruction.bytes.size).to_fixed_size 16
-		instruction_address = Memory.absolute_address_for instruction_segment, instruction_pointer
 		
+		instruction_address = Memory.absolute_address_for instruction_segment, instruction_pointer
 		byte = @ram.byte_at instruction_address
 		instruction.bytes << byte
 		return byte
 	end
 	
 	def decode(instruction)
-		@before_decode.call if @before_decode
+		# Callback
+		#@before_decode.call if @before_decode
 		
 		initial_byte = instruction.bytes.first
 		
@@ -67,13 +73,13 @@ class Processor
 		lo = initial_byte & 0x0F
 		
 		# Look up the two nybbles to decode the opcode and addressing mode
-		op_with_addr_mode = @primary_opcode_table[hi][lo]
-		instruction.initialize_op_and_addr_mode(op_with_addr_mode)
+		instruction.initialize_op_and_addr_mode(@primary_opcode_table[hi][lo])
 		
 		# Decode the addressing mode to gather the operands
 		self.send(instruction.decoder_function, instruction)
 		
-		@after_decode.call(instruction) if @after_decode
+		# Callback
+		#@after_decode.call(instruction) if @after_decode
 		
 		return instruction
 	end
@@ -81,24 +87,20 @@ class Processor
 	def execute(instruction)
 		@state = :EXECUTION_STATE
 		
-		@before_execute.call if @before_execute
+		# Callback
+		#@before_execute.call if @before_execute
 		
-		# Commit the fetch ip changes
+		# Commit the instruction pointer offsets due to fetching
 		@ip.value += instruction.bytes.size
 		
 		# Execute the instruction
 		self.send(instruction.executor_function, *instruction.operands)
+		@instruction_count += 1
 		
+		# Callback
 		@after_execute.call(instruction) if @after_execute
+		
 		return instruction
-	end
-	
-	# -----------------------------------------------------------------
-	# Execution-cycle Helper Methods
-	# -----------------------------------------------------------------
-	
-	def segment_register_from_id(id)
-		@segment_registers[id]
 	end
 	
 	# -----------------------------------------------------------------
@@ -164,6 +166,7 @@ class Processor
 		end
 		
 		preload_register_operands
+		preload_rm_index_operands
 	end
 	
 	def initialize_callbacks
@@ -185,7 +188,7 @@ class Processor
     end
 		
 		object.modules.each do |memory_module|		
-			segment = segment_register_from_id(memory_module[:segment_register_id]).value
+			segment = @segment_registers[ memory_module[:segment_register_id] ].value
 			memory_module[:address] = Memory.absolute_address_for segment, memory_module[:offset]
 			@ram.load_module memory_module
 		end

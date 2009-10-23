@@ -33,14 +33,7 @@ module Decoder
 			memory = MemoryAccess.new(@ram, @ds.value, offset, 8)
 		end
 		
-		# Determine direction of operands
-		if instruction.bytes.first[1] == 1 # !D-bit
-			instruction.operands << memory
-			instruction.operands << accumulator
-		else
-			instruction.operands << accumulator
-			instruction.operands << memory
-		end
+		add_operands_by_direction_flag(instruction, memory, accumulator, instruction.bytes.first[1] ^ 1)
 	end
 	
 	def decode_AccReg(instruction)
@@ -83,15 +76,19 @@ module Decoder
 	
 	def decode_Short(instruction)
 		add_signed_immediate_byte_operand(instruction)
+		decode_display_for_signed_ip_offset_for instruction.operands.first
 	end
 	
 	def decode_Intra(instruction)
 		add_signed_immediate_word_operand(instruction)
+		decode_display_for_signed_ip_offset_for instruction.operands.first
 	end
 	
 	def decode_Inter(instruction)
 		add_immediate_word_operand(instruction)
 		add_immediate_word_operand(instruction)
+		segment_operand = instruction.operands[1]
+		segment_operand.string = "SEG: #{segment_operand}"
 	end
 	
 	def decode_Acc(instruction)
@@ -119,8 +116,82 @@ module Decoder
 		add_immediate_byte_operand(instruction)
 	end
 	
+	def decode_RegRM(instruction)
+		first_byte = instruction.bytes.first
+		width_bit = first_byte[0]
+		direction_bit = first_byte[1]
+		mod_rm_byte = fetch_byte(instruction)
+		
+		# Get operand determined by the mod r/m fields
+		rm_operand = mod_rm_operand_for(instruction, mod_rm_byte, width_bit)
+		
+		# Get the register operand
+		reg_index = (mod_rm_byte >> 3) & 0x07 # bits 3-5 determine register
+		reg_operand = (
+			if width_bit == 1
+				@register_operands_16[reg_index]
+			else
+				@register_operands_8[reg_index]
+			end
+		)
+		
+		add_operands_by_direction_flag(instruction, rm_operand, reg_operand, direction_bit)
+	end
+	
 	def decode_illegal_addr_mode
 		raise IllegalAddressingMode.new
+	end
+	
+	# -----------------------------------------------------------------
+	# Mod R/M Methods
+	# -----------------------------------------------------------------
+	
+	def mod_rm_operand_for(instruction, mod_rm_byte, width_bit)
+		mod = mod_rm_byte >> 6 # 7-8
+		rm = mod_rm_byte & 0x07 # bits 0-2
+		
+		case mod
+			# Zero displacement
+			when 0b00
+				unless rm == 0b110
+					rm_indexed_memory_operand_with_displacement(mod, rm, 0, width_bit)
+				else
+					# Stupid intel's exceptions - no index if rm = 0b110, just direct offset
+					offset = two_byte_displacement_for(instruction)
+					MemoryAccess.new(@ram, @ds.value, offset, (width_bit == 1 ? 16 : 8 ))
+				end
+			# Sign extended single byte as displacement
+			when 0b01
+				sign_extended_displacement = fetch_byte(instruction).to_fixed_size(8, true)
+				rm_indexed_memory_operand_with_displacement(mod, rm, sign_extended_displacement, width_bit)
+			# RM operand is a register operand
+			when 0b11
+				if width_bit == 1
+					@register_operands_16[rm]
+				else
+					@register_operands_8[rm]
+				end
+			# Displacement is the next two bytes
+			when 0b10
+				displacement = two_byte_displacement_for(instruction)
+				rm_indexed_memory_operand_with_displacement(mod, rm, displacement, width_bit)
+		end
+	end
+	
+	# Displacement is calculated as an offset in the current data segment with
+	# an index based on the R/M decoding.
+	def rm_indexed_memory_operand_with_displacement(mod, rm, displacement, width_bit)
+		rm_name, rm_indices = @rm_index_operands[rm]
+		bits = width_bit == 1 ? 16 : 8
+		index = rm_indices.inject(0) { |sum, register| sum + register.value }
+		address_string = "[#{rm_name} + #{displacement.to_s(16)}]"
+		MemoryAccess.new(@ram, @ds.value, index + displacement, bits, address_string)
+	end
+	
+	def two_byte_displacement_for(instruction)
+		byte0 = fetch_byte(instruction)
+		byte1 = fetch_byte(instruction)
+		Memory.word_from_little_endian_bytes(byte0, byte1)
 	end
 	
 	# -----------------------------------------------------------------
@@ -172,6 +243,38 @@ module Decoder
 	# Helper Methods
 	# -----------------------------------------------------------------
 	
+	def add_operands_by_direction_flag(instruction, operand1, reg_operand, direction_bit)
+		if direction_bit == 1
+			instruction.operands << reg_operand
+			instruction.operands << operand1
+		else
+			instruction.operands << operand1
+			instruction.operands << reg_operand
+		end
+	end
+	
+	def decode_display_for_signed_ip_offset_for(operand)
+		new_instruction_pointer = @ip.value + operand.value
+		operand.string = new_instruction_pointer.to_hex_string(4)
+	end
+	
+	# -----------------------------------------------------------------
+	# Setup Methods
+	# -----------------------------------------------------------------
+	
+	def preload_rm_index_operands
+		@rm_index_operands = [
+		                       [ "BX + SI", [@bx, @si] ],
+		                       [ "BX + DI", [@bx, @di] ],
+		                       [ "BP + SI", [@bp, @si] ],
+		                       [ "BP + DI", [@bp, @di] ],
+		                       [ "SI", [@si] ],
+		                       [ "DI", [@di] ],
+		                       [ "BP", [@bp] ],
+		                       [ "BX", [@bx] ]
+		                     ]
+	end
+	
 	def preload_register_operands
 		@register_operands_16 = [ @ax, @cx, @dx, @bx, @sp, @bp, @si, @di ].collect do |register|
 			RegisterAccess.new(register)
@@ -192,10 +295,6 @@ module Decoder
 			RegisterAccess.new(register)
 		end
 	end
-	
-	# -----------------------------------------------------------------
-	# OpCode Setup Methods
-	# -----------------------------------------------------------------
 	
 	def read_opcodes_from(file)
 		lines = file.readlines.map { |line| line.strip }

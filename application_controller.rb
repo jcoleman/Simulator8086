@@ -69,17 +69,17 @@ class ApplicationController
 		initialize_processor_with_hooks
 		
 		open_dialog = NSOpenPanel.openPanel
-		#runModalForDirectory:file:types:
 		if open_dialog.runModalForDirectory(nil, file:nil, types:["obj"]) == NSOKButton
 			file = open_dialog.filenames[0]
 			object = MemoryObject.new(File.new file)
 			@last_loaded_object = File.basename(file.to_s)
 			@object_file_label.setStringValue @last_loaded_object
+			
 			# Preload Sim86OS here
+			
 			@processor.load_object object
+			get_next_instruction
 		end
-		
-		get_next_instruction
 		
 		initialize_all_displays
 		refresh_all_displays(true)
@@ -199,36 +199,37 @@ class ApplicationController
 	end
 	
 	def prepare_for_execution
+		@execution_stopped = false
 		@executing = true
-		@start_menu_item.action = nil
-		@start_toolbar_item.action = nil
-		@step_instruction_button.action = nil
-		@single_step_menu_item.action = nil
+		@start_menu_item.action = ''
+		@start_toolbar_item.action = ''
+		@step_instruction_button.action = ''
+		@single_step_menu_item.action = ''
 		@stop_menu_item.action = 'stop_execution:'
 		@stop_toolbar_item.action = 'stop_execution:'
 	end
 	
 	def end_execution
-		@executing = false
+		@execution_stopped = true
 		@start_menu_item.action = 'start_execution:'
 		@start_toolbar_item.action = 'start_execution:'
 		@step_instruction_button.action = 'step_execute_instruction:'
 		@single_step_menu_item.action = 'step_execute_instruction:'
-		@stop_menu_item.action = nil
-		@stop_toolbar_item.action = nil
+		@stop_menu_item.action = ''
+		@stop_toolbar_item.action = ''
 	end
 	
 	def start_execution(sender)
 		prepare_for_execution
 		
-		@execution_time = nil
 		@thread = Thread.new do
-			@execution_time = Time.new
-			ret = nil
-			until @executing == false
+			execution_time = Time.new
+			while @executing && !@execution_stopped
 				process_instruction
+				puts @executing
 			end
-			puts "Execution cycle lasted #{Time.new - @execution_time} seconds."
+			puts "Execution cycle lasted #{Time.new - execution_time} seconds."
+			puts "Total instructions executed so far (per module load): #{@processor.instruction_count}"
 			end_execution
 			refresh_all_displays(true)
 			Thread.exit
@@ -240,11 +241,11 @@ class ApplicationController
 	end
 	
 	def get_next_instruction
-		begin
+		#begin
 			@next_instruction = @processor.decode(@processor.fetch)
-		rescue
-			@next_instruction = nil
-		end
+		#rescue
+		#	@next_instruction = nil
+		#end
 	end
 	
 	def process_instruction
@@ -289,6 +290,10 @@ class ApplicationController
 	
 	def applicationWillTerminate(notification)
 		Kernel.puts "\nApplication will terminate."
+	end
+	
+	def windowWillClose(notification)
+		NSApp.terminate self
 	end
 	
 end

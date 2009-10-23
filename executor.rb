@@ -50,15 +50,15 @@ module Executor
 	end
 	
 	def execute_JNE(operand)
-		jump_to_signed_displacement(operand) if @flags.value[ZERO_FLAG].zero? # Zero means not set
+		jump_conditionally_to_signed_displacement(operand, @flags.value[ZERO_FLAG].zero?) # Zero means not set
 	end
 	
 	def execute_JE(operand)
-		jump_to_signed_displacement(operand) unless @flags.value[ZERO_FLAG].zero? # Non-zero means set
+		jump_conditionally_to_signed_displacement(operand, @flags.value[ZERO_FLAG].zero?) # Non-zero means set
 	end
 	
 	def execute_JMP(operand)
-		jump_to_signed_displacement(operand)
+		jump_conditionally_to_signed_displacement(operand, true)
 	end
 	
 	def execute_JMPFAR(offset, segment)
@@ -75,8 +75,8 @@ module Executor
 	# Jump Helper Methods
 	# -----------------------------------------------------------------
 	
-	def jump_to_signed_displacement(operand)
-		@ip.value += operand.value
+	def jump_conditionally_to_signed_displacement(operand, condition)
+		@ip.value = @ip.value + operand.value if condition
 	end
 	
 	# -----------------------------------------------------------------
