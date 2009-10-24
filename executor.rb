@@ -60,33 +60,33 @@ module Executor
 	# Jump if the zero flag is set
 	# (from a math operation or comparing two numbers that are equal)
 	def execute_JNE(operand) # Same as the JNZ instruction
-		jump_conditionally_to_signed_displacement(operand, !(@flags.value[ZERO_FLAG].zero?)) # Zero means not set
+		jump_conditionally_to_signed_displacement(operand, (@flags.value[ZERO_FLAG].zero?)) # Zero means not set
 	end
 	
 	# Jump if the zero flag is not set
 	# (from a math operation or comparing two numbers that are unequal)
 	def execute_JE(operand) # Same as the JZ instruction
-		jump_conditionally_to_signed_displacement(operand, @flags.value[ZERO_FLAG].zero?) # Non-zero means set
+		jump_conditionally_to_signed_displacement(operand, !@flags.value[ZERO_FLAG].zero?) # Non-zero means set
 	end
 	
 	# Jump if the overflow flag is not set
 	def execute_JNO(operand)
-		jump_conditionally_to_signed_displacement(operand, !(@flags.value[OVERFLOW_FLAG].zero?)) # Zero means not set
+		jump_conditionally_to_signed_displacement(operand, (@flags.value[OVERFLOW_FLAG].zero?)) # Zero means not set
 	end
 	
 	# Jump if the overflow flag is set
 	def execute_JO(operand)
-		jump_conditionally_to_signed_displacement(operand, @flags.value[OVERFLOW_FLAG].zero?) # Non-zero means set
+		jump_conditionally_to_signed_displacement(operand, !@flags.value[OVERFLOW_FLAG].zero?) # Non-zero means set
 	end
 	
 	# Jump if the sign flag is not set
 	def execute_JNS(operand)
-		jump_conditionally_to_signed_displacement(operand, !(@flags.value[SIGN_FLAG].zero?)) # Zero means not set
+		jump_conditionally_to_signed_displacement(operand, (@flags.value[SIGN_FLAG].zero?)) # Zero means not set
 	end
 	
 	# Jump if the sign flag is set
 	def execute_JS(operand)
-		jump_conditionally_to_signed_displacement(operand, @flags.value[SIGN_FLAG].zero?) # Non-zero means set
+		jump_conditionally_to_signed_displacement(operand, !@flags.value[SIGN_FLAG].zero?) # Non-zero means set
 	end
 	
 	# Jump if the carry flag is set
