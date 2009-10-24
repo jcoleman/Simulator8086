@@ -1,7 +1,7 @@
 // !$*UTF8*$!
 {
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = Release;
+		activeBuildConfigurationName = Debug;
 		activeExecutable = C497B4BF105D102A00FFB668 /* MacRuby-Sim8086 */;
 		activeSDKPreference = macosx10.5;
 		activeTarget = 8D1107260486CEB800E47090 /* MacRuby-Sim8086 */;
@@ -125,9 +125,9 @@
 	};
 	C40A957C106D9C0600FA90B0 /* memory_stack.rb */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {767, 923}}";
+			sepNavIntBoundsRect = "{{0, 0}, {826, 858}}";
 			sepNavSelRange = "{628, 0}";
-			sepNavVisRange = "{0, 1282}";
+			sepNavVisRange = "{0, 905}";
 			sepNavWindowFrame = "{{38, 194}, {750, 558}}";
 		};
 	};
@@ -144,16 +144,16 @@
 	};
 	C40A9699107171DB00FA90B0 /* instruction.rb */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {856, 815}}";
+			sepNavIntBoundsRect = "{{0, 0}, {826, 503}}";
 			sepNavSelRange = "{319, 0}";
 			sepNavVisRange = "{0, 676}";
 		};
 	};
 	C40A97B31081110800FA90B0 /* 8086.OPS */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {856, 1976}}";
+			sepNavIntBoundsRect = "{{0, 0}, {847, 1989}}";
 			sepNavSelRange = "{1637, 0}";
-			sepNavVisRange = "{4824, 2438}";
+			sepNavVisRange = "{578, 3568}";
 		};
 	};
 	C40A9DEA10812BBA00FA90B0 /* PBXTextBookmark */ = {
@@ -195,9 +195,9 @@
 	};
 	C40A9E0810814F0B00FA90B0 /* executor.rb */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {826, 1196}}";
-			sepNavSelRange = "{475, 0}";
-			sepNavVisRange = "{1193, 1042}";
+			sepNavIntBoundsRect = "{{0, 0}, {847, 1742}}";
+			sepNavSelRange = "{1513, 0}";
+			sepNavVisRange = "{1208, 1538}";
 			sepNavWindowFrame = "{{153, 89}, {750, 558}}";
 		};
 	};
@@ -306,7 +306,7 @@
 		fRef = C4A5FD391063DC9900A43A26 /* decoder.rb */;
 		name = "decoder.rb: 201";
 		rLen = 0;
-		rLoc = 7139;
+		rLoc = 8313;
 		rType = 0;
 		vrLen = 1326;
 		vrLoc = 4368;
@@ -326,7 +326,7 @@
 		fRef = C497B532105E677300FFB668 /* processor.rb */;
 		name = "processor.rb: 101";
 		rLen = 0;
-		rLoc = 2578;
+		rLoc = 2561;
 		rType = 0;
 		vrLen = 863;
 		vrLoc = 2128;
@@ -425,17 +425,17 @@
 	};
 	C497B529105D79BD00FFB668 /* application_controller.rb */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1055, 3796}}";
-			sepNavSelRange = "{2681, 40}";
-			sepNavVisRange = "{2095, 953}";
+			sepNavIntBoundsRect = "{{0, 0}, {847, 3887}}";
+			sepNavSelRange = "{7068, 0}";
+			sepNavVisRange = "{6844, 1625}";
 			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
 		};
 	};
 	C497B532105E677300FFB668 /* processor.rb */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {826, 3172}}";
-			sepNavSelRange = "{2578, 0}";
-			sepNavVisRange = "{2141, 825}";
+			sepNavIntBoundsRect = "{{0, 0}, {847, 3159}}";
+			sepNavSelRange = "{1425, 0}";
+			sepNavVisRange = "{1365, 1843}";
 			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
 		};
 	};
@@ -449,15 +449,15 @@
 	};
 	C497B536105E682400FFB668 /* register.rb */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {767, 815}}";
+			sepNavIntBoundsRect = "{{0, 0}, {826, 572}}";
 			sepNavSelRange = "{73, 0}";
-			sepNavVisRange = "{0, 694}";
+			sepNavVisRange = "{17, 669}";
 		};
 	};
 	C497B538105E685000FFB668 /* storage_access.rb */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {826, 1430}}";
-			sepNavSelRange = "{78, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {826, 1495}}";
+			sepNavSelRange = "{366, 0}";
 			sepNavVisRange = "{161, 672}";
 			sepNavWindowFrame = "{{130, 110}, {750, 558}}";
 		};
@@ -492,9 +492,9 @@
 	};
 	C4A5FD391063DC9900A43A26 /* decoder.rb */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {826, 4108}}";
-			sepNavSelRange = "{4252, 0}";
-			sepNavVisRange = "{3618, 1373}";
+			sepNavIntBoundsRect = "{{0, 0}, {847, 4745}}";
+			sepNavSelRange = "{2402, 0}";
+			sepNavVisRange = "{2119, 1712}";
 		};
 	};
 	C4B0E4EF10920192004BEAA7 /* PBXTextBookmark */ = {
