@@ -50,7 +50,7 @@ module Executor
 	end
 	
 	def execute_JNE(operand)
-		jump_conditionally_to_signed_displacement(operand, @flags.value[ZERO_FLAG].zero?) # Zero means not set
+		jump_conditionally_to_signed_displacement(operand, !(@flags.value[ZERO_FLAG].zero?)) # Zero means not set
 	end
 	
 	def execute_JE(operand)
@@ -65,6 +65,12 @@ module Executor
 		
 	end
 	
+	def execute_LOOP(operand)
+		cx_counter = @register_operands_16[1]
+		perform_arithmetic_operation(cx_counter, cx_counter.value - 1)
+		jump_conditionally_to_signed_displacement(operand, !(cx_counter.value.zero?))
+	end
+	
 	def perform_arithmetic_operation(destination, expected_value)
 		actual = expected_value.to_fixed_size(destination.size, true)
 		set_arithmetic_flags_from(expected_value, actual)
@@ -76,7 +82,7 @@ module Executor
 	# -----------------------------------------------------------------
 	
 	def jump_conditionally_to_signed_displacement(operand, condition)
-		@ip.value = @ip.value + operand.value if condition
+		@ip.value += operand.value if condition
 	end
 	
 	# -----------------------------------------------------------------

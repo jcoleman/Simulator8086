@@ -76,12 +76,12 @@ module Decoder
 	
 	def decode_Short(instruction)
 		add_signed_immediate_byte_operand(instruction)
-		decode_display_for_signed_ip_offset_for instruction.operands.first
+		decode_display_for_signed_ip_offset_for instruction, instruction.operands.first
 	end
 	
 	def decode_Intra(instruction)
 		add_signed_immediate_word_operand(instruction)
-		decode_display_for_signed_ip_offset_for instruction.operands.first
+		decode_display_for_signed_ip_offset_for instruction, instruction.operands.first
 	end
 	
 	def decode_Inter(instruction)
@@ -253,8 +253,8 @@ module Decoder
 		end
 	end
 	
-	def decode_display_for_signed_ip_offset_for(operand)
-		new_instruction_pointer = @ip.value + operand.value
+	def decode_display_for_signed_ip_offset_for(instruction, operand)
+		new_instruction_pointer = current_ip_adjusted_for(instruction) + operand.value
 		operand.string = new_instruction_pointer.to_hex_string(4)
 	end
 	
