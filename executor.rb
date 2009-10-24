@@ -261,6 +261,7 @@ module Executor
 	
 	def execute_RET(operand=nil)
 		@ip.value = pop_stack_word
+		@sp.value += operand.value if operand
 	end
 	
 	# -----------------------------------------------------------------
