@@ -9,6 +9,7 @@
 class MemoryAccess
   attr_writer :ram
   attr_accessor :reference, :size
+	attr_reader :segment, :offset
   
   def initialize(ram, segment, offset, size, string = nil)
     @ram = ram

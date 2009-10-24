@@ -13,14 +13,65 @@ module Executor
 	
 	include ProcessorConstants
 	
+	# Swap the values in the two operands
 	def execute_XCHG(left, right)
 		left.value, right.value = right.value, left.value
 	end
 	
+	# Copy the value in source to destination
 	def execute_MOV(destination, source)
 		destination.value = source.value
 	end
 	
+	# Load effective address (offset in DS) of the memory operand into the register
+	def execute_LEA(register, memory_operand)
+		register.value = memory_operand.offset
+	end
+	
+	# Convert word to double word
+	def execute_CWD(accumulator)
+		@dx.value = (accumulator.value < 0x8000 ? 0x0000 : 0xFFFF)
+	end
+	
+	# Convert byte to word
+	def execute_CBW(accumulator)
+		@ax.high = (@ax.low < 0x80 ? 0x00 : 0xFF)
+	end
+	
+	# -----------------------------------------------------------------
+	# Processor Control Instructions
+	# -----------------------------------------------------------------
+	
+	def execute_CLC
+		@flags.set_bit_at(CARRY_FLAG, 0)
+	end
+	
+	def execute_STC
+		@flags.set_bit_at(CARRY_FLAG, 1)
+	end
+	
+	def execute_CLD
+		@flags.set_bit_at(DIRECTION_FLAG, 0)
+	end
+	
+	def execute_STD
+		@flags.set_bit_at(DIRECTION_FLAG, 1)
+	end
+	
+	def execute_CLI
+		@flags.set_bit_at(INTERRUPT_FLAG, 0)
+	end
+	
+	def execute_STI
+		@flags.set_bit_at(INTERRUPT_FLAG, 1)
+	end
+	
+	# Toggle the state of the carry flag
+	def execute_CMC
+		@flags.set_bit_at(CARRY_FLAG, @flags[CARRY_FLAG] ^ 1)
+	end
+	
+	# Enter the halt state
 	def execute_HLT
 		@state = :HALT_STATE
 	end
@@ -30,11 +81,11 @@ module Executor
 	# -----------------------------------------------------------------
 	
 	def execute_ADD(destination, source)
-		perform_arithmetic_operation(destination, destination.value + source.value)
+		perform_arithmetic_operation_storing_result(destination, destination.value + source.value)
 	end
 	
 	def execute_SUB(destination, source)
-		perform_arithmetic_operation(destination, destination.value - source.value)
+		perform_arithmetic_operation_storing_result(destination, destination.value - source.value)
 	end
 	
 	def execute_AND(destination, source)
@@ -45,12 +96,26 @@ module Executor
 		destination.value |= source.value
 	end
 	
+	def execute_XOR(destination, source)
+		destination.value ^= source.value
+	end
+	
 	def execute_INC(operand)
-		perform_arithmetic_operation(operand, operand.value + 1)
+		perform_arithmetic_operation_storing_result(operand, operand.value + 1)
 	end
 	
 	def execute_DEC(operand)
-		perform_arithmetic_operation(operand, operand.value - 1)
+		perform_arithmetic_operation_storing_result(operand, operand.value - 1)
+	end
+	
+	# Perform subtraction but do not store the result in destination
+	def execute_CMP(destination, source)
+		perform_arithmetic_operation(destination, destination.value - source.value)
+	end
+	
+	# Perform bitwise AND but do not store the result in destination
+	def execute_TEST(destination, source)
+		perform_arithmetic_operation(destination, destination.value & source.value)
 	end
 	
 	# -----------------------------------------------------------------
@@ -66,7 +131,7 @@ module Executor
 	# Jump if the zero flag is not set
 	# (from a math operation or comparing two numbers that are unequal)
 	def execute_JE(operand) # Same as the JZ instruction
-		jump_conditionally_to_signed_displacement(operand, !@flags.value[ZERO_FLAG].zero?) # Non-zero means set
+		jump_conditionally_to_signed_displacement(operand, @flags.value[ZERO_FLAG] == 1) # Non-zero means set
 	end
 	
 	# Jump if the overflow flag is not set
@@ -76,7 +141,7 @@ module Executor
 	
 	# Jump if the overflow flag is set
 	def execute_JO(operand)
-		jump_conditionally_to_signed_displacement(operand, !@flags.value[OVERFLOW_FLAG].zero?) # Non-zero means set
+		jump_conditionally_to_signed_displacement(operand, @flags.value[OVERFLOW_FLAG] == 1) # Non-zero means set
 	end
 	
 	# Jump if the sign flag is not set
@@ -86,13 +151,13 @@ module Executor
 	
 	# Jump if the sign flag is set
 	def execute_JS(operand)
-		jump_conditionally_to_signed_displacement(operand, !@flags.value[SIGN_FLAG].zero?) # Non-zero means set
+		jump_conditionally_to_signed_displacement(operand, @flags.value[SIGN_FLAG] == 1) # Non-zero means set
 	end
 	
 	# Jump if the carry flag is set
 	# (compare operation: either below || not above or equal)
 	def execute_JNAE(operand) # Same as the JC and JB instructions
-		jump_conditionally_to_signed_displacement(operand, !(@flags.value[CARRY_FLAG].zero?)) # Zero means not set
+		jump_conditionally_to_signed_displacement(operand, @flags.value[CARRY_FLAG] == 1) # Zero means not set
 	end
 	
 	# Jump if the carry flag is not set
@@ -118,7 +183,7 @@ module Executor
 	# Jump if the parity flag is not set
 	# (parity is odd)
 	def execute_JNP(operand) # Same as the JPO instruction
-		jump_conditionally_to_signed_displacement(operand, !(@flags.value[PARITY_FLAG].zero?)) # Zero means not set
+		jump_conditionally_to_signed_displacement(operand, @flags.value[PARITY_FLAG] == 1) # Zero means not set
 	end
 	
 	# Jump if the parity flag is set
@@ -171,10 +236,21 @@ module Executor
 		
 	end
 	
+	# Decrement CX and jump to operand offset until CX == 0
 	def execute_LOOP(operand)
-		cx_counter = @register_operands_16[1]
-		perform_arithmetic_operation(cx_counter, cx_counter.value - 1)
-		jump_conditionally_to_signed_displacement(operand, !(cx_counter.value.zero?))
+		jump_conditionally_to_signed_displacement(operand, !(perform_counting_loop.zero?))
+	end
+	
+	# Decrement CX and jump to operand offset until CX == 0 and ZF is not set
+	def execute_LOOPE(operand) # Same as the LOOPZ instruction
+		condition = perform_counting_loop.zero? && @flags[ZERO_FLAG].zero?
+		jump_conditionally_to_signed_displacement(operand, condition)
+	end
+	
+	# Decrement CX and jump to operand offset until CX == 0 and ZF is set
+	def execute_LOOPNE(operand) # Same as the LOOPNZ instruction
+		condition = perform_counting_loop.zero? && @flags[ZERO_FLAG] == 1
+		jump_conditionally_to_signed_displacement(operand, condition)
 	end
 	
 	def execute_CALL(operand)
@@ -208,13 +284,18 @@ module Executor
 	end
 	
 	# -----------------------------------------------------------------
-	# Arithemetic Methods
+	# Arithemetic Helper Methods
 	# -----------------------------------------------------------------
+	
+	def perform_arithmetic_operation_storing_result(destination, expected_value)
+		actual = expected_value.to_fixed_size(destination.size, true)
+		set_arithmetic_flags_from(expected_value, actual)
+		destination.value = actual
+	end
 	
 	def perform_arithmetic_operation(destination, expected_value)
 		actual = expected_value.to_fixed_size(destination.size, true)
 		set_arithmetic_flags_from(expected_value, actual)
-		destination.value = actual
 	end
 	
 	# -----------------------------------------------------------------
@@ -223,6 +304,11 @@ module Executor
 	
 	def jump_conditionally_to_signed_displacement(operand, condition)
 		@ip.value += operand.value if condition
+	end
+	
+	def perform_counting_loop
+		cx_counter = @register_operands_16[1]
+		perform_arithmetic_operation_storing_result(cx_counter, cx_counter.value - 1)
 	end
 	
 	# -----------------------------------------------------------------
