@@ -226,7 +226,6 @@ class ApplicationController
 			execution_time = Time.new
 			while @executing && !@execution_stopped
 				process_instruction
-				puts @executing
 			end
 			puts "Execution cycle lasted #{Time.new - execution_time} seconds."
 			puts "Total instructions executed so far (per module load): #{@processor.instruction_count}"

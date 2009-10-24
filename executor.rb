@@ -57,6 +57,12 @@ module Executor
 		jump_conditionally_to_signed_displacement(operand, @flags.value[ZERO_FLAG].zero?) # Non-zero means set
 	end
 	
+	def execute_JCXZ(operand)
+		# Another example of Intel's crazy CISC
+		# Jump if CX is zero
+		jump_conditionally_to_signed_displacement(operand, @cx.value.zero?)
+	end
+	
 	def execute_JMP(operand)
 		jump_conditionally_to_signed_displacement(operand, true)
 	end
@@ -70,6 +76,36 @@ module Executor
 		perform_arithmetic_operation(cx_counter, cx_counter.value - 1)
 		jump_conditionally_to_signed_displacement(operand, !(cx_counter.value.zero?))
 	end
+	
+	def execute_CALL(operand)
+		# Executing an intra-segment call
+		push_stack_word @ip.value
+		jump_conditionally_to_signed_displacement(operand, true)
+	end
+	
+	def execute_RET(operand=nil)
+		@ip.value = pop_stack_word
+	end
+	
+	def execute_PUSH(operand)
+		push_stack_word operand.value
+	end
+	
+	def execute_POP(operand)
+		operand.value = pop_stack_word
+	end
+	
+	def execute_PUSHF(operand)
+		push_stack_word operand.value
+	end
+	
+	def execute_POPF(operand)
+		operand.value = pop_stack_word
+	end
+	
+	# -----------------------------------------------------------------
+	# Arithemetic Methods
+	# -----------------------------------------------------------------
 	
 	def perform_arithmetic_operation(destination, expected_value)
 		actual = expected_value.to_fixed_size(destination.size, true)
