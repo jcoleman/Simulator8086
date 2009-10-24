@@ -92,12 +92,8 @@ module Decoder
 	end
 	
 	def decode_Acc(instruction)
-		# Accumulator register, 8 or 16 bits
-		if instruction.bytes.first[0] == 1 # W-bit
-			instruction.operands << @register_operands_16[0] # AX register
-		else
-			instruction.operands << @register_operands_8[0] # AL register
-		end
+		# Accumulator register on 16 bit support
+		instruction.operands << @register_operands_16[0] # AX register
 	end
 	
 	def decode_Segment(instruction)
