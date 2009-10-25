@@ -71,6 +71,17 @@ module Executor
 		@flags.set_bit_at(CARRY_FLAG, @flags[CARRY_FLAG] ^ 1)
 	end
 	
+	# Store AH into FLAGS
+	def execute_SAHF(flags_register)
+		# Mask the extra bits in AH for data consistency
+		@flags.low = (@ax.high & 0b11010101)
+	end
+	
+	# Load AH from FLAGS
+	def execute_LAHF(flags_register)
+		@ax.high = @flags.low
+	end
+	
 	# Enter the halt state
 	def execute_HLT
 		@state = :HALT_STATE
