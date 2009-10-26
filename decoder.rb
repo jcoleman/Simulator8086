@@ -75,13 +75,13 @@ module Decoder
 	end
 	
 	def decode_Short(instruction)
-		add_signed_immediate_byte_operand(instruction)
-		decode_display_for_signed_ip_offset_for instruction, instruction.operands.first
+		add_sign_extended_immediate_byte_to_word_ip_offset_operand(instruction)
+		#decode_display_for_signed_ip_offset_for instruction, instruction.operands.first
 	end
 	
 	def decode_Intra(instruction)
-		add_signed_immediate_word_operand(instruction)
-		decode_display_for_signed_ip_offset_for instruction, instruction.operands.first
+		add_signed_immediate_word_ip_offset_operand(instruction)
+		#decode_display_for_signed_ip_offset_for instruction, instruction.operands.first
 	end
 	
 	def decode_Inter(instruction)
@@ -158,7 +158,7 @@ module Decoder
 				end
 			# Sign extended single byte as displacement
 			when 0b01
-				sign_extended_displacement = fetch_byte(instruction).to_fixed_size(8, true)
+				sign_extended_displacement = fetch_byte(instruction).sign_extend_8_to_16_bits
 				rm_indexed_memory_operand_with_displacement(mod, rm, sign_extended_displacement, width_bit)
 			# RM operand is a register operand
 			when 0b11
@@ -222,13 +222,16 @@ module Decoder
 		instruction.operands << ImmediateValue.new(fetch_byte(instruction), 8)
 	end
 	
-	def add_signed_immediate_word_operand(instruction)
-		word_value = fetch_word_value(instruction).to_fixed_size(16, true)
-		instruction.operands << ImmediateValue.new(word_value, 16)
+	def add_signed_immediate_word_ip_offset_operand(instruction)
+		word_value = fetch_word_value(instruction)
+		adjusted_offset = @ip.value + instruction.bytes.size + word_value
+		instruction.operands << ImmediateValue.new(adjusted_offset.to_unsigned_16_bits, 16)
 	end
 	
-	def add_signed_immediate_byte_operand(instruction)
-		instruction.operands << ImmediateValue.new(fetch_byte(instruction).to_fixed_size(8, true), 8)
+	def add_sign_extended_immediate_byte_to_word_ip_offset_operand(instruction)
+		word_value = fetch_byte(instruction).sign_extend_8_to_16_bits
+		adjusted_offset = @ip.value + instruction.bytes.size + word_value
+		instruction.operands << ImmediateValue.new(adjusted_offset.to_unsigned_16_bits, 16)
 	end
 	
 	def fetch_word_value(instruction)

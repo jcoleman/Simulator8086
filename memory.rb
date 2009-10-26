@@ -28,16 +28,27 @@ class Memory
   
   def set_byte_at(reference, value)
     raise MemoryAccessViolation.new unless reference < @bytes_array.size
-    @bytes_array[reference] = value.to_fixed_size(8)
+    @bytes_array[reference] = value.to_unsigned_8_bits
   end
   
   def set_word_at(reference, value)
     raise MemoryAccessViolation.new unless reference + 1 < @bytes_array.size
-		value = value.to_fixed_size(16)
+		value = value.to_unsigned_16_bits
     @bytes_array[reference] = value & 0x00FF
 		@bytes_array[reference + 1] = value >> 8
   end
   
+	def set_direct_byte_at(reference, value)
+    raise MemoryAccessViolation.new unless reference < @bytes_array.size
+    @bytes_array[reference] = value
+  end
+  
+  def set_direct_word_at(reference, value)
+    raise MemoryAccessViolation.new unless reference + 1 < @bytes_array.size
+    @bytes_array[reference] = value & 0x00FF
+		@bytes_array[reference + 1] = value >> 8
+  end
+	
   # Note: set_bytes_at will not correct endianess! Do not use unless
   # 'bytes' is already stored in the correct endian format
   def set_bytes_at(reference, bytes)

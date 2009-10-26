@@ -33,8 +33,17 @@ class MemoryAccess
         @ram.set_byte_at(reference, value)
       when 16
         @ram.set_word_at(reference, value)
-    end 
+    end
   end
+	
+	def direct_value=(value)
+		case @size
+      when 8
+        @ram.set_direct_byte_at(reference, value)
+      when 16
+        @ram.set_direct_word_at(reference, value)
+    end
+	end
 	
 	def reference
 		Memory.absolute_address_for @segment, @offset
@@ -80,6 +89,17 @@ class RegisterAccess
     end
   end
   
+	def direct_value=(value)
+		case @section
+      when nil
+        @register.direct_value = value
+      when :high
+        @register.high = value
+      when :low
+        @register.low = value
+    end
+	end
+	
   def size
     unless @section
       16

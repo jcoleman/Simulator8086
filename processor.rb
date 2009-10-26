@@ -110,7 +110,7 @@ class Processor
 	# Retrieve the current value of the instruction pointer adjusted for the
 	# instruction currently in the fetch, decode, execute cycle.
 	def current_ip_adjusted_for(instruction)
-		(@ip.value + instruction.bytes.size).to_fixed_size(16)
+		(@ip.value + instruction.bytes.size).to_unsigned_16_bits
 	end
 	
 	# -----------------------------------------------------------------

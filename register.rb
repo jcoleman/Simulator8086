@@ -31,7 +31,11 @@ class Register
   end
 	
 	def value=(value)
-		@value = value.to_fixed_size(16)
+		@value = value.to_unsigned_16_bits
+	end
+	
+	def direct_value=(value)
+		@value = value
 	end
 	
 	def set_bit_at(bit_index, value)

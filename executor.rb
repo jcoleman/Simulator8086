@@ -300,13 +300,13 @@ module Executor
 	# -----------------------------------------------------------------
 	
 	def perform_arithmetic_operation_storing_result(destination, expected_value)
-		actual = expected_value.to_fixed_size(destination.size, true)
+		actual = expected_value.to_fixed_size_signed(destination.size)
 		set_arithmetic_flags_from(expected_value, actual)
-		destination.value = actual
+		destination.direct_value = actual
 	end
 	
 	def perform_arithmetic_operation(destination, expected_value)
-		actual = expected_value.to_fixed_size(destination.size, true)
+		actual = expected_value.to_fixed_size_signed(destination.size)
 		set_arithmetic_flags_from(expected_value, actual)
 	end
 	
@@ -315,7 +315,7 @@ module Executor
 	# -----------------------------------------------------------------
 	
 	def jump_conditionally_to_signed_displacement(operand, condition)
-		@ip.value += operand.value if condition
+		@ip.direct_value = operand.value if condition
 	end
 	
 	def perform_counting_loop
