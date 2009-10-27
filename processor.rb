@@ -39,7 +39,6 @@ class Processor
 		
 		instruction_segment = @cs.value
 		instruction_pointer = @ip.value
-		instruction_address = Memory.absolute_address_for instruction_segment, instruction_pointer
 		
 		instruction = Instruction.new(instruction_segment, instruction_pointer)
 		fetch_byte(instruction)
@@ -51,12 +50,11 @@ class Processor
 	end
 	
 	def fetch_byte(instruction)
-		instruction_segment = @cs.value
 		# Pointer factors in the number of bytes already fetched for this instruction.
 		# This allows support for a peek ahead decode of the next instruction.
 		instruction_pointer = current_ip_adjusted_for(instruction)
 		
-		instruction_address = Memory.absolute_address_for instruction_segment, instruction_pointer
+		instruction_address = @cs.displacement + instruction_pointer
 		byte = @ram.byte_at instruction_address
 		instruction.bytes << byte
 		return byte
@@ -153,10 +151,10 @@ class Processor
     @dx = Register.new :dx
     @di = Register.new :di
     @si = Register.new :si
-    @cs = Register.new :cs
-    @ds = Register.new :ds
-    @es = Register.new :es
-    @ss = Register.new :ss
+    @cs = SegmentRegister.new :cs
+    @ds = SegmentRegister.new :ds
+    @es = SegmentRegister.new :es
+    @ss = SegmentRegister.new :ss
     @ip = Register.new :ip
     @bp = Register.new :bp
     @sp = Register.new :sp

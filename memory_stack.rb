@@ -48,7 +48,7 @@ module MemoryStack
 	end
 	
 	def stack_pointer
-		Memory.absolute_address_for stack_segment, stack_offset
+		@ss.displacement + stack_offset
 	end
 	
 	def stack_offset
@@ -60,7 +60,7 @@ module MemoryStack
 	end
 	
 	def stack_segment_top
-		stack_segment + MAX_STACK_INDEX
+		(stack_segment << 4) + MAX_STACK_INDEX
 	end
 	
 	class StackOverflowError < StandardError; end

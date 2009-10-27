@@ -26,11 +26,11 @@ module Decoder
 		if instruction.bytes.first[0] == 1 # W-bit
 			# Word value
 			accumulator = @register_operands_16[0] # AX register operand
-			memory = MemoryAccess.new(@ram, @ds.value, offset, 16)
+			memory = MemoryAccess.new(@ram, @ds.displacement, offset, 16)
 		else
 			# Byte value
 			accumulator = @register_operands_8[0] # AL register
-			memory = MemoryAccess.new(@ram, @ds.value, offset, 8)
+			memory = MemoryAccess.new(@ram, @ds.displacement, offset, 8)
 		end
 		
 		add_operands_by_direction_flag(instruction, memory, accumulator, instruction.bytes.first[1] ^ 1)
@@ -154,7 +154,7 @@ module Decoder
 				else
 					# Stupid intel's exceptions - no index if rm = 0b110, just direct offset
 					offset = two_byte_displacement_for(instruction)
-					MemoryAccess.new(@ram, @ds.value, offset, (width_bit == 1 ? 16 : 8 ))
+					MemoryAccess.new(@ram, @ds.displacement, offset, (width_bit == 1 ? 16 : 8 ))
 				end
 			# Sign extended single byte as displacement
 			when 0b01
@@ -181,7 +181,7 @@ module Decoder
 		bits = width_bit == 1 ? 16 : 8
 		index = rm_indices.inject(0) { |sum, register| sum + register.value }
 		address_string = "[#{rm_name} + #{displacement.to_s(16)}]"
-		MemoryAccess.new(@ram, @ds.value, index + displacement, bits, address_string)
+		MemoryAccess.new(@ram, @ds.displacement, index + displacement, bits, address_string)
 	end
 	
 	def two_byte_displacement_for(instruction)

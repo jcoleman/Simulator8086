@@ -46,3 +46,15 @@ class Register
 		end
 	end
 end
+
+class SegmentRegister < Register
+	attr_reader :displacement
+	
+	def value=(value)
+		super(value)
+		# Cache the effective displacement when this register is used
+		# for addressing segments
+		@displacement = (@value << 4)
+		return @value
+	end
+end

@@ -9,11 +9,11 @@
 class MemoryAccess
   attr_writer :ram
   attr_accessor :reference, :size
-	attr_reader :segment, :offset
+	attr_reader :displacement, :offset
   
-  def initialize(ram, segment, offset, size, string = nil)
+  def initialize(ram, displacement, offset, size, string = nil)
     @ram = ram
-    @offset, @segment = offset, segment
+    @offset, @displacement = offset, displacement
     @size = size
 		@string = string
   end
@@ -46,7 +46,11 @@ class MemoryAccess
 	end
 	
 	def reference
-		Memory.absolute_address_for @segment, @offset
+		@displacement + @offset
+	end
+	
+	def segment
+		displacement >> 4
 	end
 	
 	def to_s
