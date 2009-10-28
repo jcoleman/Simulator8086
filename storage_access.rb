@@ -8,14 +8,15 @@
 
 class MemoryAccess
   attr_writer :ram
-  attr_accessor :reference, :size
-	attr_reader :displacement, :offset
+  attr_accessor :reference, :size, :string
+	attr_reader :displacement, :offset, :type
   
   def initialize(ram, displacement, offset, size, string = nil)
     @ram = ram
     @offset, @displacement = offset, displacement
     @size = size
 		@string = string
+		@type = :memory
   end
   
   def value
@@ -26,6 +27,10 @@ class MemoryAccess
         @ram.word_at(reference)
     end
   end
+	
+	def next_word_value
+		@ram.word_at(reference + 2)
+	end
   
   def value=(value)
     case @size
@@ -65,10 +70,12 @@ end
 
 class RegisterAccess
   attr_accessor :register, :section
+	attr_reader :type
   
   def initialize(register, section = nil)
     @register = register
     @section = section
+		@type = :register
   end
   
   def value
@@ -126,14 +133,16 @@ end
 
 
 class ImmediateValue
-  attr_reader :value, :size
-	attr_writer :string
+  attr_reader :value, :size, :type
+	# next_word_value is only used to support the Inter addressing mode
+	attr_writer :string, :next_word_value
   
   def initialize(value, size)
     @value = value
 		@size = size
 		@string = nil
-  end
+		@type = :immediate
+	end
 	
 	def to_s
 		unless @string

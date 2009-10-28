@@ -86,9 +86,15 @@ module Decoder
 	
 	def decode_Inter(instruction)
 		add_immediate_word_operand(instruction)
-		add_immediate_word_operand(instruction)
-		segment_operand = instruction.operands[1]
-		segment_operand.string = "SEG: #{segment_operand}"
+		instruction.operands[0].next_word_value = fetch_word_value(instruction)
+	end
+	
+	def decode_XferInd(instruction)
+		first_byte = instruction.bytes.first
+		mod_rm_byte = retrieve_second_byte_for(instruction)
+		
+		# Get operand determined by the mod r/m fields
+		instruction.operands << mod_rm_operand_for(instruction, mod_rm_byte, 1)
 	end
 	
 	def decode_Acc(instruction)
@@ -132,6 +138,83 @@ module Decoder
 		)
 		
 		add_operands_by_direction_flag(instruction, rm_operand, reg_operand, direction_bit)
+	end
+	
+	def decode_Type3(instruction)
+		instruction.operands << ImmediateValue.new(3, 16)
+	end
+	
+	def decode_RM(instruction)
+		first_byte = instruction.bytes.first
+		width_bit = first_byte[0]
+		mod_rm_byte = retrieve_second_byte_for(instruction)
+		
+		# Get operand determined by the mod r/m fields
+		operand = mod_rm_operand_for(instruction, mod_rm_byte, width_bit)
+		instruction.operands << operand
+		
+		if operand.type == :memory
+			# Specialize the decoding since a single memory operand
+			# has no other indicator as to the width of access
+			size = width_bit.zero? ? 'BYTE ' : 'WORD '
+			string = operand.to_s
+			operand.string = string.insert 0, size
+		end
+	end
+	
+	def decode_SegRM(instruction)
+		first_byte = instruction.bytes.first
+		direction_bit = first_byte[1]
+		mod_rm_byte = fetch_byte(instruction)
+		
+		# Get operand determined by the mod r/m fields
+		rm_operand = mod_rm_operand_for(instruction, mod_rm_byte, width_bit)
+		
+		# Get the segment register operand
+		seg_index = (mod_rm_byte >> 3) & 0x03 # bits 3-4 determine segment register
+		seg_operand = @segment_register_operands[seg_index]
+		
+		add_operands_by_direction_flag(instruction, rm_operand, seg_operand, direction_bit)
+	end
+	
+	def decode_RMImm(instruction)
+		first_byte = instruction.bytes.first
+		width_bit = first_byte[0]
+		direction_bit = first_byte[1]
+		mod_rm_byte = retrieve_second_byte_for(instruction)
+		
+		# Get operand determined by the mod r/m fields
+		rm_operand = mod_rm_operand_for(instruction, mod_rm_byte, width_bit)
+		
+		# Now handle the immediate operand
+		unless instruction.bytes.first == 0x83
+			# Normal W-bit immediate mode decoding
+			if width_bit == 1
+				add_immediate_word_operand(instruction) # Word value
+			else
+				add_immediate_byte_operand(instruction) # Byte value
+			end
+		else
+			# Intel's special S-bit case
+			sign_extended_byte = fetch_byte(instruction).sign_extend_8_to_16_bits
+			instruction.operands << ImmediateValue.new(sign_extended_byte, 16)
+		end
+	end
+	
+	def decode_AccPort(instruction)
+		
+	end
+	
+	def decode_AccVPort(instruction)
+		
+	end
+	
+	def decode_AccBase(instruction)
+		
+	end
+	
+	def decode_String(instruction)
+		
 	end
 	
 	def decode_illegal_addr_mode
@@ -257,6 +340,13 @@ module Decoder
 		operand.string = new_instruction_pointer.to_hex_string(4)
 	end
 	
+	# Helper method to fetch or return if already fetched the second byte
+	# of an instruction - specifically for retrieving the Mod R/M byte
+	# whether we are in the primary or secondary opcode tables
+	def retrieve_second_byte_for(instruction)
+		instruction.bytes[1] || fetch_byte(instruction)
+	end
+	
 	# -----------------------------------------------------------------
 	# Setup Methods
 	# -----------------------------------------------------------------
@@ -319,10 +409,13 @@ module Decoder
 					opcode = :execute_illegal_opcode
 					addr_mode = :decode_illegal_addr_mode
 				end
-				code_row << { :opcode => opcode,
-											:decode_with => "decode_#{addr_mode}".to_sym,
-				              :addr_mode => addr_mode,
-				              :execute_with => "execute_#{opcode}".to_sym }
+				
+				code_row << [ { :opcode => opcode,
+												:decode_with => "decode_#{addr_mode}".to_sym,
+												:addr_mode => addr_mode,
+												:execute_with => "execute_#{opcode}".to_sym },
+											opcode_index
+				            ]
 				index += 2
 			end
 			

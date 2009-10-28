@@ -46,20 +46,20 @@ module Extension
 		end
 		
 		def to_unsigned_16_bits
-			self & 0x10000 - 1
+			self & 0xFFFF
 		end
 		
 		def to_unsigned_8_bits
-			self & 0b100000000 - 1
+			self & 0xFF
 		end
 		
 		def to_signed_16_bits
-			unsigned = self & 0x10000 - 1
+			unsigned = self & 0xFFFF
 			unsigned[7] == 1 ? unsigned - 0x10000 : unsigned
 		end
 		
 		def to_signed_8_bits
-			unsigned = self & 0b100000000 - 1
+			unsigned = self & 0xFF
 			unsigned[7] == 1 ? unsigned - 0b100000000 : unsigned
 		end
 		

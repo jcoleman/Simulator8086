@@ -70,8 +70,15 @@ class Processor
 		hi = initial_byte >> 4
 		lo = initial_byte & 0x0F
 		
-		# Look up the two nybbles to decode the opcode and addressing mode
-		instruction.initialize_op_and_addr_mode(@primary_opcode_table[hi][lo])
+		# Decode the opcode and addressing mode by table lookup
+		op_addr_mode, op_code_index = @primary_opcode_table[hi][lo]
+		if op_code_index < 64
+			# One of Intel's crazy secondary decode table instructions
+			second_byte = fetch_byte(instruction)
+			column_index = (second_byte >> 3) & 0x07 # Bits 3-5
+			op_addr_mode = @secondary_opcode_table[op_code_index][column_index][0]
+		end
+		instruction.initialize_op_and_addr_mode(op_addr_mode)
 		
 		# Decode the addressing mode to gather the operands
 		self.send(instruction.decoder_function, instruction)
