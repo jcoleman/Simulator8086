@@ -25,7 +25,14 @@ module Executor
 	
 	# Load effective address (offset in DS) of the memory operand into the register
 	def execute_LEA(register, memory_operand)
-		register.value = memory_operand.offset
+		register.direct_value = memory_operand.offset
+	end
+	
+	# Load effective address: the offset the memory operand holds into the
+	# destination and the segment (the next word in memory) into ES
+	def execute_LES(destination, memory_operand)
+		destination.direct_value = memory_operand.value
+		@es.direct_value = memory_operand.next_word_value
 	end
 	
 	# Convert word to double word
@@ -239,12 +246,13 @@ module Executor
 		jump_conditionally_to_signed_displacement(operand, @cx.value.zero?)
 	end
 	
-	def execute_JMP(operand)
-		jump_conditionally_to_signed_displacement(operand, true)
+	def execute_JMP(offset)
+		jump_conditionally_to_signed_displacement(offset, true)
 	end
 	
-	def execute_JMPFAR(offset, segment)
-		
+	def execute_JMPFAR(pointer)
+		@cs.direct_value = pointer.next_word_value # Segment
+		jump_conditionally_to_signed_displacement(pointer, true) # Offset
 	end
 	
 	# Decrement CX and jump to operand offset until CX == 0
@@ -264,15 +272,35 @@ module Executor
 		jump_conditionally_to_signed_displacement(operand, condition)
 	end
 	
-	def execute_CALL(operand)
+	def execute_CALL(offset)
 		# Executing an intra-segment call
 		push_stack_word @ip.value
-		jump_conditionally_to_signed_displacement(operand, true)
+		jump_conditionally_to_signed_displacement(offset, true)
+	end
+	
+	def execute_CALFAR(pointer)
+		# Executing an inter-segment call
+		push_stack_word @cs.value # Save current segment
+		@cs.direct_value = pointer.next_word_value # Setup new segment
+		push_stack_word @ip.value # Save current IP
+		jump_conditionally_to_signed_displacement(pointer.value, true) # Goto new IP
 	end
 	
 	def execute_RET(operand=nil)
-		@ip.value = pop_stack_word
+		@ip.direct_value = pop_stack_word
 		@sp.value += operand.value if operand
+	end
+	
+	def execute_RETFAR(operand=nil)
+		@ip.direct_value = pop_stack_word
+		@cs.direct_value = pop_stack_word
+		@sp.value += operand.value if operand
+	end
+	
+	def execute_IRET
+		@ip.direct_value = pop_stack_word
+		@cs.direct_value = pop_stack_word
+		@flags.direct_value = pop_stack_word
 	end
 	
 	# -----------------------------------------------------------------
