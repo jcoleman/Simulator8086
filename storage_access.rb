@@ -8,7 +8,7 @@
 
 class MemoryAccess
   attr_writer :ram
-  attr_accessor :reference, :size, :string
+  attr_accessor :reference, :size, :string, :v_bit
 	attr_reader :displacement, :offset, :type
   
   def initialize(ram, displacement, offset, size, string = nil)
@@ -69,7 +69,7 @@ end
 
 
 class RegisterAccess
-  attr_accessor :register, :section
+  attr_accessor :register, :section, :v_bit
 	attr_reader :type
   
   def initialize(register, section = nil)
@@ -134,9 +134,10 @@ end
 
 class ImmediateValue
   attr_reader :value, :size, :type
+	attr_writer :string
 	# next_word_value is only used to support the Inter addressing mode
-	attr_writer :string, :next_word_value
-  
+  attr_accessor :next_word_value
+	
   def initialize(value, size)
     @value = value
 		@size = size

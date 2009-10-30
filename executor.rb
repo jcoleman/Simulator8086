@@ -98,30 +98,32 @@ module Executor
 	# Arithemetic Instructions
 	# -----------------------------------------------------------------
 	
+	# Destination is set to the destination value plus the source value
 	def execute_ADD(destination, source)
 		perform_arithmetic_operation_storing_result(destination, destination.value + source.value)
 	end
 	
+	# Destination is set to the destination value plus the source value + CF
+	def execute_ADC(destination, source)
+		perform_arithmetic_operation_storing_result(destination, destination.value + source.value + @flags[CARRY_FLAG])
+	end
+	
+	# Destination is set to the destination value minus the source value
 	def execute_SUB(destination, source)
 		perform_arithmetic_operation_storing_result(destination, destination.value - source.value)
 	end
 	
-	def execute_AND(destination, source)
-		destination.value &= source.value
+	# Destination is set to the destination value minus the source value - CF
+	def execute_SBB(destination, source)
+		perform_arithmetic_operation_storing_result(destination, destination.value - source.value - @flags[CARRY_FLAG])
 	end
 	
-	def execute_OR(destination, source)
-		destination.value |= source.value
-	end
-	
-	def execute_XOR(destination, source)
-		destination.value ^= source.value
-	end
-	
+	# Adds one to the operand
 	def execute_INC(operand)
 		perform_arithmetic_operation_storing_result(operand, operand.value + 1)
 	end
 	
+	# Subtracts one from the operand
 	def execute_DEC(operand)
 		perform_arithmetic_operation_storing_result(operand, operand.value - 1)
 	end
@@ -131,9 +133,75 @@ module Executor
 		perform_arithmetic_operation(destination, destination.value - source.value)
 	end
 	
+	# -----------------------------------------------------------------
+	# Bit Instructions
+	# -----------------------------------------------------------------
+	
+	# Destination is set to the destination value bitwise ANDed with the source value
+	def execute_AND(destination, source)
+		destination.value &= source.value
+	end
+	
 	# Perform bitwise AND but do not store the result in destination
 	def execute_TEST(destination, source)
 		perform_arithmetic_operation(destination, destination.value & source.value)
+	end
+	
+	# Destination is set to the destination value bitwise ORed with the source value
+	def execute_OR(destination, source)
+		destination.value |= source.value
+	end
+	
+	# Destination is set to the destination value bitwise XORed with the source value
+	def execute_XOR(destination, source)
+		destination.value ^= source.value
+	end
+	
+	# Performs a one's complement on the operand (flips the bits)
+	def execute_NOT(operand)
+		operand.value ~= operand.value
+	end
+	
+	# Performs a two's complement on the operand (flips the bits and adds one)
+	# practically this means the negation of the number
+	def execute_NEG(operand)
+		operand.value = 0 - operand
+	end
+	
+	def execute_SHR(operand)
+		operand.direct_value = operand.value >> bit_movement_count_for(operand)
+	end
+	
+	def execute_SHL(operand)
+		operand.value = operand.value << bit_movement_count_for(operand)
+	end
+	
+	def execute_SAR(operand)
+		size = operand.size
+		sign = operand.value[size - 1]
+		bit_moves = bit_movement_count_for(operand)
+		value = operand.value >> bit_moves
+		if sign == 1
+			mask = size == 16 ? 0xFFFF : 0xFF
+			mask = (mask >> size - bit_moves) << bit_moves
+		end
+		operand.direct_value = value | mask
+	end
+	
+	def execute_ROR(operand)
+		
+	end
+	
+	def execute_ROL(operand)
+		
+	end
+	
+	def execute_RCR(operand)
+		
+	end
+	
+	def execute_RCL(operand)
+		
 	end
 	
 	# -----------------------------------------------------------------
@@ -357,6 +425,16 @@ module Executor
 	
 	def set_arithmetic_flags_from(expected, actual)
 		@flags.set_bit_at(ZERO_FLAG, (actual.zero? ? 1 : 0))
+	end
+	
+	# -----------------------------------------------------------------
+	# Helper Methods
+	# -----------------------------------------------------------------
+	
+	# Used by the shift and rotate instructions to determine the number
+	# of bits to shift/rotate.
+	def bit_movement_count_for(operand)
+		operand.v_bit.zero? ? 1 : @cx.low
 	end
 	
 	class InvalidInstructionCode < StandardError; end
