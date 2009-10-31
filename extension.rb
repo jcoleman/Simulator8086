@@ -70,6 +70,10 @@ module Extension
 				self - 0b100000000
 			end
 		end
+		
+		def each_bit(bit_count, &block)
+			bit_count.times { |index| block.call(self[index]) }
+		end
 	end
 	
 end

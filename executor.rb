@@ -100,37 +100,37 @@ module Executor
 	
 	# Destination is set to the destination value plus the source value
 	def execute_ADD(destination, source)
-		perform_arithmetic_operation_storing_result(destination, destination.value + source.value)
+		perform_arithmetic_operation_storing_result(source, destination, destination.value + source.value)
 	end
 	
 	# Destination is set to the destination value plus the source value + CF
 	def execute_ADC(destination, source)
-		perform_arithmetic_operation_storing_result(destination, destination.value + source.value + @flags[CARRY_FLAG])
+		perform_arithmetic_operation_storing_result(source, destination, destination.value + source.value + @flags[CARRY_FLAG])
 	end
 	
 	# Destination is set to the destination value minus the source value
 	def execute_SUB(destination, source)
-		perform_arithmetic_operation_storing_result(destination, destination.value - source.value)
+		perform_arithmetic_operation_storing_result(source, destination, destination.value - source.value)
 	end
 	
 	# Destination is set to the destination value minus the source value - CF
 	def execute_SBB(destination, source)
-		perform_arithmetic_operation_storing_result(destination, destination.value - source.value - @flags[CARRY_FLAG])
+		perform_arithmetic_operation_storing_result(source, destination, destination.value - source.value - @flags[CARRY_FLAG])
 	end
 	
 	# Adds one to the operand
 	def execute_INC(operand)
-		perform_arithmetic_operation_storing_result(operand, operand.value + 1)
+		perform_arithmetic_operation_storing_result(operand, operand, operand.value + 1)
 	end
 	
 	# Subtracts one from the operand
 	def execute_DEC(operand)
-		perform_arithmetic_operation_storing_result(operand, operand.value - 1)
+		perform_arithmetic_operation_storing_result(operand, operand, operand.value - 1)
 	end
 	
 	# Perform subtraction but do not store the result in destination
 	def execute_CMP(destination, source)
-		perform_arithmetic_operation(destination, destination.value - source.value)
+		perform_arithmetic_operation(source, destination, destination.value - source.value)
 	end
 	
 	# -----------------------------------------------------------------
@@ -139,44 +139,53 @@ module Executor
 	
 	# Destination is set to the destination value bitwise ANDed with the source value
 	def execute_AND(destination, source)
+		# all flag are undefined
 		destination.value &= source.value
 	end
 	
 	# Perform bitwise AND but do not store the result in destination
 	def execute_TEST(destination, source)
-		perform_arithmetic_operation(destination, destination.value & source.value)
+		# TODO: all flags affected but AF
+		destination.value &= source.value
 	end
 	
 	# Destination is set to the destination value bitwise ORed with the source value
 	def execute_OR(destination, source)
+		# TODO: all flags affected but AF
 		destination.value |= source.value
 	end
 	
 	# Destination is set to the destination value bitwise XORed with the source value
 	def execute_XOR(destination, source)
+		# TODO: all flags affected but AF
 		destination.value ^= source.value
 	end
 	
 	# Performs a one's complement on the operand (flips the bits)
 	def execute_NOT(operand)
-		operand.value ~= operand.value
+		# no flags affected
+		operand.value = ~operand.value
 	end
 	
 	# Performs a two's complement on the operand (flips the bits and adds one)
 	# practically this means the negation of the number
 	def execute_NEG(operand)
+		# TODO: all flags affected
 		operand.value = 0 - operand
 	end
 	
 	def execute_SHR(operand)
+		# TODO: all flags affected but AF
 		operand.direct_value = operand.value >> bit_movement_count_for(operand)
 	end
 	
 	def execute_SHL(operand)
+		# TODO: all flags affected but AF
 		operand.value = operand.value << bit_movement_count_for(operand)
 	end
 	
 	def execute_SAR(operand)
+		# TODO: all flags affected but AF
 		size = operand.size
 		sign = operand.value[size - 1]
 		bit_moves = bit_movement_count_for(operand)
@@ -395,15 +404,15 @@ module Executor
 	# Arithemetic Helper Methods
 	# -----------------------------------------------------------------
 	
-	def perform_arithmetic_operation_storing_result(destination, expected_value)
+	def perform_arithmetic_operation_storing_result(source, destination, expected_value)
 		actual = expected_value.to_fixed_size_signed(destination.size)
-		set_arithmetic_flags_from(expected_value, actual)
+		set_arithmetic_flags_from(source.value, destination.value, expected_value, actual, destination.size)
 		destination.direct_value = actual
 	end
 	
-	def perform_arithmetic_operation(destination, expected_value)
+	def perform_arithmetic_operation(source, destination, expected_value)
 		actual = expected_value.to_fixed_size_signed(destination.size)
-		set_arithmetic_flags_from(expected_value, actual)
+		set_arithmetic_flags_from(source.value, destination.value, expected_value, actual, destination.size)
 	end
 	
 	# -----------------------------------------------------------------
@@ -416,15 +425,52 @@ module Executor
 	
 	def perform_counting_loop
 		cx_counter = @register_operands_16[1]
-		perform_arithmetic_operation_storing_result(cx_counter, cx_counter.value - 1)
+		perform_arithmetic_operation_storing_result(cx_counter, cx_counter, cx_counter.value - 1)
 	end
 	
 	# -----------------------------------------------------------------
 	# Flag Handling Methods
 	# -----------------------------------------------------------------
 	
-	def set_arithmetic_flags_from(expected, actual)
-		@flags.set_bit_at(ZERO_FLAG, (actual.zero? ? 1 : 0))
+	def set_arithmetic_flags_from(source_value, destination_value, expected_value, actual_value, size)
+		msb_index = size - 1
+		set_zero_flag_from actual_value
+		set_sign_flag_from actual_value, msb_index
+		set_parity_flag_from actual_value, size
+		set_overflow_flag_from source_value, destination_value, actual_value, msb_index
+		set_carry_flag_from expected_value, size
+	end
+	
+	def set_zero_flag_from(actual_value)
+		@flags.set_bit_at(ZERO_FLAG, (actual_value.zero? ? 1 : 0))
+	end
+	
+	def set_sign_flag_from(actual_value, msb_index)
+		@flags.set_bit_at(SIGN_FLAG, actual_value[msb_index])
+	end
+	
+	def set_overflow_flag_from(source_value, destination_value, actual_value, msb)
+		# Detects if a signed operation overflowed (wrapped around - 
+		# operand signs were the same, but result's sign is different )
+		overflow_flag = ( (source_value[msb] == destination_value[msb]) && (actual_value[msb] != source_value[msb]) ? 1 : 0 )
+		@flags.set_bit_at(OVERFLOW_FLAG, overflow_flag)
+	end
+	
+	def set_parity_flag_from(actual_value, size)
+		# Determine the parity (whether number of set bits is odd or even)
+		bits_set = 1 # Start at one because the PF is 1 if even and 0 if odd
+		actual_value.each_bit(size) { |bit| bits_set += bit }
+		@flags.set_bit_at(PARITY_FLAG, bits_set & 1)
+	end
+	
+	def set_carry_flag_from(expected_value, size)
+		@flags.set_bit_at(CARRY_FLAG, (
+			if size == 16
+				expected_value > 0xFFFF || expected_value < 0 ? 1 : 0
+			else
+				expected_value > 0xFF || expected_value < 0 ? 1 : 0
+			end
+		))
 	end
 	
 	# -----------------------------------------------------------------
