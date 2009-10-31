@@ -40,7 +40,7 @@ class Register
 	
 	def set_bit_at(bit_index, value)
 		if value.zero?
-			@value &= (0xFFFE << bit_index)
+			@value &= (0xFFFF7FFF >> (15 - bit_index))
 		else
 			@value |= (0x0001 << bit_index)
 		end
