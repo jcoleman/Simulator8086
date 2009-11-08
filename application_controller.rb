@@ -30,6 +30,7 @@ class ApplicationController
 		@update_checksums = true
 		@update_all_displays = true
 		@preload_os = true
+		@log_to_database = false
 		@registers_display_base = 16
 	end
 	
@@ -49,6 +50,14 @@ class ApplicationController
 	def submit_checksums_to_db(sender)
 		db = SimulatorDatabase.new("css.cs.bju.edu", 1433, "sim86", "sim86fall2009", "jcole358")
 		db.insert_checksums @last_loaded_object, @processor.registers_checksum, @processor.memory_checksum
+	end
+	
+	def submit_results_to_db(sender)
+		db = SimulatorDatabase.new("css.cs.bju.edu", 1433, "sim86", "sim86fall2009", "jcole358")
+		#insert_results(object_name, instruction_count, disassembly, addr_mode, registers, ram_checksum)
+		instruction = @instruction_display_source.executed_instructions[-1]
+		disassembly = instruction[:address].to_s << ' ' << instruction[:raw_instruction].to_s << ' ' << instruction[:assembly_instruction].to_s << ' ' << instruction[:mode].to_s
+		db.insert_results @last_loaded_object, @processor.instruction_count, disassembly, @processor.addr_modes[instruction[:mode].to_sym].to_s, @processor.registers.collect { |reg| reg.value }, @processor.memory_checksum
 	end
 	
 	def reset_simulator(sender)
@@ -97,6 +106,7 @@ class ApplicationController
 			refresh_checksum_display
 			refresh_flags_display
 			refresh_memory_display
+			refresh_stack_display
 			refresh_instruction_display
 			refresh_next_instruction_display
 		end
@@ -195,7 +205,12 @@ class ApplicationController
 	
 	def should_update_displays(sender)
 		@update_all_displays = !@update_all_displays
-		sender.setTitle((@update_all_displays ? "Disable " : "Enable ") + "Disable Updates")
+		sender.setTitle((@update_all_displays ? "Disable " : "Enable ") + "Display Updates")
+	end
+	
+	def should_log_to_database(sender)
+		@log_to_database = !@log_to_database
+		sender.setTitle((@log_to_database ? "Disable " : "Enable ") + "DB Logging")
 	end
 	
 	def prepare_for_execution
@@ -249,6 +264,7 @@ class ApplicationController
 	
 	def process_instruction
 		@processor.execute(@next_instruction)
+		submit_results_to_db(nil) if @log_to_database
 		@executing = @processor.state == :EXECUTION_STATE
 		get_next_instruction
 		refresh_next_instruction_display if @should_update_displays

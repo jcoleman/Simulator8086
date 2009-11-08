@@ -427,6 +427,7 @@ module Decoder
 	end
 	
 	def read_symbols_from(lines)
+		@addr_modes = {}
 		ops_symbols = {}
 		lines.each do |line|
 			unless line.empty?
@@ -434,6 +435,8 @@ module Decoder
 				key = ($2).to_i
 				symbol = ($1).to_sym
 				ops_symbols[key] = { :symbol => symbol, :description => $3 }
+				
+				@addr_modes[symbol] = key if key < 30
 			end
 		end
 		
