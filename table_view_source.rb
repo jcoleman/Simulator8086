@@ -75,10 +75,6 @@ module TableViewSource
 		attr_accessor :executed_instructions
 		
 		def initialize
-			#{ address:"0000:1135",
-			#  raw_instruction:"8D160810",
-			#  assembly_instruction:"LEA    DX,[1008]",
-			#  mode:"RegRM" }
 			@executed_instructions = []
 		end
 		

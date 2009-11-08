@@ -50,6 +50,11 @@ end
 class SegmentRegister < Register
 	attr_reader :displacement
 	
+	def initialize(name, value = 0)
+    super(name, value)
+		@displacement = (@value << 4)
+  end
+	
 	def value=(value)
 		super(value)
 		# Cache the effective displacement when this register is used

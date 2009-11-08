@@ -7,8 +7,8 @@
 #
 
 class MemoryAccess
-  attr_writer :ram
-  attr_accessor :reference, :size, :string, :v_bit
+  attr_writer :ram, :string
+  attr_accessor :reference, :size, :v_bit
 	attr_reader :displacement, :offset, :type
   
   def initialize(ram, displacement, offset, size, string = nil)
@@ -70,6 +70,7 @@ end
 
 class RegisterAccess
   attr_accessor :register, :section, :v_bit
+	attr_writer :string
 	attr_reader :type
   
   def initialize(register, section = nil)
@@ -120,6 +121,8 @@ class RegisterAccess
   end
 	
 	def to_s
+		return @string if @string
+		
 		register_name = @register.name.to_s
 		case @section
 			when :high

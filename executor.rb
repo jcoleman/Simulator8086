@@ -45,6 +45,11 @@ module Executor
 		@ax.high = (@ax.low < 0x80 ? 0x00 : 0xFF)
 	end
 	
+	def execute_XLAT
+		operand = MemoryAccess.new(@ram, @ds.displacement, @bx.value + @ax.low, 8)
+		@ax.low = operand.value
+	end
+	
 	# -----------------------------------------------------------------
 	# Processor Control Instructions
 	# -----------------------------------------------------------------
@@ -139,26 +144,30 @@ module Executor
 	
 	# Destination is set to the destination value bitwise ANDed with the source value
 	def execute_AND(destination, source)
-		# all flag are undefined
+		# all flags are affected except AF is undefined
 		destination.value &= source.value
+		set_logical_flags_from destination.value, destination.size
 	end
 	
 	# Perform bitwise AND but do not store the result in destination
 	def execute_TEST(destination, source)
-		# TODO: all flags affected but AF
+		# all flags are affected except AF is undefined
 		destination.value &= source.value
+		set_logical_flags_from destination.value, destination.size
 	end
 	
 	# Destination is set to the destination value bitwise ORed with the source value
 	def execute_OR(destination, source)
-		# TODO: all flags affected but AF
+		# all flags are affected except AF is undefined
 		destination.value |= source.value
+		set_logical_flags_from destination.value, destination.size
 	end
 	
 	# Destination is set to the destination value bitwise XORed with the source value
 	def execute_XOR(destination, source)
-		# TODO: all flags affected but AF
+		# all flags are affected except AF is undefined
 		destination.value ^= source.value
+		set_logical_flags_from destination.value, destination.size
 	end
 	
 	# Performs a one's complement on the operand (flips the bits)
@@ -170,22 +179,31 @@ module Executor
 	# Performs a two's complement on the operand (flips the bits and adds one)
 	# practically this means the negation of the number
 	def execute_NEG(operand)
-		# TODO: all flags affected
-		operand.value = 0 - operand
+		# all flags affected
+		perform_arithmetic_operation_storing_result(operand, operand, 0 - operand.value)
 	end
 	
+	# Shift the operand's value to the right
 	def execute_SHR(operand)
-		# TODO: all flags affected but AF
-		operand.direct_value = operand.value >> bit_movement_count_for(operand)
+		# all flags are affected except AF is undefined
+		count = bit_movement_count_for(operand)
+		value = operand.value >> count
+		set_shift_or_rotate_flags_from(value, value, operand.value[count - 1], operand.size)
+		operand.direct_value = value
 	end
 	
-	def execute_SHL(operand)
-		# TODO: all flags affected but AF
-		operand.value = operand.value << bit_movement_count_for(operand)
+	# Shift the operand's value to the left
+	def execute_SHL(operand) # Same instruction as SAL
+		# all flags are affected except AF is undefined
+		expected_value = operand.value << bit_movement_count_for(operand)
+		operand.value = expected_value
+		size = operand.size
+		set_shift_or_rotate_flags_from(operand.value, expected_value, expected_value[size], size)
 	end
 	
+	# Shift arithmetic right (essentially sign extend the result from the original msb)
 	def execute_SAR(operand)
-		# TODO: all flags affected but AF
+		# TODO: all flags are affected except AF is undefined
 		size = operand.size
 		sign = operand.value[size - 1]
 		bit_moves = bit_movement_count_for(operand)
@@ -193,24 +211,29 @@ module Executor
 		if sign == 1
 			mask = size == 16 ? 0xFFFF : 0xFF
 			mask = (mask >> size - bit_moves) << bit_moves
+			value |= mask
 		end
-		operand.direct_value = value | mask
+		operand.direct_value = value
 	end
 	
+	# Rotate the operand's value right
 	def execute_ROR(operand)
-		
+		# affects CF and OF flags
 	end
 	
+	# Rotate the operand's value left
 	def execute_ROL(operand)
-		
+		# affects CF and OF flags
 	end
 	
+	# Rotate the operand's value right through the carry flag
 	def execute_RCR(operand)
-		
+		# affects CF and OF flags
 	end
 	
+	# Rotate the operand's value left through the carry flag
 	def execute_RCL(operand)
-		
+		# affects CF and OF flags
 	end
 	
 	# -----------------------------------------------------------------
@@ -317,16 +340,18 @@ module Executor
 		jump_conditionally_to_signed_displacement(operand, is_greater_than)
 	end
 	
+	# Jump if CX is zero
 	def execute_JCXZ(operand)
-		# Another example of Intel's crazy CISC
-		# Jump if CX is zero
+		# Another example of Intel's crazy CISC philosophy
 		jump_conditionally_to_signed_displacement(operand, @cx.value.zero?)
 	end
 	
+	# Unconditional jump within the current segment
 	def execute_JMP(offset)
 		jump_conditionally_to_signed_displacement(offset, true)
 	end
 	
+	# Unconditional jump to a different segment
 	def execute_JMPFAR(pointer)
 		@cs.direct_value = pointer.next_word_value # Segment
 		jump_conditionally_to_signed_displacement(pointer, true) # Offset
@@ -349,31 +374,34 @@ module Executor
 		jump_conditionally_to_signed_displacement(operand, condition)
 	end
 	
+	# Intra-segment call
 	def execute_CALL(offset)
-		# Executing an intra-segment call
 		push_stack_word @ip.value
 		jump_conditionally_to_signed_displacement(offset, true)
 	end
 	
+	# Inter-segment call
 	def execute_CALFAR(pointer)
-		# Executing an inter-segment call
 		push_stack_word @cs.value # Save current segment
 		@cs.direct_value = pointer.next_word_value # Setup new segment
 		push_stack_word @ip.value # Save current IP
 		jump_conditionally_to_signed_displacement(pointer.value, true) # Goto new IP
 	end
 	
+	# Return near (within current segment) with optional pop
 	def execute_RET(operand=nil)
 		@ip.direct_value = pop_stack_word
 		@sp.value += operand.value if operand
 	end
 	
+	# Return far (to different segment) with optional pop
 	def execute_RETFAR(operand=nil)
 		@ip.direct_value = pop_stack_word
 		@cs.direct_value = pop_stack_word
 		@sp.value += operand.value if operand
 	end
 	
+	# Return after interrupt (return far with flags restoration)
 	def execute_IRET
 		@ip.direct_value = pop_stack_word
 		@cs.direct_value = pop_stack_word
@@ -425,7 +453,7 @@ module Executor
 	
 	def perform_counting_loop
 		cx_counter = @register_operands_16[1]
-		perform_arithmetic_operation_storing_result(cx_counter, cx_counter, cx_counter.value - 1)
+		cx_counter.value -= 1
 	end
 	
 	# -----------------------------------------------------------------
@@ -439,6 +467,23 @@ module Executor
 		set_parity_flag_from actual_value, size
 		set_overflow_flag_from source_value, destination_value, actual_value, msb_index
 		set_carry_flag_from expected_value, size
+	end
+	
+	def set_logical_flags_from(actual_value, size)
+		@flags.set_bit_at(OVERFLOW_FLAG, 0)
+		@flags.set_bit_at(CARRY_FLAG, 0)
+		set_zero_flag_from actual_value
+		set_sign_flag_from actual_value, size - 1
+		set_parity_flag_from actual_value, size
+	end
+	
+	def set_shift_or_rotate_flags_from(actual_value, expected_value, carry_flag, size)
+		msb = size - 1
+		@flags.set_bit_at(OVERFLOW_FLAG, actual_value[msb] == expected_value[msb] ? 0 : 1)
+		@flags.set_bit_at(CARRY_FLAG, carry_flag)
+		set_zero_flag_from actual_value
+		set_sign_flag_from actual_value, msb
+		set_parity_flag_from actual_value, size
 	end
 	
 	def set_zero_flag_from(actual_value)
@@ -480,7 +525,9 @@ module Executor
 	# Used by the shift and rotate instructions to determine the number
 	# of bits to shift/rotate.
 	def bit_movement_count_for(operand)
-		operand.v_bit.zero? ? 1 : @cx.low
+		count = operand.v_bit.zero? ? 1 : @cx.low
+		operand.string = operand.to_s << ", ${count}"
+		return count
 	end
 	
 	class InvalidInstructionCode < StandardError; end

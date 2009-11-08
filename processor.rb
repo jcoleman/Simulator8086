@@ -15,7 +15,7 @@ class Processor
 	include Executor
 	include MemoryStack
 	
-	attr_reader :ram, :ss, :sp, :state, :instruction_count
+	attr_reader :ram, :ss, :sp, :state, :instruction_count, :registers, :addr_modes
 	
   def initialize(base_path)
 		@base_path = base_path
