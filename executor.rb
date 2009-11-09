@@ -105,36 +105,43 @@ module Executor
 	
 	# Destination is set to the destination value plus the source value
 	def execute_ADD(destination, source)
+		set_auxiliary_carry_flag_from destination.value.lowest_4_bits + source.value.lowest_4_bits
 		perform_arithmetic_operation_storing_result(source, destination, destination.value + source.value)
 	end
 	
 	# Destination is set to the destination value plus the source value + CF
 	def execute_ADC(destination, source)
+		set_auxiliary_carry_flag_from destination.value.lowest_4_bits + source.value.lowest_4_bits + @flags[CARRY_FLAG]
 		perform_arithmetic_operation_storing_result(source, destination, destination.value + source.value + @flags[CARRY_FLAG])
 	end
 	
 	# Destination is set to the destination value minus the source value
 	def execute_SUB(destination, source)
+		set_auxiliary_carry_flag_from destination.value.lowest_4_bits - source.value.lowest_4_bits
 		perform_arithmetic_operation_storing_result(source, destination, destination.value - source.value)
 	end
 	
 	# Destination is set to the destination value minus the source value - CF
 	def execute_SBB(destination, source)
+		set_auxiliary_carry_flag_from destination.value.lowest_4_bits - source.value.lowest_4_bits - @flags[CARRY_FLAG]
 		perform_arithmetic_operation_storing_result(source, destination, destination.value - source.value - @flags[CARRY_FLAG])
 	end
 	
 	# Adds one to the operand
 	def execute_INC(operand)
-		perform_arithmetic_operation_storing_result(operand, operand, operand.value + 1)
+		set_auxiliary_carry_flag_from operand.value.lowest_4_bits + 1
+		perform_inc_or_dec_storing_result(operand, operand, operand.value + 1)
 	end
 	
 	# Subtracts one from the operand
 	def execute_DEC(operand)
-		perform_arithmetic_operation_storing_result(operand, operand, operand.value - 1)
+		set_auxiliary_carry_flag_from operand.value.lowest_4_bits - 1
+		perform_inc_or_dec_storing_result(operand, operand, operand.value - 1)
 	end
 	
 	# Perform subtraction but do not store the result in destination
 	def execute_CMP(destination, source)
+		set_auxiliary_carry_flag_from destination.value.lowest_4_bits - source.value.lowest_4_bits
 		perform_arithmetic_operation(source, destination, destination.value - source.value)
 	end
 	
@@ -180,6 +187,7 @@ module Executor
 	# practically this means the negation of the number
 	def execute_NEG(operand)
 		# all flags affected
+		set_auxiliary_carry_flag_from 0 - operand.value.lowest_4_bits
 		perform_arithmetic_operation_storing_result(operand, operand, 0 - operand.value)
 	end
 	
@@ -438,6 +446,12 @@ module Executor
 		destination.direct_value = actual
 	end
 	
+	def perform_inc_or_dec_storing_result(source, destination, expected_value)
+		actual = expected_value.to_fixed_size_signed(destination.size)
+		set_arithmetic_flags_except_cf_from(source.value, destination.value, expected_value, actual, destination.size)
+		destination.direct_value = actual
+	end
+	
 	def perform_arithmetic_operation(source, destination, expected_value)
 		actual = expected_value.to_fixed_size_signed(destination.size)
 		set_arithmetic_flags_from(source.value, destination.value, expected_value, actual, destination.size)
@@ -467,6 +481,14 @@ module Executor
 		set_parity_flag_from actual_value, size
 		set_overflow_flag_from source_value, destination_value, actual_value, msb_index
 		set_carry_flag_from expected_value, size
+	end
+	
+	def set_arithmetic_flags_except_cf_from(source_value, destination_value, expected_value, actual_value, size)
+		msb_index = size - 1
+		set_zero_flag_from actual_value
+		set_sign_flag_from actual_value, msb_index
+		set_parity_flag_from actual_value, size
+		set_overflow_flag_from source_value, destination_value, actual_value, msb_index
 	end
 	
 	def set_logical_flags_from(actual_value, size)
@@ -516,6 +538,14 @@ module Executor
 				expected_value > 0xFF || expected_value < 0 ? 1 : 0
 			end
 		))
+	end
+	
+	# 
+	# Note: the expected value is the result of the operation
+	# applied to the lowest 3 bits of each operand.
+	def set_auxiliary_carry_flag_from(expected_value)
+		puts "AuxCarryFlag: #{expected_value > 0b111 ? 1 : 0} for expected_value: #{expected_value}"
+		@flags.set_bit_at(AUX_CARRY_FLAG, expected_value > 0xF ? 1 : 0)
 	end
 	
 	# -----------------------------------------------------------------

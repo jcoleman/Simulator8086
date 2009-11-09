@@ -71,6 +71,10 @@ module Extension
 			end
 		end
 		
+		def lowest_4_bits
+			self & 0xF
+		end
+		
 		def each_bit(bit_count, &block)
 			bit_count.times { |index| block.call(self[index]) }
 		end
