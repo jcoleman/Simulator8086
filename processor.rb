@@ -15,7 +15,7 @@ class Processor
 	include Executor
 	include MemoryStack
 	
-	attr_reader :ram, :ss, :sp, :state, :instruction_count, :registers, :addr_modes
+	attr_reader :ram, :ss, :sp, :bx, :cx, :state, :instruction_count, :registers, :addr_modes
 	
   def initialize(base_path)
 		@base_path = base_path
@@ -24,6 +24,8 @@ class Processor
     initialize_memory
 		initialize_decoder
 		initialize_callbacks
+		
+		SpeakerSimulator.initialize_audio_system
 		
 		@state = :READY_STATE
 		@instruction_count = 0

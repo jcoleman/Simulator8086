@@ -35,6 +35,8 @@
 		C40A9DD71081253D00FA90B0 /* Vendor in Resources */ = {isa = PBXBuildFile; fileRef = C40A9BBC1081253D00FA90B0 /* Vendor */; };
 		C40A9DE61081260B00FA90B0 /* Spec in Resources */ = {isa = PBXBuildFile; fileRef = C40A9DE41081260B00FA90B0 /* Spec */; };
 		C40A9E0910814F0B00FA90B0 /* executor.rb in Resources */ = {isa = PBXBuildFile; fileRef = C40A9E0810814F0B00FA90B0 /* executor.rb */; };
+		C42A5BD910ABA9CE00AB9701 /* io_access.rb in Resources */ = {isa = PBXBuildFile; fileRef = C42A5BD810ABA9CE00AB9701 /* io_access.rb */; };
+		C42A5BF510ABABAA00AB9701 /* sine_generator.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C42A5BF410ABABAA00AB9701 /* sine_generator.bundle */; };
 		C44F72D2106A9020008628C6 /* table_view_source.rb in Resources */ = {isa = PBXBuildFile; fileRef = C44F72D1106A9020008628C6 /* table_view_source.rb */; };
 		C497B52A105D79BD00FFB668 /* application_controller.rb in Resources */ = {isa = PBXBuildFile; fileRef = C497B529105D79BD00FFB668 /* application_controller.rb */; };
 		C497B533105E677300FFB668 /* processor.rb in Resources */ = {isa = PBXBuildFile; fileRef = C497B532105E677300FFB668 /* processor.rb */; };
@@ -78,6 +80,8 @@
 		C40A9BBC1081253D00FA90B0 /* Vendor */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Vendor; sourceTree = "<group>"; };
 		C40A9DE41081260B00FA90B0 /* Spec */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Spec; sourceTree = "<group>"; };
 		C40A9E0810814F0B00FA90B0 /* executor.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = executor.rb; sourceTree = "<group>"; };
+		C42A5BD810ABA9CE00AB9701 /* io_access.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = io_access.rb; sourceTree = "<group>"; };
+		C42A5BF410ABABAA00AB9701 /* sine_generator.bundle */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = sine_generator.bundle; sourceTree = "<group>"; };
 		C44F72D1106A9020008628C6 /* table_view_source.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = table_view_source.rb; sourceTree = "<group>"; };
 		C497B529105D79BD00FFB668 /* application_controller.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = application_controller.rb; sourceTree = "<group>"; };
 		C497B532105E677300FFB668 /* processor.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = processor.rb; sourceTree = "<group>"; };
@@ -212,6 +216,7 @@
 				C40A96501070E46F00FA90B0 /* processor_constants.rb */,
 				C40A9699107171DB00FA90B0 /* instruction.rb */,
 				C40A9E0810814F0B00FA90B0 /* executor.rb */,
+				C42A5BD810ABA9CE00AB9701 /* io_access.rb */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -219,6 +224,7 @@
 		C497B53C105E68B600FFB668 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				C42A5BF410ABABAA00AB9701 /* sine_generator.bundle */,
 				C497B53D105E68C000FFB668 /* utility.rb */,
 				C497B53F105E68D400FFB668 /* extension.rb */,
 			);
@@ -298,6 +304,8 @@
 				C40A9DD71081253D00FA90B0 /* Vendor in Resources */,
 				C40A9DE61081260B00FA90B0 /* Spec in Resources */,
 				C40A9E0910814F0B00FA90B0 /* executor.rb in Resources */,
+				C42A5BD910ABA9CE00AB9701 /* io_access.rb in Resources */,
+				C42A5BF510ABABAA00AB9701 /* sine_generator.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

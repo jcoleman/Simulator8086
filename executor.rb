@@ -111,8 +111,8 @@ module Executor
 	
 	# Destination is set to the destination value plus the source value + CF
 	def execute_ADC(destination, source)
-		set_auxiliary_carry_flag_from destination.value.lowest_4_bits + source.value.lowest_4_bits + @flags[CARRY_FLAG]
-		perform_arithmetic_operation_storing_result(source, destination, destination.value + source.value + @flags[CARRY_FLAG])
+		set_auxiliary_carry_flag_from destination.value.lowest_4_bits + source.value.lowest_4_bits + @flags.value[CARRY_FLAG]
+		perform_arithmetic_operation_storing_result(source, destination, destination.value + source.value + @flags.value[CARRY_FLAG])
 	end
 	
 	# Destination is set to the destination value minus the source value
@@ -123,8 +123,8 @@ module Executor
 	
 	# Destination is set to the destination value minus the source value - CF
 	def execute_SBB(destination, source)
-		set_auxiliary_carry_flag_from destination.value.lowest_4_bits - source.value.lowest_4_bits - @flags[CARRY_FLAG]
-		perform_arithmetic_operation_storing_result(source, destination, destination.value - source.value - @flags[CARRY_FLAG])
+		set_auxiliary_carry_flag_from destination.value.lowest_4_bits - source.value.lowest_4_bits - @flags.value[CARRY_FLAG]
+		perform_arithmetic_operation_storing_result(source, destination, destination.value - source.value - @flags.value[CARRY_FLAG])
 	end
 	
 	# Adds one to the operand
@@ -143,6 +143,60 @@ module Executor
 	def execute_CMP(destination, source)
 		set_auxiliary_carry_flag_from destination.value.lowest_4_bits - source.value.lowest_4_bits
 		perform_arithmetic_operation(source, destination, destination.value - source.value)
+	end
+	
+	# Perform unsigned multiplication
+	def execute_MUL(operand)
+		# Affects CF, OF; all other flags undefined
+		if operand.size == 8
+			@ax.value = operand.value * @ax.low
+			flag = @ax.high.zero? ? 0 : 1
+		else
+			result = operand.value * @ax.value
+			@dx.value = result >> 16
+			@ax.value = result & 0xFFFF
+			flag = @dx.value.zero? ? 0 : 1
+		end
+		
+		@flags.set_bit_at(CARRY_FLAG, flag)
+		@flags.set_bit_at(OVERFLOW_FLAG, flag)
+	end
+	
+	# Perform signed multiplation
+	def execute_IMUL(operand)
+		
+	end
+	
+	# Perform unsigned division
+	def execute_DIV(operand)
+		# All flags undefined
+		
+		#raise "DIVIDE BY ZERO" if operand.value.zero?
+		return if operand.value.zero?
+		
+		if operand.size == 8
+			quotient = @ax.value / operand.value
+			remainder = @ax.value % operand.value
+			return if quotient > 0xFF
+			@ax.low = quotient
+			@ax.high = remainder
+		else
+			dividend = (@dx.value << 16) + @ax.value
+			quotient = dividend / operand.value
+			remainder = dividend % operand.value
+			return if quotient > 0xFFFF
+			@ax.value = quotient
+			@dx.value = remainder
+		end
+	end
+	
+	# Perform signed division
+	def execute_IDIV(operand)
+		
+	end
+	
+	def execute_OUT(io_port, operand)
+		io_port.write(operand.value, self)
 	end
 	
 	# -----------------------------------------------------------------
@@ -251,7 +305,7 @@ module Executor
 	# Jump if the zero flag is set
 	# (from a math operation or comparing two numbers that are equal)
 	def execute_JNE(operand) # Same as the JNZ instruction
-		jump_conditionally_to_signed_displacement(operand, (@flags.value[ZERO_FLAG].zero?)) # Zero means not set
+		jump_conditionally_to_signed_displacement(operand, @flags.value[ZERO_FLAG].zero?) # Zero means not set
 	end
 	
 	# Jump if the zero flag is not set
@@ -443,13 +497,13 @@ module Executor
 	def perform_arithmetic_operation_storing_result(source, destination, expected_value)
 		actual = expected_value.to_fixed_size_signed(destination.size)
 		set_arithmetic_flags_from(source.value, destination.value, expected_value, actual, destination.size)
-		destination.direct_value = actual
+		destination.value = actual
 	end
 	
 	def perform_inc_or_dec_storing_result(source, destination, expected_value)
 		actual = expected_value.to_fixed_size_signed(destination.size)
 		set_arithmetic_flags_except_cf_from(source.value, destination.value, expected_value, actual, destination.size)
-		destination.direct_value = actual
+		destination.value = actual
 	end
 	
 	def perform_arithmetic_operation(source, destination, expected_value)
@@ -474,23 +528,27 @@ module Executor
 	# Flag Handling Methods
 	# -----------------------------------------------------------------
 	
+	# Calculates all of the flags necessary for an arithmetic operation
 	def set_arithmetic_flags_from(source_value, destination_value, expected_value, actual_value, size)
 		msb_index = size - 1
 		set_zero_flag_from actual_value
 		set_sign_flag_from actual_value, msb_index
 		set_parity_flag_from actual_value, size
-		set_overflow_flag_from source_value, destination_value, actual_value, msb_index
+		set_overflow_flag_from source_value, destination_value, expected_value, actual_value, msb_index
 		set_carry_flag_from expected_value, size
 	end
 	
+	# Calculates all of the flags necessary for an arithmetic operation
+	# except CF (used particularly by INC and DEC)
 	def set_arithmetic_flags_except_cf_from(source_value, destination_value, expected_value, actual_value, size)
 		msb_index = size - 1
 		set_zero_flag_from actual_value
 		set_sign_flag_from actual_value, msb_index
 		set_parity_flag_from actual_value, size
-		set_overflow_flag_from source_value, destination_value, actual_value, msb_index
+		set_overflow_flag_from source_value, destination_value, expected_value, actual_value, msb_index
 	end
 	
+	# Calculates the flags for logical bit operations
 	def set_logical_flags_from(actual_value, size)
 		@flags.set_bit_at(OVERFLOW_FLAG, 0)
 		@flags.set_bit_at(CARRY_FLAG, 0)
@@ -499,6 +557,7 @@ module Executor
 		set_parity_flag_from actual_value, size
 	end
 	
+	# Calculates the flags for shift and rotate operations
 	def set_shift_or_rotate_flags_from(actual_value, expected_value, carry_flag, size)
 		msb = size - 1
 		@flags.set_bit_at(OVERFLOW_FLAG, actual_value[msb] == expected_value[msb] ? 0 : 1)
@@ -508,6 +567,7 @@ module Executor
 		set_parity_flag_from actual_value, size
 	end
 	
+	# Zero Flag: rather self-explanatory: is the computed value zero?
 	def set_zero_flag_from(actual_value)
 		@flags.set_bit_at(ZERO_FLAG, (actual_value.zero? ? 1 : 0))
 	end
@@ -516,36 +576,38 @@ module Executor
 		@flags.set_bit_at(SIGN_FLAG, actual_value[msb_index])
 	end
 	
-	def set_overflow_flag_from(source_value, destination_value, actual_value, msb)
-		# Detects if a signed operation overflowed (wrapped around - 
-		# operand signs were the same, but result's sign is different )
-		overflow_flag = ( (source_value[msb] == destination_value[msb]) && (actual_value[msb] != source_value[msb]) ? 1 : 0 )
-		@flags.set_bit_at(OVERFLOW_FLAG, overflow_flag)
+	# Overflow Flag: detects if a signed operation overflowed (wrapped around -
+	# operand signs were the same, but result's sign is different)
+	def set_overflow_flag_from(source_value, destination_value, expected_value, actual_value, msb)
+		flag = ( ((expected_value - destination_value)[msb] == destination_value[msb]) && (actual_value[msb] != destination_value[msb]) ? 1 : 0 )
+		@flags.set_bit_at(OVERFLOW_FLAG, flag)
 	end
 	
+	# Parity Flag: determine the parity (whether number of set bits is odd or even)
 	def set_parity_flag_from(actual_value, size)
-		# Determine the parity (whether number of set bits is odd or even)
 		bits_set = 1 # Start at one because the PF is 1 if even and 0 if odd
 		actual_value.each_bit(size) { |bit| bits_set += bit }
 		@flags.set_bit_at(PARITY_FLAG, bits_set & 1)
 	end
 	
+	# Carry Flag: overflow from an unsigned operation (the expected value
+	# did not fit in the destination)
 	def set_carry_flag_from(expected_value, size)
 		@flags.set_bit_at(CARRY_FLAG, (
 			if size == 16
-				expected_value > 0xFFFF || expected_value < 0 ? 1 : 0
+				(expected_value & 0xFFFFFFFF) > 0xFFFF || expected_value < 0 ? 1 : 0
 			else
-				expected_value > 0xFF || expected_value < 0 ? 1 : 0
+				(expected_value & 0xFFFFFFFF) > 0xFF || expected_value < 0 ? 1 : 0
 			end
 		))
 	end
 	
-	# 
-	# Note: the expected value is the result of the operation
-	# applied to the lowest 3 bits of each operand.
+	# Auxiliary Carry Flag: overflow from the low nybble of the expected value
+	# of the operation's result.
+	# Note: the expected value is the result of the operation applied to the
+	# lowest 4 bits of each operand.
 	def set_auxiliary_carry_flag_from(expected_value)
-		puts "AuxCarryFlag: #{expected_value > 0b111 ? 1 : 0} for expected_value: #{expected_value}"
-		@flags.set_bit_at(AUX_CARRY_FLAG, expected_value > 0xF ? 1 : 0)
+		@flags.set_bit_at(AUX_CARRY_FLAG, (expected_value & 0xFFFFFFFF) > 0xF ? 1 : 0)
 	end
 	
 	# -----------------------------------------------------------------

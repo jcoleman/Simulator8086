@@ -137,6 +137,7 @@ module Decoder
 			end
 		)
 		
+		direction_bit = 1 if first_byte == 0x8D
 		add_operands_by_direction_flag(instruction, rm_operand, reg_operand, direction_bit)
 	end
 	
@@ -185,7 +186,7 @@ module Decoder
 		mod_rm_byte = retrieve_second_byte_for(instruction)
 		
 		# Get operand determined by the mod r/m fields
-		rm_operand = mod_rm_operand_for(instruction, mod_rm_byte, width_bit)
+		instruction.operands << mod_rm_operand_for(instruction, mod_rm_byte, width_bit)
 		
 		# Now handle the immediate operand
 		unless instruction.bytes.first == 0x83
@@ -203,7 +204,12 @@ module Decoder
 	end
 	
 	def decode_AccPort(instruction)
-		
+		instruction.operands << IOAccess.for_port(fetch_byte(instruction), 8)
+		if instruction.bytes.first[0].zero?
+			instruction.operands << @register_operands_8[0]
+		else
+			instruction.operands << @register_operands_16[0]
+		end
 	end
 	
 	def decode_AccVPort(instruction)

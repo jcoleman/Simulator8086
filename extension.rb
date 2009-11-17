@@ -64,11 +64,7 @@ module Extension
 		end
 		
 		def sign_extend_8_to_16_bits
-			if self < 0x80
-				self & 0x00FF
-			else
-				self - 0b100000000
-			end
+			self < 0x80 ? self : self | 0xFF00
 		end
 		
 		def lowest_4_bits

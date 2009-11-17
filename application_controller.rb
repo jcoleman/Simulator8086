@@ -219,6 +219,7 @@ class ApplicationController
 		@start_menu_item.action = ''
 		@start_toolbar_item.action = ''
 		@step_instruction_button.action = ''
+		step_instruction_button.enabled = false
 		@single_step_menu_item.action = ''
 		@stop_menu_item.action = 'stop_execution:'
 		@stop_toolbar_item.action = 'stop_execution:'
@@ -230,6 +231,7 @@ class ApplicationController
 		@start_toolbar_item.action = 'start_execution:'
 		@step_instruction_button.action = 'step_execute_instruction:'
 		@single_step_menu_item.action = 'step_execute_instruction:'
+		step_instruction_button.enabled = true
 		@stop_menu_item.action = ''
 		@stop_toolbar_item.action = ''
 	end
@@ -271,8 +273,10 @@ class ApplicationController
 	end
 	
 	def step_execute_instruction(sender)
-		process_instruction
-		refresh_all_displays(true)
+		Thread.new do
+			process_instruction
+			refresh_all_displays(true)
+		end
 	end
 	
 	def manually_refresh_display(sender)

@@ -23,11 +23,11 @@ class Register
   end
   
   def high=(value)
-    @value = (@value & 0x00FF) + (value << 8)
+    @value = (@value & 0x00FF) + (value.to_unsigned_8_bits << 8)
   end
   
   def low=(value)
-    @value = (@value & 0xFF00) + value
+    @value = (@value & 0xFF00) + value.to_unsigned_8_bits
   end
 	
 	def value=(value)
