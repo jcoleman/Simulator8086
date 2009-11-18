@@ -283,14 +283,14 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>19</integer>
+									<integer>20</integer>
 									<integer>7</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {286, 936}}</string>
+							<string>{{0, 16}, {286, 936}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -327,7 +327,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>executor.rb</string>
+								<string>io_access.rb</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -335,11 +335,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>executor.rb</string>
+										<string>io_access.rb</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>C4627CB010B3777600BEDD8A</string>
+										<string>C4627CDE10B37CAF00BEDD8A</string>
 										<key>history</key>
 										<array>
 											<string>C40A9DEC10812BBA00FA90B0</string>
@@ -359,12 +359,12 @@
 											<string>C42CC52810AB836C00865520</string>
 											<string>C42A5C1010AC4DDF00AB9701</string>
 											<string>C42A5C1110AC4DDF00AB9701</string>
-											<string>C4627C2710AE6A7200BEDD8A</string>
 											<string>C4627C8310B36F3A00BEDD8A</string>
 											<string>C4627C8610B3712E00BEDD8A</string>
 											<string>C4627C9710B3745200BEDD8A</string>
-											<string>C4627CAA10B376AD00BEDD8A</string>
-											<string>C4627CAB10B376AD00BEDD8A</string>
+											<string>C4627CB510B378EF00BEDD8A</string>
+											<string>C4627CC410B37A3E00BEDD8A</string>
+											<string>C4627CC510B37A3E00BEDD8A</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -562,13 +562,12 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>C4627CB110B3777600BEDD8A</string>
 		<string>C4627BFD10ADBF6900BEDD8A</string>
 		<string>C4627BFE10ADBF6900BEDD8A</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>C497B4D1105D103800FFB668</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/MacRuby-Sim8086.xcodeproj</string>
+		<string>1C78EAAD065D492600B07095</string>
 	</array>
 	<key>WindowString</key>
 	<string>-1387 55 1107 995 -1680 0 1680 1050 </string>
@@ -909,7 +908,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {650, 209}}</string>
 								<key>RubberWindowFrame</key>
-								<string>-950 320 650 250 -1680 0 1680 1050 </string>
+								<string>-1617 393 650 250 -1680 0 1680 1050 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXDebugCLIModule</string>
@@ -938,7 +937,7 @@
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.consoleV3</string>
 			<key>WindowString</key>
-			<string>-950 320 650 250 -1680 0 1680 1050 </string>
+			<string>-1617 393 650 250 -1680 0 1680 1050 </string>
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>

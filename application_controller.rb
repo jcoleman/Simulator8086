@@ -80,8 +80,10 @@ class ApplicationController
 		open_dialog = NSOpenPanel.openPanel
 		if open_dialog.runModalForDirectory(nil, file:nil, types:["obj"]) == NSOKButton
 			# Preload Sim86OS here
-			sim86os_file = NSBundle.mainBundle.resourcePath.fileSystemRepresentation + "/Sim86OS.obj"
-			@processor.load_object MemoryObject.new(File.new sim86os_file)
+			if @preload_os
+				sim86os_file = NSBundle.mainBundle.resourcePath.fileSystemRepresentation + "/Sim86OS.obj"
+				@processor.load_object MemoryObject.new(File.new sim86os_file)
+			end
 			
 			file = open_dialog.filenames[0]
 			@processor.load_object MemoryObject.new(File.new file)
@@ -258,11 +260,12 @@ class ApplicationController
 	end
 	
 	def get_next_instruction
-		#begin
+		begin
 			@next_instruction = @processor.decode(@processor.fetch)
-		#rescue
-		#	@next_instruction = nil
-		#end
+		rescue => e
+			puts e
+			@next_instruction = nil
+		end
 	end
 	
 	def process_instruction
@@ -275,12 +278,16 @@ class ApplicationController
 	
 	def step_execute_instruction(sender)
 		Thread.new do
+			prepare_for_execution
+			
 			begin
 				process_instruction
 			rescue => e
 				puts e
 			end
 			refresh_all_displays(true)
+			
+			end_execution
 		end
 	end
 	
