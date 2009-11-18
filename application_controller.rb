@@ -79,14 +79,16 @@ class ApplicationController
 		
 		open_dialog = NSOpenPanel.openPanel
 		if open_dialog.runModalForDirectory(nil, file:nil, types:["obj"]) == NSOKButton
+			# Preload Sim86OS here
+			sim86os_file = NSBundle.mainBundle.resourcePath.fileSystemRepresentation + "/Sim86OS.obj"
+			@processor.load_object MemoryObject.new(File.new sim86os_file)
+			
 			file = open_dialog.filenames[0]
-			object = MemoryObject.new(File.new file)
+			@processor.load_object MemoryObject.new(File.new file)
+			
 			@last_loaded_object = File.basename(file.to_s)
 			@object_file_label.setStringValue @last_loaded_object
 			
-			# Preload Sim86OS here
-			
-			@processor.load_object object
 			get_next_instruction
 		end
 		
@@ -248,7 +250,6 @@ class ApplicationController
 			puts "Total instructions executed so far (per module load): #{@processor.instruction_count}"
 			end_execution
 			refresh_all_displays(true)
-			Thread.exit
 		end
 	end
 	
@@ -274,7 +275,11 @@ class ApplicationController
 	
 	def step_execute_instruction(sender)
 		Thread.new do
-			process_instruction
+			begin
+				process_instruction
+			rescue => e
+				puts e
+			end
 			refresh_all_displays(true)
 		end
 	end

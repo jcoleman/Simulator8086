@@ -38,6 +38,7 @@
 		C42A5BD910ABA9CE00AB9701 /* io_access.rb in Resources */ = {isa = PBXBuildFile; fileRef = C42A5BD810ABA9CE00AB9701 /* io_access.rb */; };
 		C42A5BF510ABABAA00AB9701 /* sine_generator.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C42A5BF410ABABAA00AB9701 /* sine_generator.bundle */; };
 		C44F72D2106A9020008628C6 /* table_view_source.rb in Resources */ = {isa = PBXBuildFile; fileRef = C44F72D1106A9020008628C6 /* table_view_source.rb */; };
+		C4627C9310B373CB00BEDD8A /* Sim86OS.obj in Resources */ = {isa = PBXBuildFile; fileRef = C4627C9210B373CB00BEDD8A /* Sim86OS.obj */; };
 		C497B52A105D79BD00FFB668 /* application_controller.rb in Resources */ = {isa = PBXBuildFile; fileRef = C497B529105D79BD00FFB668 /* application_controller.rb */; };
 		C497B533105E677300FFB668 /* processor.rb in Resources */ = {isa = PBXBuildFile; fileRef = C497B532105E677300FFB668 /* processor.rb */; };
 		C497B535105E67CF00FFB668 /* memory.rb in Resources */ = {isa = PBXBuildFile; fileRef = C497B534105E67CF00FFB668 /* memory.rb */; };
@@ -83,6 +84,7 @@
 		C42A5BD810ABA9CE00AB9701 /* io_access.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = io_access.rb; sourceTree = "<group>"; };
 		C42A5BF410ABABAA00AB9701 /* sine_generator.bundle */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = sine_generator.bundle; sourceTree = "<group>"; };
 		C44F72D1106A9020008628C6 /* table_view_source.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = table_view_source.rb; sourceTree = "<group>"; };
+		C4627C9210B373CB00BEDD8A /* Sim86OS.obj */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sim86OS.obj; sourceTree = "<group>"; };
 		C497B529105D79BD00FFB668 /* application_controller.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = application_controller.rb; sourceTree = "<group>"; };
 		C497B532105E677300FFB668 /* processor.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = processor.rb; sourceTree = "<group>"; };
 		C497B534105E67CF00FFB668 /* memory.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = memory.rb; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C4627C9210B373CB00BEDD8A /* Sim86OS.obj */,
 				C40A9DE41081260B00FA90B0 /* Spec */,
 				C40A9BBC1081253D00FA90B0 /* Vendor */,
 				C40A97B31081110800FA90B0 /* 8086.OPS */,
@@ -306,6 +309,7 @@
 				C40A9E0910814F0B00FA90B0 /* executor.rb in Resources */,
 				C42A5BD910ABA9CE00AB9701 /* io_access.rb in Resources */,
 				C42A5BF510ABABAA00AB9701 /* sine_generator.bundle in Resources */,
+				C4627C9310B373CB00BEDD8A /* Sim86OS.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

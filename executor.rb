@@ -171,20 +171,30 @@ module Executor
 	def execute_DIV(operand)
 		# All flags undefined
 		
-		#raise "DIVIDE BY ZERO" if operand.value.zero?
-		return if operand.value.zero?
+		# Check for divide by zero
+		return perform_interrupt_for 0 if operand.value.zero?
 		
 		if operand.size == 8
+			# Perform calculation
 			quotient = @ax.value / operand.value
 			remainder = @ax.value % operand.value
-			return if quotient > 0xFF
+			
+			# Check for overflow
+			return perform_interrupt_for 0 if quotient > 0xFF
+			
+			# Save results
 			@ax.low = quotient
 			@ax.high = remainder
-		else
+		else # 16-bit operation
+			# Perform calculation
 			dividend = (@dx.value << 16) + @ax.value
 			quotient = dividend / operand.value
 			remainder = dividend % operand.value
-			return if quotient > 0xFFFF
+			
+			# Check for overflow
+			return perform_interrupt_for 0 if quotient > 0xFFFF
+			
+			# Save results
 			@ax.value = quotient
 			@dx.value = remainder
 		end
@@ -470,6 +480,17 @@ module Executor
 		@flags.direct_value = pop_stack_word
 	end
 	
+	# Execute the interrupt instruction
+	def execute_INT(operand)
+		perform_interrupt_for operand.value
+	end
+	
+	# Execute the interrupt on overflow
+	def execute_INTO
+		# Overflow interrupt is Type 4
+		perform_interrupt_for 4
+	end
+	
 	# -----------------------------------------------------------------
 	# Stack Instructions
 	# -----------------------------------------------------------------
@@ -512,7 +533,7 @@ module Executor
 	end
 	
 	# -----------------------------------------------------------------
-	# Jump Helper Methods
+	# Control Transfer Helper Methods
 	# -----------------------------------------------------------------
 	
 	def jump_conditionally_to_signed_displacement(operand, condition)
@@ -522,6 +543,22 @@ module Executor
 	def perform_counting_loop
 		cx_counter = @register_operands_16[1]
 		cx_counter.value -= 1
+	end
+	
+	def perform_interrupt_for(type)
+		# Store old values for the flags, code segment, and instruction pointer
+		push_stack_word @flags.value
+		push_stack_word @cs.value
+		push_stack_word @ip.value
+		
+		# Clear interrupt and trace flags
+		@flags.set_bit_at INTERRUPT_FLAG, 0
+		@flags.set_bit_at TRACE_FLAG, 0
+		
+		# Lookup the interrupt handler address and set the new control values
+		handler_address = type * 4
+		@cs.direct_value = @ram.word_at handler_address + 2
+		@ip.direct_value = @ram.word_at handler_address
 	end
 	
 	# -----------------------------------------------------------------
