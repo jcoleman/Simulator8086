@@ -259,7 +259,7 @@ module Executor
 		# all flags are affected except AF is undefined
 		count = bit_shift_count_for(operand, operand.size)
 		new_value = operand.value >> count
-		set_shift__flags_from(new_value, new_value, operand.value[count - 1], operand.size)
+		set_shift_flags_from(new_value, new_value, operand.value[count - 1], operand.size)
 		operand.direct_value = new_value
 	end
 	
@@ -269,7 +269,7 @@ module Executor
 		expected_value = operand.value << bit_shift_count_for(operand, operand.size)
 		operand.value = expected_value
 		size = operand.size
-		set_shift__flags_from(operand.value, expected_value, expected_value[size], size)
+		set_shift_flags_from(operand.value, expected_value, expected_value[size], size)
 	end
 	
 	# Shift arithmetic right (essentially sign extend the result from the original msb)
@@ -284,7 +284,7 @@ module Executor
 			mask = ((size == 16 ? 0xFFFF : 0xFF) >> (mask_shift)) << mask_shift
 			value |= mask
 		end
-		set_shift__flags_from(value, value, operand.value[bit_moves - 1], size)
+		set_shift_flags_from(value, value, operand.value[bit_moves - 1], size)
 		operand.direct_value = value
 	end
 	
@@ -623,7 +623,7 @@ module Executor
 	end
 	
 	# Calculates the flags for shift operations
-	def set_shift__flags_from(actual_value, expected_value, carry_flag, size)
+	def set_shift_flags_from(actual_value, expected_value, carry_flag, size)
 		msb = size - 1
 		@flags.set_bit_at(OVERFLOW_FLAG, actual_value[msb] == expected_value[msb] ? 0 : 1)
 		@flags.set_bit_at(CARRY_FLAG, carry_flag)

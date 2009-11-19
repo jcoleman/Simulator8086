@@ -205,6 +205,8 @@
 			C4627D8710B4C97200BEDD8A /* PBXTextBookmark */ = C4627D8710B4C97200BEDD8A /* PBXTextBookmark */;
 			C4627D8910B4CA9B00BEDD8A /* PBXTextBookmark */ = C4627D8910B4CA9B00BEDD8A /* PBXTextBookmark */;
 			C4627D8A10B4CA9B00BEDD8A /* PBXTextBookmark */ = C4627D8A10B4CA9B00BEDD8A /* PBXTextBookmark */;
+			C4627D8D10B4D1AD00BEDD8A /* PBXTextBookmark */ = C4627D8D10B4D1AD00BEDD8A /* PBXTextBookmark */;
+			C4627D8E10B4D1AD00BEDD8A /* PBXTextBookmark */ = C4627D8E10B4D1AD00BEDD8A /* PBXTextBookmark */;
 			C482D23510A1044000D4BCA8 = C482D23510A1044000D4BCA8 /* PBXTextBookmark */;
 			C482D23610A1044000D4BCA8 = C482D23610A1044000D4BCA8 /* PBXTextBookmark */;
 			C482D23F10A1044000D4BCA8 = C482D23F10A1044000D4BCA8 /* PBXTextBookmark */;
@@ -249,7 +251,7 @@
 	};
 	C40A96501070E46F00FA90B0 /* processor_constants.rb */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {397, 374}}";
+			sepNavIntBoundsRect = "{{0, 0}, {397, 397}}";
 			sepNavSelRange = "{193, 11}";
 			sepNavVisRange = "{0, 342}";
 			sepNavWindowFrame = "{{61, 173}, {750, 558}}";
@@ -1157,7 +1159,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 676";
 		rLen = 0;
-		rLoc = 24324;
+		rLoc = 24320;
 		rType = 0;
 		vrLen = 2354;
 		vrLoc = 21008;
@@ -1167,7 +1169,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 307";
 		rLen = 0;
-		rLoc = 9530;
+		rLoc = 7895;
 		rType = 0;
 		vrLen = 1929;
 		vrLoc = 8271;
@@ -1227,7 +1229,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 281";
 		rLen = 0;
-		rLoc = 8641;
+		rLoc = 7895;
 		rType = 0;
 		vrLen = 2102;
 		vrLoc = 7211;
@@ -1247,7 +1249,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 271";
 		rLen = 0;
-		rLoc = 8287;
+		rLoc = 7895;
 		rType = 0;
 		vrLen = 2090;
 		vrLoc = 7585;
@@ -1267,7 +1269,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 616";
 		rLen = 0;
-		rLoc = 21973;
+		rLoc = 21969;
 		rType = 0;
 		vrLen = 2310;
 		vrLoc = 20594;
@@ -1277,7 +1279,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 284";
 		rLen = 0;
-		rLoc = 8783;
+		rLoc = 7895;
 		rType = 0;
 		vrLen = 1991;
 		vrLoc = 8011;
@@ -1287,7 +1289,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 282";
 		rLen = 0;
-		rLoc = 8694;
+		rLoc = 7895;
 		rType = 0;
 		vrLen = 2040;
 		vrLoc = 8011;
@@ -1311,7 +1313,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 282";
 		rLen = 0;
-		rLoc = 8694;
+		rLoc = 7895;
 		rType = 0;
 		vrLen = 1963;
 		vrLoc = 7883;
@@ -1321,7 +1323,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 645";
 		rLen = 0;
-		rLoc = 23132;
+		rLoc = 23128;
 		rType = 0;
 		vrLen = 2301;
 		vrLoc = 21324;
@@ -1341,7 +1343,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 645";
 		rLen = 0;
-		rLoc = 23132;
+		rLoc = 23128;
 		rType = 0;
 		vrLen = 2301;
 		vrLoc = 21324;
@@ -1381,7 +1383,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 645";
 		rLen = 0;
-		rLoc = 23132;
+		rLoc = 23128;
 		rType = 0;
 		vrLen = 2357;
 		vrLoc = 21319;
@@ -1391,7 +1393,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 324";
 		rLen = 0;
-		rLoc = 10699;
+		rLoc = 7895;
 		rType = 0;
 		vrLen = 2257;
 		vrLoc = 8934;
@@ -1411,7 +1413,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 324";
 		rLen = 0;
-		rLoc = 10689;
+		rLoc = 7895;
 		rType = 0;
 		vrLen = 2088;
 		vrLoc = 9129;
@@ -1431,7 +1433,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 325";
 		rLen = 0;
-		rLoc = 10699;
+		rLoc = 7895;
 		rType = 0;
 		vrLen = 2154;
 		vrLoc = 9129;
@@ -1451,7 +1453,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 325";
 		rLen = 0;
-		rLoc = 10556;
+		rLoc = 7895;
 		rType = 0;
 		vrLen = 2253;
 		vrLoc = 9129;
@@ -1471,7 +1473,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 325";
 		rLen = 0;
-		rLoc = 10569;
+		rLoc = 7895;
 		rType = 0;
 		vrLen = 2259;
 		vrLoc = 9129;
@@ -1491,12 +1493,32 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 320";
 		rLen = 0;
-		rLoc = 10097;
+		rLoc = 7895;
 		rType = 0;
 		vrLen = 2343;
 		vrLoc = 8934;
 	};
 	C4627D8A10B4CA9B00BEDD8A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C40A96501070E46F00FA90B0 /* processor_constants.rb */;
+		name = "processor_constants.rb: 12";
+		rLen = 11;
+		rLoc = 193;
+		rType = 0;
+		vrLen = 342;
+		vrLoc = 0;
+	};
+	C4627D8D10B4D1AD00BEDD8A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
+		name = "executor.rb: 567";
+		rLen = 0;
+		rLoc = 19483;
+		rType = 0;
+		vrLen = 2233;
+		vrLoc = 18347;
+	};
+	C4627D8E10B4D1AD00BEDD8A /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = C40A96501070E46F00FA90B0 /* processor_constants.rb */;
 		name = "processor_constants.rb: 12";
@@ -1563,9 +1585,9 @@
 		path = "/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/executor.rb";
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {754, 9308}}";
-			sepNavSelRange = "{10097, 0}";
-			sepNavVisRange = "{8934, 2343}";
+			sepNavIntBoundsRect = "{{0, 0}, {810, 9425}}";
+			sepNavSelRange = "{19483, 0}";
+			sepNavVisRange = "{18347, 2233}";
 		};
 	};
 	C497B4BF105D102A00FFB668 /* MacRuby-Sim8086 */ = {
