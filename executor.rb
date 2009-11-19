@@ -154,7 +154,7 @@ module Executor
 		else
 			result = operand.value * @ax.value
 			@dx.value = result >> 16
-			@ax.value = result & 0xFFFF
+			@ax.direct_value = result & 0xFFFF
 			flag = @dx.value.zero? ? 0 : 1
 		end
 		
@@ -164,7 +164,33 @@ module Executor
 	
 	# Perform signed multiplation
 	def execute_IMUL(operand)
+		# Affects CF, OF; all other flags undefined
+		if operand.size == 8
+			@ax.value = operand.value.to_signed_8_bits * @ax.low.to_signed_8_bits
+			high = @ax.high
+			flag = (
+				if @ax.low[7].zero?
+					high.zero? ? 0 : 1
+				else
+					high == 0xFF ? 0 : 1
+				end
+			)
+		else
+			result = operand.value.to_signed_16_bits * @ax.value.to_signed_16_bits
+			@dx.value = result >> 16
+			@ax.direct_value = result & 0xFFFF
+			high = @dx.value
+			flag = (
+				if @ax.value[15].zero?
+					high.zero? ? 0 : 1
+				else
+					high == 0xFFFF ? 0 : 1
+				end
+			)
+		end
 		
+		@flags.set_bit_at(CARRY_FLAG, flag)
+		@flags.set_bit_at(OVERFLOW_FLAG, flag)
 	end
 	
 	# Perform unsigned division

@@ -207,6 +207,12 @@
 			C4627D8A10B4CA9B00BEDD8A /* PBXTextBookmark */ = C4627D8A10B4CA9B00BEDD8A /* PBXTextBookmark */;
 			C4627D8D10B4D1AD00BEDD8A /* PBXTextBookmark */ = C4627D8D10B4D1AD00BEDD8A /* PBXTextBookmark */;
 			C4627D8E10B4D1AD00BEDD8A /* PBXTextBookmark */ = C4627D8E10B4D1AD00BEDD8A /* PBXTextBookmark */;
+			C4627D8F10B4E91B00BEDD8A /* PBXTextBookmark */ = C4627D8F10B4E91B00BEDD8A /* PBXTextBookmark */;
+			C4627D9010B4E91B00BEDD8A /* PBXTextBookmark */ = C4627D9010B4E91B00BEDD8A /* PBXTextBookmark */;
+			C4627D9110B4E91B00BEDD8A /* PBXTextBookmark */ = C4627D9110B4E91B00BEDD8A /* PBXTextBookmark */;
+			C4627D9210B4E91B00BEDD8A /* PBXTextBookmark */ = C4627D9210B4E91B00BEDD8A /* PBXTextBookmark */;
+			C4627D9310B4EACE00BEDD8A /* PBXTextBookmark */ = C4627D9310B4EACE00BEDD8A /* PBXTextBookmark */;
+			C4627D9410B4EACE00BEDD8A /* PBXTextBookmark */ = C4627D9410B4EACE00BEDD8A /* PBXTextBookmark */;
 			C482D23510A1044000D4BCA8 = C482D23510A1044000D4BCA8 /* PBXTextBookmark */;
 			C482D23610A1044000D4BCA8 = C482D23610A1044000D4BCA8 /* PBXTextBookmark */;
 			C482D23F10A1044000D4BCA8 = C482D23F10A1044000D4BCA8 /* PBXTextBookmark */;
@@ -331,7 +337,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 202";
 		rLen = 0;
-		rLoc = 5963;
+		rLoc = 6604;
 		rType = 0;
 		vrLen = 1644;
 		vrLoc = 5137;
@@ -559,7 +565,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 201";
 		rLen = 0;
-		rLoc = 5918;
+		rLoc = 6559;
 		rType = 0;
 		vrLen = 1018;
 		vrLoc = 5800;
@@ -589,7 +595,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 202";
 		rLen = 0;
-		rLoc = 5950;
+		rLoc = 6591;
 		rType = 0;
 		vrLen = 981;
 		vrLoc = 5800;
@@ -639,7 +645,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 202";
 		rLen = 0;
-		rLoc = 5950;
+		rLoc = 6591;
 		rType = 0;
 		vrLen = 981;
 		vrLoc = 5800;
@@ -649,7 +655,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 311";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 1232;
 		vrLoc = 9415;
@@ -659,7 +665,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 310";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 1310;
 		vrLoc = 9415;
@@ -769,7 +775,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 475";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 1722;
 		vrLoc = 14586;
@@ -779,7 +785,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 520";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 2043;
 		vrLoc = 16143;
@@ -799,7 +805,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 543";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 2321;
 		vrLoc = 16871;
@@ -809,7 +815,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 546";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 2324;
 		vrLoc = 16871;
@@ -819,7 +825,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 179";
 		rLen = 0;
-		rLoc = 5260;
+		rLoc = 5901;
 		rType = 0;
 		vrLen = 1605;
 		vrLoc = 5039;
@@ -829,7 +835,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 175";
 		rLen = 0;
-		rLoc = 5159;
+		rLoc = 5800;
 		rType = 0;
 		vrLen = 1626;
 		vrLoc = 5039;
@@ -839,7 +845,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 175";
 		rLen = 0;
-		rLoc = 5159;
+		rLoc = 5800;
 		rType = 0;
 		vrLen = 1601;
 		vrLoc = 0;
@@ -929,7 +935,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 175";
 		rLen = 0;
-		rLoc = 5159;
+		rLoc = 5800;
 		rType = 0;
 		vrLen = 1584;
 		vrLoc = 17;
@@ -939,7 +945,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 485";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 1561;
 		vrLoc = 15519;
@@ -949,7 +955,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 175";
 		rLen = 0;
-		rLoc = 5182;
+		rLoc = 5823;
 		rType = 0;
 		vrLen = 1597;
 		vrLoc = 5068;
@@ -959,7 +965,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 175";
 		rLen = 0;
-		rLoc = 5182;
+		rLoc = 5823;
 		rType = 0;
 		vrLen = 1716;
 		vrLoc = 5068;
@@ -1099,7 +1105,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 272";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 1877;
 		vrLoc = 7302;
@@ -1149,7 +1155,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 304";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 1768;
 		vrLoc = 8023;
@@ -1159,7 +1165,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 676";
 		rLen = 0;
-		rLoc = 24320;
+		rLoc = 24961;
 		rType = 0;
 		vrLen = 2354;
 		vrLoc = 21008;
@@ -1169,7 +1175,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 307";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 1929;
 		vrLoc = 8271;
@@ -1179,7 +1185,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 162";
 		rLen = 0;
-		rLoc = 4963;
+		rLoc = 4970;
 		rType = 0;
 		vrLen = 1582;
 		vrLoc = 4246;
@@ -1219,7 +1225,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 162";
 		rLen = 0;
-		rLoc = 4963;
+		rLoc = 4970;
 		rType = 0;
 		vrLen = 1575;
 		vrLoc = 4246;
@@ -1229,7 +1235,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 281";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 2102;
 		vrLoc = 7211;
@@ -1239,7 +1245,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 226";
 		rLen = 1;
-		rLoc = 6585;
+		rLoc = 7226;
 		rType = 0;
 		vrLen = 2105;
 		vrLoc = 5890;
@@ -1249,7 +1255,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 271";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 2090;
 		vrLoc = 7585;
@@ -1269,7 +1275,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 616";
 		rLen = 0;
-		rLoc = 21969;
+		rLoc = 22610;
 		rType = 0;
 		vrLen = 2310;
 		vrLoc = 20594;
@@ -1279,7 +1285,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 284";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 1991;
 		vrLoc = 8011;
@@ -1289,7 +1295,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 282";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 2040;
 		vrLoc = 8011;
@@ -1313,7 +1319,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 282";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 1963;
 		vrLoc = 7883;
@@ -1323,7 +1329,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 645";
 		rLen = 0;
-		rLoc = 23128;
+		rLoc = 23769;
 		rType = 0;
 		vrLen = 2301;
 		vrLoc = 21324;
@@ -1343,7 +1349,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 645";
 		rLen = 0;
-		rLoc = 23128;
+		rLoc = 23769;
 		rType = 0;
 		vrLen = 2301;
 		vrLoc = 21324;
@@ -1383,7 +1389,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 645";
 		rLen = 0;
-		rLoc = 23128;
+		rLoc = 23769;
 		rType = 0;
 		vrLen = 2357;
 		vrLoc = 21319;
@@ -1393,7 +1399,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 324";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 2257;
 		vrLoc = 8934;
@@ -1413,7 +1419,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 324";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 2088;
 		vrLoc = 9129;
@@ -1433,7 +1439,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 325";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 2154;
 		vrLoc = 9129;
@@ -1453,7 +1459,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 325";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 2253;
 		vrLoc = 9129;
@@ -1473,7 +1479,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 325";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 2259;
 		vrLoc = 9129;
@@ -1493,7 +1499,7 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 320";
 		rLen = 0;
-		rLoc = 7895;
+		rLoc = 8536;
 		rType = 0;
 		vrLen = 2343;
 		vrLoc = 8934;
@@ -1513,12 +1519,72 @@
 		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
 		name = "executor.rb: 567";
 		rLen = 0;
-		rLoc = 19483;
+		rLoc = 20124;
 		rType = 0;
 		vrLen = 2233;
 		vrLoc = 18347;
 	};
 	C4627D8E10B4D1AD00BEDD8A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C40A96501070E46F00FA90B0 /* processor_constants.rb */;
+		name = "processor_constants.rb: 12";
+		rLen = 11;
+		rLoc = 193;
+		rType = 0;
+		vrLen = 342;
+		vrLoc = 0;
+	};
+	C4627D8F10B4E91B00BEDD8A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C497B53F105E68D400FFB668 /* extension.rb */;
+		name = "extension.rb: 56";
+		rLen = 17;
+		rLoc = 1249;
+		rType = 0;
+		vrLen = 1367;
+		vrLoc = 331;
+	};
+	C4627D9010B4E91B00BEDD8A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
+		name = "executor.rb: 179";
+		rLen = 0;
+		rLoc = 5672;
+		rType = 0;
+		vrLen = 1689;
+		vrLoc = 4350;
+	};
+	C4627D9110B4E91B00BEDD8A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
+		name = "executor.rb: 172";
+		rLen = 0;
+		rLoc = 5385;
+		rType = 0;
+		vrLen = 1763;
+		vrLoc = 4350;
+	};
+	C4627D9210B4E91B00BEDD8A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C40A96501070E46F00FA90B0 /* processor_constants.rb */;
+		name = "processor_constants.rb: 12";
+		rLen = 11;
+		rLoc = 193;
+		rType = 0;
+		vrLen = 342;
+		vrLoc = 0;
+	};
+	C4627D9310B4EACE00BEDD8A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C482D34210A1058800D4BCA8 /* executor.rb */;
+		name = "executor.rb: 214";
+		rLen = 0;
+		rLoc = 6140;
+		rType = 0;
+		vrLen = 1441;
+		vrLoc = 5452;
+	};
+	C4627D9410B4EACE00BEDD8A /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = C40A96501070E46F00FA90B0 /* processor_constants.rb */;
 		name = "processor_constants.rb: 12";
@@ -1585,9 +1651,9 @@
 		path = "/Users/jcoleman/Documents/Programming/cps310/MacRuby-Sim8086/executor.rb";
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {810, 9425}}";
-			sepNavSelRange = "{19483, 0}";
-			sepNavVisRange = "{18347, 2233}";
+			sepNavIntBoundsRect = "{{0, 0}, {915, 9646}}";
+			sepNavSelRange = "{6140, 0}";
+			sepNavVisRange = "{5452, 1441}";
 		};
 	};
 	C497B4BF105D102A00FFB668 /* MacRuby-Sim8086 */ = {
@@ -1691,9 +1757,9 @@
 	};
 	C497B53F105E68D400FFB668 /* extension.rb */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {785, 1053}}";
-			sepNavSelRange = "{1538, 0}";
-			sepNavVisRange = "{1168, 530}";
+			sepNavIntBoundsRect = "{{0, 0}, {737, 1053}}";
+			sepNavSelRange = "{1249, 17}";
+			sepNavVisRange = "{331, 1367}";
 		};
 	};
 	C497B5DD1061818F00FFB668 /* simulator_database.rb */ = {
