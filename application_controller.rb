@@ -54,9 +54,8 @@ class ApplicationController
 	
 	def submit_results_to_db(sender)
 		db = SimulatorDatabase.new("css.cs.bju.edu", 1433, "sim86", "sim86fall2009", "jcole358")
-		#insert_results(object_name, instruction_count, disassembly, addr_mode, registers, ram_checksum)
 		instruction = @instruction_display_source.executed_instructions[-1]
-		disassembly = instruction[:address].to_s << ' ' << instruction[:raw_instruction].to_s << ' ' << instruction[:assembly_instruction].to_s << ' ' << instruction[:mode].to_s
+		disassembly = instruction[:address].to_s + ' ' << instruction[:raw_instruction].to_s << ' ' << instruction[:assembly_instruction].to_s << ' ' << instruction[:mode].to_s
 		db.insert_results @last_loaded_object, @processor.instruction_count, disassembly, @processor.addr_modes[instruction[:mode].to_sym].to_s, @processor.registers.collect { |reg| reg.value }, @processor.memory_checksum
 	end
 	

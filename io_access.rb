@@ -40,6 +40,10 @@ class IOAccess
 		end
 	end
 	
+	def to_s
+		@port.to_s
+	end
+	
 end
 
 class SpeakerSimulator < IOAccess

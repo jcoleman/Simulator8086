@@ -223,8 +223,7 @@ module Executor
 	# Perform bitwise AND but do not store the result in destination
 	def execute_TEST(destination, source)
 		# all flags are affected except AF is undefined
-		destination.value &= source.value
-		set_logical_flags_from destination.value, destination.size
+		set_logical_flags_from destination.value & source.value, destination.size
 	end
 	
 	# Destination is set to the destination value bitwise ORed with the source value
@@ -258,54 +257,83 @@ module Executor
 	# Shift the operand's value to the right
 	def execute_SHR(operand)
 		# all flags are affected except AF is undefined
-		count = bit_movement_count_for(operand)
-		value = operand.value >> count
-		set_shift_or_rotate_flags_from(value, value, operand.value[count - 1], operand.size)
-		operand.direct_value = value
+		count = bit_shift_count_for(operand, operand.size)
+		new_value = operand.value >> count
+		set_shift__flags_from(new_value, new_value, operand.value[count - 1], operand.size)
+		operand.direct_value = new_value
 	end
 	
 	# Shift the operand's value to the left
 	def execute_SHL(operand) # Same instruction as SAL
 		# all flags are affected except AF is undefined
-		expected_value = operand.value << bit_movement_count_for(operand)
+		expected_value = operand.value << bit_shift_count_for(operand, operand.size)
 		operand.value = expected_value
 		size = operand.size
-		set_shift_or_rotate_flags_from(operand.value, expected_value, expected_value[size], size)
+		set_shift__flags_from(operand.value, expected_value, expected_value[size], size)
 	end
 	
 	# Shift arithmetic right (essentially sign extend the result from the original msb)
 	def execute_SAR(operand)
-		# TODO: all flags are affected except AF is undefined
+		# all flags are affected except AF is undefined
 		size = operand.size
 		sign = operand.value[size - 1]
-		bit_moves = bit_movement_count_for(operand)
+		bit_moves = bit_shift_count_for(operand, size)
 		value = operand.value >> bit_moves
 		if sign == 1
-			mask = size == 16 ? 0xFFFF : 0xFF
-			mask = (mask >> size - bit_moves) << bit_moves
+			mask_shift = size - bit_moves
+			mask = ((size == 16 ? 0xFFFF : 0xFF) >> (mask_shift)) << mask_shift
 			value |= mask
 		end
+		set_shift__flags_from(value, value, operand.value[bit_moves - 1], size)
 		operand.direct_value = value
 	end
 	
 	# Rotate the operand's value right
 	def execute_ROR(operand)
 		# affects CF and OF flags
+		count = bit_rotate_count_for(operand, operand.size)
+		mask = (operand.value << (operand.size - count))
+		original_value = operand.value
+		operand.value = (operand.value >> count) + mask
+		set_rotate_flags_from(operand, original_value)
 	end
 	
 	# Rotate the operand's value left
 	def execute_ROL(operand)
 		# affects CF and OF flags
+		count = bit_rotate_count_for(operand, operand.size)
+		mask = (operand.value >> (operand.size - count))
+		original_value = operand.value
+		operand.value = (operand.value << count) + mask
+		set_rotate_flags_from(operand, original_value)
 	end
 	
 	# Rotate the operand's value right through the carry flag
 	def execute_RCR(operand)
 		# affects CF and OF flags
+		original_value = operand.value
+		size = operand.size + 1
+		count = bit_rotate_count_for(operand, size)
+		carry_flag = operand.value[count - 1]
+		mask = (operand.value << (size - count))
+		previous_carry_flag = operand.v_bit.zero? ? @flags.value[CARRY_FLAG] : operand.value[count - 2]
+		operand.value = (operand.value >> count) + mask + (previous_carry_flag << (operand.size - count))
+		set_rotate_flags_from(operand, original_value)
+		@flags.set_bit_at(CARRY_FLAG, carry_flag)
 	end
 	
 	# Rotate the operand's value left through the carry flag
 	def execute_RCL(operand)
 		# affects CF and OF flags
+		original_value = operand.value
+		size = operand.size + 1
+		count = bit_rotate_count_for(operand, size)
+		carry_flag = operand.value[operand.size - count]
+		mask = (operand.value >> (size - count))
+		previous_carry_flag = operand.v_bit.zero? ? @flags.value[CARRY_FLAG] : operand.value[size - count]
+		operand.value = (operand.value << count) + mask + (previous_carry_flag << (count - 1))
+		set_rotate_flags_from(operand, original_value)
+		@flags.set_bit_at(CARRY_FLAG, carry_flag)
 	end
 	
 	# -----------------------------------------------------------------
@@ -594,14 +622,22 @@ module Executor
 		set_parity_flag_from actual_value, size
 	end
 	
-	# Calculates the flags for shift and rotate operations
-	def set_shift_or_rotate_flags_from(actual_value, expected_value, carry_flag, size)
+	# Calculates the flags for shift operations
+	def set_shift__flags_from(actual_value, expected_value, carry_flag, size)
 		msb = size - 1
 		@flags.set_bit_at(OVERFLOW_FLAG, actual_value[msb] == expected_value[msb] ? 0 : 1)
 		@flags.set_bit_at(CARRY_FLAG, carry_flag)
 		set_zero_flag_from actual_value
 		set_sign_flag_from actual_value, msb
 		set_parity_flag_from actual_value, size
+	end
+	
+	# Calculates the flags for rotate operations
+	def set_rotate_flags_from(operand, original_value)
+		msb = operand.size - 1
+		overflow_flag = original_value[msb] != operand.value[msb] ? 1 : 0
+		@flags.set_bit_at(OVERFLOW_FLAG, overflow_flag)
+		@flags.set_bit_at(CARRY_FLAG, operand.value[msb])
 	end
 	
 	# Zero Flag: rather self-explanatory: is the computed value zero?
@@ -651,12 +687,15 @@ module Executor
 	# Helper Methods
 	# -----------------------------------------------------------------
 	
-	# Used by the shift and rotate instructions to determine the number
-	# of bits to shift/rotate.
-	def bit_movement_count_for(operand)
-		count = operand.v_bit.zero? ? 1 : @cx.low
-		operand.string = operand.to_s << ", ${count}"
-		return count
+	# Determine the number of bits to rotate - if the operation would
+	# wrap around, only need to rotate count mod size times
+	def bit_rotate_count_for(operand, size)
+		operand.v_bit.zero? ? 1 : @cx.low % size
+	end
+	
+	# Determine the number of bits to shift - cannot be greater than size
+	def bit_shift_count_for(operand, size)
+		operand.v_bit.zero? ? 1 : (@cx.low > size ? size : @cx.low)
 	end
 	
 	class InvalidInstructionCode < StandardError; end
