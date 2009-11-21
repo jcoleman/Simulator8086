@@ -228,7 +228,38 @@ module Executor
 	
 	# Perform signed division
 	def execute_IDIV(operand)
+		# All flags undefined
 		
+		# Check for divide by zero
+		return perform_interrupt_for 0 if operand.value.zero?
+		
+		if operand.size == 8
+			# Perform calculation
+			dividend = @ax.value.to_signed_8_bits
+			divisor = operand.value.to_signed_8_bits
+			quotient = dividend / divisor
+			remainder = dividend % divisor
+			
+			# Check for overflow
+			return perform_interrupt_for 0 if quotient > 127 || quotient < -127
+			
+			# Save results
+			@ax.low = quotient
+			@ax.high = remainder
+		else # 16-bit operation
+			# Perform calculation
+			dividend = ((@dx.value << 16) + @ax.value).to_signed_16_bits
+			divisor = operand.value.to_signed_16_bits
+			quotient = dividend / divisor
+			remainder = dividend % divisor
+			
+			# Check for overflow
+			return perform_interrupt_for 0 if quotient > 32767 || quotient < -32767
+			
+			# Save results
+			@ax.value = quotient
+			@dx.value = remainder
+		end
 	end
 	
 	def execute_OUT(io_port, operand)
