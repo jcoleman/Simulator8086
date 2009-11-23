@@ -120,7 +120,7 @@ module Decoder
 	
 	def decode_RegRM(instruction)
 		first_byte = instruction.bytes.first
-		width_bit = first_byte[0]
+		width_bit = first_byte == 0xC4 ? 1 : first_byte[0]
 		direction_bit = first_byte[1]
 		mod_rm_byte = fetch_byte(instruction)
 		
@@ -137,7 +137,7 @@ module Decoder
 			end
 		)
 		
-		direction_bit = 1 if first_byte == 0x8D
+		direction_bit = 1 if [0x8D, 0xC4, 0xC5].include?(first_byte) 
 		add_operands_by_direction_flag(instruction, rm_operand, reg_operand, direction_bit)
 	end
 	
@@ -413,8 +413,8 @@ module Decoder
 					opcode = @ops_symbols[opcode_index][:symbol]
 					addr_mode = @ops_symbols[addr_mode_index][:symbol]
 				else
-					opcode = :execute_illegal_opcode
-					addr_mode = :decode_illegal_addr_mode
+					opcode = :illegal_opcode
+					addr_mode = :illegal_addr_mode
 				end
 				
 				code_row << [ { :opcode => opcode,

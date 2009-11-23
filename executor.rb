@@ -35,6 +35,13 @@ module Executor
 		@es.direct_value = memory_operand.next_word_value
 	end
 	
+	# Load effective address: the offset the memory operand holds into the
+	# destination and the segment (the next word in memory) into DS
+	def execute_LDS(destination, memory_operand)
+		destination.direct_value = memory_operand.value
+		@ds.direct_value = memory_operand.next_word_value
+	end
+	
 	# Convert word to double word
 	def execute_CWD(accumulator)
 		@dx.value = (accumulator.value < 0x8000 ? 0x0000 : 0xFFFF)
