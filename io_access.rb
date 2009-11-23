@@ -15,6 +15,7 @@ class IOAccess
 	def self.for_port(port, size)
 		case port
 			when 1
+				return TerminalInput.new(port, size)
 			when 2
 				return TerminalOutput.new(port, size)
 			when 3
@@ -62,8 +63,29 @@ end
 
 class TerminalOutput < IOAccess
 	
+	def self.terminal_window=(window)
+		@@terminal_window = window
+	end
+	
 	def write(value, processor = nil)
-		print value.chr
+		@@terminal_window.print value.chr
+	end
+	
+end
+
+class TerminalInput < IOAccess
+	
+	def self.character_queue=(character_queue)
+		@@character_queue = character_queue
+	end
+	
+	# Returns the last character added to the queue or blocks until one is added
+	def read
+		@@character_queue.pop
+	end
+	
+	def add_character(char)
+		@@character_queue.push char
 	end
 	
 end

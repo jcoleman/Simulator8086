@@ -19,6 +19,18 @@
 			name = "Embed MacRuby";
 			productName = "Embed MacRuby";
 		};
+		C4627E3110B82F8A00BEDD8A /* AOT Compiled */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = C4627E3A10B82FC100BEDD8A /* Build configuration list for PBXAggregateTarget "AOT Compiled" */;
+			buildPhases = (
+				C4627E3010B82F8A00BEDD8A /* ShellScript */,
+			);
+			dependencies = (
+				C4627E3C10B82FFA00BEDD8A /* PBXTargetDependency */,
+			);
+			name = "AOT Compiled";
+			productName = "AOT Compiled";
+		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -39,6 +51,7 @@
 		C42A5BF510ABABAA00AB9701 /* sine_generator.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C42A5BF410ABABAA00AB9701 /* sine_generator.bundle */; };
 		C44F72D2106A9020008628C6 /* table_view_source.rb in Resources */ = {isa = PBXBuildFile; fileRef = C44F72D1106A9020008628C6 /* table_view_source.rb */; };
 		C4627C9310B373CB00BEDD8A /* Sim86OS.obj in Resources */ = {isa = PBXBuildFile; fileRef = C4627C9210B373CB00BEDD8A /* Sim86OS.obj */; };
+		C4627E7810B84B0800BEDD8A /* terminal_window.rb in Resources */ = {isa = PBXBuildFile; fileRef = C4627E7710B84B0800BEDD8A /* terminal_window.rb */; };
 		C497B52A105D79BD00FFB668 /* application_controller.rb in Resources */ = {isa = PBXBuildFile; fileRef = C497B529105D79BD00FFB668 /* application_controller.rb */; };
 		C497B533105E677300FFB668 /* processor.rb in Resources */ = {isa = PBXBuildFile; fileRef = C497B532105E677300FFB668 /* processor.rb */; };
 		C497B535105E67CF00FFB668 /* memory.rb in Resources */ = {isa = PBXBuildFile; fileRef = C497B534105E67CF00FFB668 /* memory.rb */; };
@@ -54,6 +67,13 @@
 
 /* Begin PBXContainerItemProxy section */
 		C40A965910711E4500FA90B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1107260486CEB800E47090;
+			remoteInfo = "MacRuby-Sim8086";
+		};
+		C4627E3B10B82FFA00BEDD8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
@@ -85,6 +105,7 @@
 		C42A5BF410ABABAA00AB9701 /* sine_generator.bundle */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = sine_generator.bundle; sourceTree = "<group>"; };
 		C44F72D1106A9020008628C6 /* table_view_source.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = table_view_source.rb; sourceTree = "<group>"; };
 		C4627C9210B373CB00BEDD8A /* Sim86OS.obj */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sim86OS.obj; sourceTree = "<group>"; };
+		C4627E7710B84B0800BEDD8A /* terminal_window.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = terminal_window.rb; sourceTree = "<group>"; };
 		C497B529105D79BD00FFB668 /* application_controller.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = application_controller.rb; sourceTree = "<group>"; };
 		C497B532105E677300FFB668 /* processor.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = processor.rb; sourceTree = "<group>"; };
 		C497B534105E67CF00FFB668 /* memory.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = memory.rb; sourceTree = "<group>"; };
@@ -115,6 +136,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				C4627E7610B84AF400BEDD8A /* Views */,
 				C4A5FD381063B36A00A43A26 /* tests */,
 				C497B53C105E68B600FFB668 /* lib */,
 				C497B531105E676100FFB668 /* Models */,
@@ -194,6 +216,14 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C4627E7610B84AF400BEDD8A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C4627E7710B84B0800BEDD8A /* terminal_window.rb */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		C497B526105D184900FFB668 /* Controllers */ = {
@@ -276,6 +306,7 @@
 			targets = (
 				8D1107260486CEB800E47090 /* MacRuby-Sim8086 */,
 				C40A965610711E3600FA90B0 /* Embed MacRuby */,
+				C4627E3110B82F8A00BEDD8A /* AOT Compiled */,
 			);
 		};
 /* End PBXProject section */
@@ -310,6 +341,7 @@
 				C42A5BD910ABA9CE00AB9701 /* io_access.rb in Resources */,
 				C42A5BF510ABABAA00AB9701 /* sine_generator.bundle in Resources */,
 				C4627C9310B373CB00BEDD8A /* Sim86OS.obj in Resources */,
+				C4627E7810B84B0800BEDD8A /* terminal_window.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +361,19 @@
 			shellPath = /bin/sh;
 			shellScript = "PATH=\"$PATH:/usr/local/bin\" /usr/bin/env macruby -r hotcocoa/application_builder -e \"HotCocoa::ApplicationBuilder.deploy(ARGV[0])\" $TARGET_BUILD_DIR/$PROJECT_NAME.app";
 		};
+		C4627E3010B82F8A00BEDD8A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# The macruby_deploy command-line tool with the --compile argument will compile every Ruby source file of your .app into machine code. Default options will be used. Pass the -h option to get more information.\nPATH=\"$PATH:/usr/local/bin\" macruby_deploy --compile \"$TARGET_BUILD_DIR/$PROJECT_NAME.app\"";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -347,6 +392,11 @@
 			isa = PBXTargetDependency;
 			target = 8D1107260486CEB800E47090 /* MacRuby-Sim8086 */;
 			targetProxy = C40A965910711E4500FA90B0 /* PBXContainerItemProxy */;
+		};
+		C4627E3C10B82FFA00BEDD8A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D1107260486CEB800E47090 /* MacRuby-Sim8086 */;
+			targetProxy = C4627E3B10B82FFA00BEDD8A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -445,6 +495,27 @@
 			};
 			name = Release;
 		};
+		C4627E3210B82F8A00BEDD8A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "AOT Compiled";
+			};
+			name = Debug;
+		};
+		C4627E3310B82F8A00BEDD8A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = "AOT Compiled";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -471,6 +542,15 @@
 			buildConfigurations = (
 				C40A965710711E3700FA90B0 /* Debug */,
 				C40A965810711E3700FA90B0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C4627E3A10B82FC100BEDD8A /* Build configuration list for PBXAggregateTarget "AOT Compiled" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4627E3210B82F8A00BEDD8A /* Debug */,
+				C4627E3310B82F8A00BEDD8A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

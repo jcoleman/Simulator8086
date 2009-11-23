@@ -31,7 +31,6 @@ class SimulatorDatabase
 		sql = "exec #{procedure} '#{@logged_user}'"
 		parameters.each { |param| sql << ", #{param}" }
 		sql << '\ngo'
-		puts sql
 		cmd = "export TDSVER=7.0 && echo \"#{sql}\" | /usr/local/bin/tsql -H #{@host} -p #{@port} -U #{@user_id} -P #{@password}"
 		puts `#{cmd}`
 	end

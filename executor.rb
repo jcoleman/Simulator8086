@@ -50,6 +50,14 @@ module Executor
 		@ax.low = operand.value
 	end
 	
+	def execute_OUT(io_port, operand)
+		io_port.write(operand.value, self)
+	end
+	
+	def execute_IN(io_port, operand)
+		operand.value = io_port.read
+	end
+	
 	# -----------------------------------------------------------------
 	# Processor Control Instructions
 	# -----------------------------------------------------------------
@@ -262,10 +270,6 @@ module Executor
 		end
 	end
 	
-	def execute_OUT(io_port, operand)
-		io_port.write(operand.value, self)
-	end
-	
 	# -----------------------------------------------------------------
 	# Bit Instructions
 	# -----------------------------------------------------------------
@@ -314,19 +318,29 @@ module Executor
 	# Shift the operand's value to the right
 	def execute_SHR(operand)
 		# all flags are affected except AF is undefined
-		count = bit_shift_count_for(operand, operand.size)
-		new_value = operand.value >> count
-		set_shift_flags_from(new_value, new_value, operand.value[count - 1], operand.size)
+		bit_moves = bit_shift_count_for(operand, operand.size)
+		new_value = operand.value >> bit_moves
+		set_shift_flags_from(new_value, new_value, operand.value[bit_moves - 1], operand.size)
+		msb = operand.size - 1
+		if bit_moves == 1
+			@flags.set_bit_at(OVERFLOW_FLAG, new_value[msb] != new_value[msb - 1] ? 1 : 0)
+		end
+		
 		operand.direct_value = new_value
 	end
 	
 	# Shift the operand's value to the left
 	def execute_SHL(operand) # Same instruction as SAL
 		# all flags are affected except AF is undefined
-		expected_value = operand.value << bit_shift_count_for(operand, operand.size)
+		bit_moves = bit_shift_count_for(operand, operand.size)
+		expected_value = operand.value << bit_moves
 		operand.value = expected_value
 		size = operand.size
+		msb = size - 1
 		set_shift_flags_from(operand.value, expected_value, expected_value[size], size)
+		if bit_moves == 1
+			@flags.set_bit_at(OVERFLOW_FLAG, operand.value[msb] != @flags.value[CARRY_FLAG] ? 1 : 0)
+		end
 	end
 	
 	# Shift arithmetic right (essentially sign extend the result from the original msb)
@@ -342,6 +356,9 @@ module Executor
 			value |= mask
 		end
 		set_shift_flags_from(value, value, operand.value[bit_moves - 1], size)
+		msb = size - 1
+		@flags.set_bit_at(OVERFLOW_FLAG, bit_moves == 1 && value[msb] != value[msb - 1] ? 1 : 0)
+		
 		operand.direct_value = value
 	end
 	
@@ -682,7 +699,6 @@ module Executor
 	# Calculates the flags for shift operations
 	def set_shift_flags_from(actual_value, expected_value, carry_flag, size)
 		msb = size - 1
-		@flags.set_bit_at(OVERFLOW_FLAG, actual_value[msb] == expected_value[msb] ? 0 : 1)
 		@flags.set_bit_at(CARRY_FLAG, carry_flag)
 		set_zero_flag_from actual_value
 		set_sign_flag_from actual_value, msb
@@ -716,7 +732,7 @@ module Executor
 	# Parity Flag: determine the parity (whether number of set bits is odd or even)
 	def set_parity_flag_from(actual_value, size)
 		bits_set = 1 # Start at one because the PF is 1 if even and 0 if odd
-		actual_value.each_bit(size) { |bit| bits_set += bit }
+		actual_value.each_bit(8) { |bit| bits_set += bit }
 		@flags.set_bit_at(PARITY_FLAG, bits_set & 1)
 	end
 	

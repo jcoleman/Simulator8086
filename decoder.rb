@@ -271,7 +271,7 @@ module Decoder
 		bits = width_bit == 1 ? 16 : 8
 		index = rm_indices.inject(0) { |sum, register| sum + register.value }
 		address_string = "[#{rm_name} + #{displacement.to_s(16)}]"
-		MemoryAccess.new(@ram, @ds.displacement, index + displacement, bits, address_string)
+		MemoryAccess.new(@ram, @ds.displacement, (index + displacement).to_unsigned_16_bits, bits, address_string)
 	end
 	
 	def two_byte_displacement_for(instruction)

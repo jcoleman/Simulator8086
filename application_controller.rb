@@ -20,6 +20,7 @@ class ApplicationController
 	attr_accessor :memory_display_source, :start_toolbar_item, :stop_toolbar_item
 	attr_accessor :start_menu_item, :stop_menu_item, :step_instruction_button, :single_step_menu_item
 	attr_accessor :next_instr_raw_label, :next_instr_op_label, :next_instr_mode_label
+	attr_accessor :terminal_window_view, :terminal_window, :send_interrupt_text_field
 	
 	def initialize
 		# The main simulator object
@@ -60,6 +61,7 @@ class ApplicationController
 	end
 	
 	def reset_simulator(sender)
+		end_execution
 		initialize_processor_with_hooks
 		initialize_all_displays
 		refresh_all_displays(true)
@@ -70,7 +72,11 @@ class ApplicationController
 	end
 	
 	def send_interrupt(sender)
-		
+		@processor.queue_interrupt(@send_interrupt_text_field.stringValue.to_i)
+	end
+	
+	def send_nmi_interrupt(sender)
+		@processor.queue_interrupt(2)
 	end
 	
 	def load_module(sender)
@@ -101,6 +107,7 @@ class ApplicationController
 		initialize_memory_display
 		initialize_stack_display
 		initialize_instruction_display
+		intitialize_terminal_display
 	end
 	
 	def refresh_all_displays(force=false)
@@ -155,6 +162,12 @@ class ApplicationController
 		@instruction_display.scrollRowToVisible(@instruction_display.numberOfRows - 1)
 	end
 	
+	def intitialize_terminal_display
+		@terminal_window_view.reinitialize
+		TerminalInput.character_queue = @terminal_window_view.character_queue
+		TerminalOutput.terminal_window = @terminal_window_view
+	end
+	
 	def refresh_checksum_display
 		@registers_checksum_label.setStringValue @processor.registers_checksum
 		@memory_checksum_label.setStringValue @processor.memory_checksum
@@ -194,6 +207,10 @@ class ApplicationController
 	
 	def show_inspector(sender)
 	  @inspector.makeKeyAndOrderFront(sender)
+	end
+	
+	def show_terminal_window(sender)
+		@terminal_window.makeKeyAndOrderFront(sender)
 	end
 	
 	def display_registers_as(sender)
@@ -282,6 +299,7 @@ class ApplicationController
 			begin
 				process_instruction
 			rescue => e
+				puts "Caught error"
 				puts e
 			end
 			refresh_all_displays(true)

@@ -29,6 +29,7 @@ class Processor
 		
 		@state = :READY_STATE
 		@instruction_count = 0
+		@queued_interrupt_type = nil
   end
 	
 	# -----------------------------------------------------------------
@@ -107,7 +108,22 @@ class Processor
 		# Callback
 		@after_execute.call(instruction) if @after_execute
 		
+		if @queued_interrupt_type
+			if @queued_interrupt_type == 2 || @flags.value[INTERRUPT_FLAG] == 1
+				puts "EXECUTING INTERRUPT OF TYPE: #{@queued_interrupt_type}"
+				perform_interrupt_for @queued_interrupt_type
+			else
+				puts "IGNORING EXTERNAL INTERRUPT OF TYPE: #{@queued_interrupt_type}"
+			end
+			
+			@queued_interrupt_type = nil
+		end
+		
 		return instruction
+	end
+	
+	def queue_interrupt(type)
+		@queued_interrupt_type = type
 	end
 	
 	# -----------------------------------------------------------------
