@@ -169,8 +169,8 @@ class ApplicationController
 	end
 	
 	def refresh_checksum_display
-		@registers_checksum_label.setStringValue @processor.registers_checksum
-		@memory_checksum_label.setStringValue @processor.memory_checksum
+		@registers_checksum_label.stringValue = @processor.registers_checksum.to_s
+		@memory_checksum_label.stringValue = @processor.memory_checksum.to_s
 	end
 	
 	def refresh_registers_display

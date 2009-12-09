@@ -369,6 +369,8 @@ module Executor
 		operand.direct_value = value
 	end
 	
+	# TODO: Rotates only set flags in certain bit rotate counts...
+	
 	# Rotate the operand's value right
 	def execute_ROR(operand)
 		# affects CF and OF flags

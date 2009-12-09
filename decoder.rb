@@ -137,7 +137,7 @@ module Decoder
 			end
 		)
 		
-		direction_bit = 1 if [0x8D, 0xC4, 0xC5].include?(first_byte) 
+		direction_bit = 1 if [0x8D, 0xC4, 0xC5].include?(first_byte)
 		add_operands_by_direction_flag(instruction, rm_operand, reg_operand, direction_bit)
 	end
 	
@@ -152,7 +152,7 @@ module Decoder
 		
 		# Get operand determined by the mod r/m fields
 		operand = mod_rm_operand_for(instruction, mod_rm_byte, width_bit)
-		operand.v_bit = v_bit = first_byte == 0xD2 || first_byte == 0xD3 ? 1 : 0
+		operand.v_bit = first_byte == 0xD2 || first_byte == 0xD3 ? 1 : 0
 		instruction.operands << operand
 		
 		if operand.type == :memory
