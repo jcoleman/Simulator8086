@@ -21,6 +21,7 @@ class ApplicationController
 	attr_accessor :start_menu_item, :stop_menu_item, :step_instruction_button, :single_step_menu_item
 	attr_accessor :next_instr_raw_label, :next_instr_op_label, :next_instr_mode_label
 	attr_accessor :terminal_window_view, :terminal_window, :send_interrupt_text_field
+	attr_accessor :instruction_stats_display, :addressing_modes_stats_display
 	
 	def initialize
 		# The main simulator object
@@ -108,6 +109,7 @@ class ApplicationController
 		initialize_stack_display
 		initialize_instruction_display
 		intitialize_terminal_display
+		initialize_statistics_display
 	end
 	
 	def refresh_all_displays(force=false)
@@ -119,6 +121,7 @@ class ApplicationController
 			refresh_stack_display
 			refresh_instruction_display
 			refresh_next_instruction_display
+			refresh_statistics_display
 		end
 	end
 	
@@ -160,6 +163,41 @@ class ApplicationController
 	def refresh_instruction_display
 		@instruction_display.reloadData
 		@instruction_display.scrollRowToVisible(@instruction_display.numberOfRows - 1)
+	end
+	
+	def initialize_statistics_display
+		@instructions_stats_display_source = TableViewSource::StatisticsView.new
+		@instruction_stats_display.dataSource = @instructions_stats_display_source
+		@addressing_modes_stats_display_source = TableViewSource::StatisticsView.new
+		@addressing_modes_stats_display.dataSource = @addressing_modes_stats_display_source
+	end
+	
+	def refresh_statistics_display
+		instruction_counts = {}
+		@instruction_display_source.executed_instructions.each do |instruction|
+			key = (instruction[:assembly_instruction].split ' ')[0]
+			instruction_counts[key] ||= 0
+			instruction_counts[key] += 1
+		end
+		
+		instruction_counts = instruction_counts.sort_by { |pair| pair[1] * -1 }
+		@instructions_stats_display_source.statistics = instruction_counts.collect do |key, value|
+		  { count: value, id: key }
+		end
+		@instruction_stats_display.reloadData
+		
+		mode_counts = {}
+		@instruction_display_source.executed_instructions.each do |instruction|
+			key = instruction[:mode]
+			mode_counts[key] ||= 0
+			mode_counts[key] += 1
+		end
+		
+		mode_counts = mode_counts.sort_by { |pair| pair[1] * -1 }
+		@addressing_modes_stats_display_source.statistics = mode_counts.collect do |key, value|
+		  { count: value, id: key }
+		end
+		@addressing_modes_stats_display.reloadData
 	end
 	
 	def intitialize_terminal_display

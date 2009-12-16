@@ -88,4 +88,22 @@ module TableViewSource
 		
 	end
 	
+	class StatisticsView
+		
+		attr_accessor :statistics
+		
+		def initialize
+			@statistics = []
+		end
+		
+		def numberOfRowsInTableView(tableView)
+			@statistics.size
+		end
+		
+		def tableView(tableView, objectValueForTableColumn:tableColumn, row:index)
+			@statistics[index][tableColumn.identifier.to_sym].to_s
+		end
+		
+	end
+	
 end
