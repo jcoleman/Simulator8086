@@ -277,6 +277,22 @@ module Executor
 		end
 	end
 	
+	def execute_FIB(destination, source)
+		fibs = [1, 1]
+		
+		n = source.value
+		
+		# Zeroth fib is undefined
+		unless n.zero?
+			n -= 2
+			n.times do
+				fibs << fibs[0] + fibs[1]
+				fibs.delete_at(0)
+			end
+			destination.value = fibs[1]
+		end
+	end
+	
 	# -----------------------------------------------------------------
 	# Bit Instructions
 	# -----------------------------------------------------------------

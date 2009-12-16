@@ -164,19 +164,29 @@ module Decoder
 		end
 	end
 	
-	def decode_SegRM(instruction)
+	def decode_RM(instruction)
 		first_byte = instruction.bytes.first
-		direction_bit = first_byte[1]
-		mod_rm_byte = fetch_byte(instruction)
+		width_bit = first_byte[0]
+		mod_rm_byte = retrieve_second_byte_for(instruction)
 		
 		# Get operand determined by the mod r/m fields
-		rm_operand = mod_rm_operand_for(instruction, mod_rm_byte, width_bit)
+		operand = mod_rm_operand_for(instruction, mod_rm_byte, width_bit)
+		operand.v_bit = first_byte == 0xD2 || first_byte == 0xD3 ? 1 : 0
+		instruction.operands << operand
 		
-		# Get the segment register operand
-		seg_index = (mod_rm_byte >> 3) & 0x03 # bits 3-4 determine segment register
-		seg_operand = @segment_register_operands[seg_index]
-		
-		add_operands_by_direction_flag(instruction, rm_operand, seg_operand, direction_bit)
+		if operand.type == :memory
+			# Specialize the decoding since a single memory operand
+			# has no other indicator as to the width of access
+			size = width_bit.zero? ? 'BYTE ' : 'WORD '
+			string = operand.to_s
+			operand.string = string.insert 0, size
+		end
+	end
+	
+	def decode_MemMem(instruction)
+		width_bit = instruction.bytes.first[0]
+		instruction.operands << mod_rm_operand_for(instruction, fetch_byte(instruction), width_bit)
+		instruction.operands << mod_rm_operand_for(instruction, fetch_byte(instruction), width_bit)
 	end
 	
 	def decode_RMImm(instruction)
