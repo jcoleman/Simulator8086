@@ -7,7 +7,7 @@
 #
 
 class Memory
-	
+  
   def initialize(bytes, initial_value)
     @bytes_array = Array.new(bytes, initial_value)
   end
@@ -21,10 +21,10 @@ class Memory
     raise MemoryAccessViolation.new unless reference + 1 < @bytes_array.size
     Memory.word_from_little_endian_bytes(@bytes_array[reference], @bytes_array[reference + 1])
   end
-	
-	def bytes_at(reference, count)
-		@bytes_array[reference ... (reference + count)]
-	end
+  
+  def bytes_at(reference, count)
+    @bytes_array[reference ... (reference + count)]
+  end
   
   def set_byte_at(reference, value)
     raise MemoryAccessViolation.new unless reference < @bytes_array.size
@@ -33,12 +33,12 @@ class Memory
   
   def set_word_at(reference, value)
     raise MemoryAccessViolation.new unless reference + 1 < @bytes_array.size
-		value = value.to_unsigned_16_bits
+    value = value.to_unsigned_16_bits
     @bytes_array[reference] = value & 0x00FF
-		@bytes_array[reference + 1] = value >> 8
+    @bytes_array[reference + 1] = value >> 8
   end
   
-	def set_direct_byte_at(reference, value)
+  def set_direct_byte_at(reference, value)
     raise MemoryAccessViolation.new unless reference < @bytes_array.size
     @bytes_array[reference] = value
   end
@@ -46,9 +46,9 @@ class Memory
   def set_direct_word_at(reference, value)
     raise MemoryAccessViolation.new unless reference + 1 < @bytes_array.size
     @bytes_array[reference] = value & 0x00FF
-		@bytes_array[reference + 1] = value >> 8
+    @bytes_array[reference + 1] = value >> 8
   end
-	
+  
   # Note: set_bytes_at will not correct endianess! Do not use unless
   # 'bytes' is already stored in the correct endian format
   def set_bytes_at(reference, bytes)
@@ -75,31 +75,31 @@ class Memory
         set_word_at(params[:reference], value)
     end
   end
-	
-	def load_module(memory_module)
-		set_bytes_at memory_module[:address], memory_module[:bytes]
-	end
+  
+  def load_module(memory_module)
+    set_bytes_at memory_module[:address], memory_module[:bytes]
+  end
   
   def self.absolute_address_for(segment, offset)
     (segment << 4) + offset
   end
   
-	def byte_size
-		@bytes_array.size
-	end
-	
+  def byte_size
+    @bytes_array.size
+  end
+  
   def checksum
     Utility.checksum_byte_array @bytes_array
   end
-	
-	def self.segment_offset_string_from(segment, offset)
-		segment.to_hex_string(4) << ':' << offset.to_hex_string(4)
-	end
   
-	def self.word_from_little_endian_bytes(byte0, byte1)
-		(byte1 << 8) + byte0
-	end
-	
+  def self.segment_offset_string_from(segment, offset)
+    segment.to_hex_string(4) << ':' << offset.to_hex_string(4)
+  end
+  
+  def self.word_from_little_endian_bytes(byte0, byte1)
+    (byte1 << 8) + byte0
+  end
+  
 end
 
 class MemoryAccessViolation < StandardError; end
